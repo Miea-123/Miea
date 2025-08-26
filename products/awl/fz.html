@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>艾曲泊帕分子作用机制图｜HTML 独立版</title>
+  <style>
+    :root{
+      --brand:#1d4ed8; /* 主色：Royal Blue */
+      --accent:#10b981; /* 强调：Jade */
+      --text:#0f172a; --muted:#475569; --line:#e6e8f0;
+      --bg:#f5f8ff; --panel:#ffffff; --radius:20px; --shadow:0 14px 40px rgba(17,24,39,.08);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{margin:0;background:linear-gradient(180deg,#ffffff,var(--bg) 70%);font-family:"Alibaba PuHuiTi","Noto Sans SC","Microsoft YaHei",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;color:var(--text)}
+    .wrap{max-width:1280px;margin:0 auto;padding:36px 24px}
+    .card{background:var(--panel);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:16px 18px}
+    .bar{display:flex;gap:10px;justify-content:space-between;align-items:center;padding:10px 8px 14px}
+    .bar .title{font-weight:900;letter-spacing:.3px;font-size:22px}
+    .controls{display:flex;gap:12px;align-items:center}
+    .ctrl{display:flex;gap:6px;align-items:center;font-size:13px;color:var(--muted)}
+    select, input[type="checkbox"]{accent-color:var(--brand)}
+    .btn{border:1px solid var(--line);background:#fff;border-radius:999px;padding:10px 14px;font-size:13px;cursor:pointer}
+    .btn.primary{background:linear-gradient(90deg,var(--brand),var(--accent));color:#fff;border-color:transparent}
+    figure{margin:0}
+    .sub{font:500 12px system-ui,-apple-system,Segoe UI,Roboto,"Alibaba PuHuiTi","Noto Sans SC",sans-serif;color:var(--muted);text-align:center;margin-top:10px}
+
+    /* 说服力数据条 */
+    .claims{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;max-width:1040px;margin:18px auto 4px}
+    .claim{background:linear-gradient(180deg,#f8fbff,#ffffff);border:1px solid var(--line);border-radius:14px;padding:12px 14px;box-shadow:0 4px 16px rgba(17,24,39,.05);text-align:center}
+    .claim .big{font-weight:900;font-size:28px;color:var(--brand);line-height:1}
+    .claim .lab{font-size:12px;color:var(--muted);margin-top:6px}
+
+    /* 小屏优化 */
+    @media (max-width: 900px){
+      .claims{grid-template-columns:1fr}
+      .bar .title{font-size:18px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" aria-label="艾曲泊帕分子作用机制图">
+      <div class="bar">
+        <div class="title">艾曲泊帕 · 分子作用机制</div>
+        <div class="controls">
+          <label class="ctrl">导出尺寸
+            <select id="scale">
+              <option value="1">1×</option>
+              <option value="2" selected>2×</option>
+              <option value="3">3×</option>
+              <option value="4">4×</option>
+            </select>
+          </label>
+          <label class="ctrl"><input type="checkbox" id="transparent"/> 透明背景</label>
+          <button class="btn" id="btn-svg">下载 SVG</button>
+          <button class="btn primary" id="btn-png">导出 PNG</button>
+        </div>
+      </div>
+      <figure>
+        <!-- ▼ 机制图（纯 SVG，独立可移植） -->
+        <svg id="moa" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" role="img" aria-labelledby="title desc">
+          <title id="title">艾曲泊帕（Eltrombopag）分子作用机制示意图</title>
+          <desc id="desc">口服 TPO 受体（c‑Mpl）激动剂；经 JAK2 激活 STAT5/3、MAPK/ERK、PI3K/AKT 通路，上调基因表达，促进巨核细胞成熟与血小板生成。</desc>
+          <defs>
+            <linearGradient id="brandGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="var(--brand)"/>
+              <stop offset="100%" stop-color="var(--accent)"/>
+            </linearGradient>
+            <radialGradient id="glow" cx="50%" cy="42%" r="35%">
+              <stop offset="0%" stop-color="var(--brand)" stop-opacity="0.18"/>
+              <stop offset="100%" stop-color="var(--brand)" stop-opacity="0"/>
+            </radialGradient>
+            <marker id="arrow" markerWidth="10" markerHeight="8" refX="10" refY="4" orient="auto-start-reverse">
+              <path d="M0,0 L10,4 L0,8 Z" fill="var(--brand)"/>
+            </marker>
+            <style><![CDATA[
+              .bg{fill:#ffffff}
+              .mem{fill:#ffffff;stroke:var(--line);stroke-width:1.4}
+              .receptor{fill:rgba(29,78,216,.10);stroke:var(--brand);stroke-width:1.6}
+              .node{fill:#ffffff;stroke:var(--line);stroke-width:1.5;rx:10}
+              .node-strong{fill:url(#brandGrad);stroke:none;rx:14}
+              .edge{stroke:var(--brand);stroke-width:2.8;fill:none;marker-end:url(#arrow)}
+              .edge-weak{stroke:var(--accent);stroke-dasharray:4 4;stroke-width:2.2;fill:none;marker-end:url(#arrow)}
+              .lbl{font:800 14.5px system-ui, -apple-system, Segoe UI, Roboto, "Alibaba PuHuiTi", "Noto Sans SC", sans-serif; fill:var(--text)}
+              .sub{font:500 12px system-ui, -apple-system, Segoe UI, Roboto, "Alibaba PuHuiTi", "Noto Sans SC", sans-serif; fill:#475569}
+              .title{font:900 28px system-ui, -apple-system, Segoe UI, Roboto, "Alibaba PuHuiTi", "Noto Sans SC", sans-serif; fill:#0b1220}
+              .eyebrow{font:800 11px system-ui, -apple-system, Segoe UI, Roboto, "Alibaba PuHuiTi", "Noto Sans SC"; fill:#64748b; letter-spacing:.6px; text-transform:uppercase}
+              .num{fill:#0b1220}
+            ]]></style>
+          </defs>
+
+          <!-- 顶部标题与副标题 -->
+          <text class="eyebrow" x="64" y="48">Mechanism of Action</text>
+          <text class="title" x="64" y="74">艾曲泊帕（Eltrombopag）</text>
+          <text class="sub" x="64" y="95">口服 TPO‑RA｜c‑Mpl → JAK2 → STAT / MAPK / PI3K｜促进巨核细胞成熟与血小板生成</text>
+
+          <!-- 背景与光晕（更具舞台感） -->
+          <rect class="bg" x="0" y="0" width="1000" height="600"/>
+          <ellipse cx="500" cy="250" rx="420" ry="220" fill="url(#glow)"/>
+
+          <!-- 图例（去框，更简洁） -->
+          <g id="legend" transform="translate(760,28)">
+            <line x1="0" y1="10" x2="40" y2="10" class="edge"/>
+            <text class="sub" x="48" y="14">主激活</text>
+            <line x1="0" y1="28" x2="40" y2="28" class="edge-weak"/>
+            <text class="sub" x="48" y="32">调节</text>
+          </g>
+
+          <!-- 细胞膜双层（下移，留足上部留白） -->
+          <rect class="mem" x="60" y="250" width="880" height="18" rx="9"/>
+          <rect class="mem" x="60" y="300" width="880" height="18" rx="9"/>
+
+          <!-- 受体 c‑Mpl 跨膜结构（②） -->
+          <rect class="receptor" x="470" y="210" width="22" height="160" rx="11"/>
+          <ellipse class="receptor" cx="481" cy="194" rx="30" ry="20"/>
+          <text class="lbl" x="430" y="170">c‑Mpl（TPO‑R）</text>
+          <!-- 编号 ② -->
+          <circle cx="512" cy="194" r="12" fill="#fff" stroke="var(--brand)"/>
+          <text x="507" y="198" class="lbl num">2</text>
+
+          <!-- JAK2（③） -->
+          <rect class="node" x="451" y="330" width="60" height="34"/>
+          <text class="lbl" x="468" y="352">JAK2</text>
+          <circle cx="520" cy="330" r="12" fill="#fff" stroke="var(--brand)"/>
+          <text x="515" y="334" class="lbl num">3</text>
+
+          <!-- Eltrombopag（①） -->
+          <rect x="230" y="178" width="220" height="38" rx="19" fill="#ffffff" stroke="var(--brand)" stroke-width="2"/>
+          <text class="lbl" x="245" y="201">Eltrombopag（口服）</text>
+          <path class="edge" d="M450,196 C462,196 465,194 470,194"/>
+          <circle cx="230" cy="196" r="12" fill="#fff" stroke="var(--brand)"/>
+          <text x="225" y="200" class="lbl num">1</text>
+
+          <!-- 下游信号（④）：STAT5/3 -->
+          <rect class="node" x="610" y="170" width="120" height="38"/>
+          <text class="lbl" x="625" y="193">STAT5 / 3</text>
+          <path class="edge" d="M511,347 C575,330 600,255 620,205"/>
+
+          <!-- MAPK/ERK -->
+          <rect class="node" x="610" y="232" width="140" height="38"/>
+          <text class="lbl" x="625" y="255">MAPK / ERK</text>
+          <path class="edge" d="M511,347 C565,338 600,305 610,268"/>
+
+          <!-- PI3K/AKT -->
+          <rect class="node" x="610" y="294" width="140" height="38"/>
+          <text class="lbl" x="625" y="317">PI3K / AKT</text>
+          <path class="edge" d="M511,347 C565,352 600,338 610,330"/>
+
+          <!-- 标注 ④ -->
+          <circle cx="602" cy="206" r="12" fill="#fff" stroke="var(--brand)"/>
+          <text x="597" y="210" class="lbl num">4</text>
+
+          <!-- 细胞核 / 基因表达（⑤） -->
+          <ellipse cx="830" cy="220" rx="46" ry="34" fill="#ffffff" stroke="var(--line)" stroke-width="1.5"/>
+          <text class="sub" x="802" y="225">基因表达↑</text>
+          <path class="edge-weak" d="M750,188 C765,190 775,202 790,210"/>
+          <circle cx="872" cy="212" r="12" fill="#fff" stroke="var(--brand)"/>
+          <text x="867" y="216" class="lbl num">5</text>
+
+          <!-- 结局（⑥）：巨核细胞成熟与产板增加 -->
+          <rect class="node-strong" x="710" y="380" width="242" height="72" rx="16"/>
+          <text class="lbl" x="726" y="413" fill="#ffffff">巨核细胞成熟↑、血小板生成↑</text>
+          <text class="sub" x="726" y="433" fill="#eaf2ff">出血风险下降、依从性佳</text>
+          <path class="edge" d="M690,340 C720,360 730,372 710,392"/>
+          <circle cx="710" cy="380" r="12" fill="#fff" stroke="var(--brand)"/>
+          <text x="705" y="384" class="lbl num">6</text>
+
+          <!-- 角标说明（右下） -->
+          <text class="sub" x="640" y="566">示意：非解剖/非比例；强调信号路径与功能结局。</text>
+        </svg>
+        <!-- ▲ 机制图结束 -->
+        <figcaption class="sub">
+          <div class="claims">
+            <div class="claim"><div class="big">57.7% vs 6.0%</div><div class="lab">ITP RCT 第42天达标（≥50×10⁹/L）</div></div>
+            <div class="claim"><div class="big">68% vs 41%</div><div class="lab">SAA 一线联合 IST 总体缓解</div></div>
+            <div class="claim"><div class="big">53%</div><div class="lab">停药后维持稳定反应（ITP）</div></div>
+          </div>
+          右上角可下载 SVG 或按所选尺寸导出 PNG（可选透明背景）。
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+
+  <script>
+    // 导出：SVG + PNG（尺寸与透明背景）
+    const svgEl = document.getElementById('moa');
+    const scaleSel = document.getElementById('scale');
+    const chkTrans = document.getElementById('transparent');
+
+    document.getElementById('btn-svg').addEventListener('click',()=>{
+      const xml = new XMLSerializer().serializeToString(svgEl);
+      const withHeader = (/^<\?xml/.test(xml)? xml : '<?xml version="1.0" standalone="no"?>
+'+xml);
+      const blob = new Blob([withHeader], {type:'image/svg+xml;charset=utf-8'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href=url; a.download='eltrombopag_moa.svg';
+      document.body.appendChild(a); a.click(); a.remove(); URL.revokeObjectURL(url);
+    });
+
+    document.getElementById('btn-png').addEventListener('click',()=>{
+      const xml = new XMLSerializer().serializeToString(svgEl);
+      const svgBlob = new Blob([xml], {type:'image/svg+xml;charset=utf-8'});
+      const url = URL.createObjectURL(svgBlob);
+      const img = new Image();
+      img.onload = ()=>{
+        const scale = parseInt(scaleSel.value || '2',10);
+        const W = 1000 * scale, H = 600 * scale;
+        const cvs = document.createElement('canvas'); cvs.width = W; cvs.height = H;
+        const ctx = cvs.getContext('2d');
+        if(!chkTrans.checked){ ctx.fillStyle = '#ffffff'; ctx.fillRect(0,0,W,H); }
+        ctx.drawImage(img,0,0,W,H);
+        cvs.toBlob((b)=>{ const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download=`eltrombopag_moa_${scale}x${chkTrans.checked? '_transparent':''}.png`; document.body.appendChild(a); a.click(); a.remove(); }, 'image/png');
+        URL.revokeObjectURL(url);
+      };
+      img.onerror = ()=> URL.revokeObjectURL(url);
+      img.src = url;
+    });
+  </script>
+</body>
+</html>

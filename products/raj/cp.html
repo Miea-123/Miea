@@ -1,0 +1,569 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>瑞安吉 - 果糖二磷酸钠口服溶液 | 能量新引擎 心脑强保护</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 30px;
+            border-radius: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .hero-content {
+            flex: 1;
+            min-width: 300px;
+        }
+
+        .hero-image {
+            flex: 0 0 300px;
+            text-align: center;
+        }
+
+        .product-bottle {
+            width: 200px;
+            height: 300px;
+            background: linear-gradient(145deg, #FFA500, #FF6347);
+            border-radius: 20px 20px 60px 60px;
+            position: relative;
+            box-shadow: 0 15px 35px rgba(255,165,0,0.3);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .product-bottle::before {
+            content: '瑞安吉';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 28px;
+            font-weight: bold;
+        }
+
+        h1 {
+            font-size: 48px;
+            color: #FF6347;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #FF6347, #FFA500);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+        }
+
+        .tagline {
+            font-size: 24px;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            animation: fadeInUp 0.8s ease-out backwards;
+        }
+
+        .feature-card:nth-child(1) { animation-delay: 0.1s; }
+        .feature-card:nth-child(2) { animation-delay: 0.2s; }
+        .feature-card:nth-child(3) { animation-delay: 0.3s; }
+        .feature-card:nth-child(4) { animation-delay: 0.4s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .feature-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            font-size: 28px;
+            color: white;
+        }
+
+        .feature-card h3 {
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .mechanism {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-top: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .mechanism h2 {
+            color: #FF6347;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 32px;
+        }
+
+        .process-flow {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .process-step {
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+            padding: 20px;
+            background: linear-gradient(145deg, #f0f0f0, #ffffff);
+            border-radius: 15px;
+            transition: transform 0.3s ease;
+        }
+
+        .process-step:hover {
+            transform: scale(1.05);
+        }
+
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #FF6347, #FFA500);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .benefits {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            margin-top: 30px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .benefits h2 {
+            color: #FF6347;
+            margin-bottom: 30px;
+            text-align: center;
+            font-size: 32px;
+        }
+
+        .benefit-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: start;
+            gap: 15px;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .benefit-item:hover {
+            background: #fff;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .benefit-icon {
+            flex-shrink: 0;
+            width: 40px;
+            height: 40px;
+            background: #4CAF50;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .dosage {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            padding: 40px;
+            border-radius: 20px;
+            margin-top: 30px;
+            color: white;
+            text-align: center;
+        }
+
+        .dosage h2 {
+            margin-bottom: 20px;
+            font-size: 32px;
+        }
+
+        .dosage-info {
+            font-size: 20px;
+            margin: 15px 0;
+        }
+
+        .cta {
+            text-align: center;
+            margin-top: 40px;
+            padding: 30px;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 18px 40px;
+            background: linear-gradient(135deg, #FF6347, #FFA500);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 20px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255,99,71,0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255,99,71,0.4);
+        }
+
+        .warning {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: white;
+            background: rgba(0,0,0,0.2);
+            border-radius: 15px;
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 32px;
+            }
+
+            .tagline {
+                font-size: 18px;
+            }
+
+            .hero {
+                flex-direction: column;
+            }
+
+            .product-bottle {
+                width: 150px;
+                height: 225px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="hero">
+                <div class="hero-content">
+                    <h1>瑞安吉®</h1>
+                    <p class="tagline">果糖二磷酸钠口服溶液</p>
+                    <h2 style="color: #666; font-size: 28px; margin-top: 20px;">能量新引擎 心脑强保护</h2>
+                    <p style="margin-top: 15px; color: #888; font-size: 18px;">
+                        独特口服溶液剂型，甜橙口感<br>
+                        更适合儿童等特殊群体<br>
+                        <strong style="color: #FF6347;">远大医药（中国）有限公司</strong>
+                    </p>
+                </div>
+                <div class="hero-image">
+                    <div class="product-bottle"></div>
+                </div>
+            </div>
+        </header>
+
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">💊</div>
+                <h3>口服液剂型</h3>
+                <p>随身携带，服用更便捷，每次10-20ml，每日2-3次</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🍊</div>
+                <h3>甜橙口味</h3>
+                <p>口感似饮品，宝宝更爱喝，提高用药依从性</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3>快速供能</h3>
+                <p>优化供能途径，快速供能，保障心脑能量供应</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🛡️</div>
+                <h3>双重保护</h3>
+                <p>增加供氧，促进氧气利用，提高能量代谢效率</p>
+            </div>
+        </div>
+
+        <div class="mechanism">
+            <h2>作用机制 - FDP能量新引擎</h2>
+            <p style="text-align: center; color: #666; margin-bottom: 30px;">
+                果糖二磷酸钠（FDP）是人体内葡萄糖代谢高能底物又是代谢调节剂
+            </p>
+            <div class="process-flow">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h4>优化供能途径</h4>
+                    <p>外源性补充FDP<br>规避耗能环节<br>净增4分子ATP</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h4>激活限速酶</h4>
+                    <p>激活磷酸果糖激酶<br>促进葡萄糖代谢<br>增加ATP产量</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h4>强效增氧</h4>
+                    <p>增加2,3-DPG含量<br>氧离曲线右移<br>改善缺氧状态</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h4>心脑保护</h4>
+                    <p>维持能量代谢<br>稳定细胞膜<br>减轻心脑损伤</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="benefits">
+            <h2>临床优势与适应症</h2>
+            <div class="benefit-list">
+                <div class="benefit-item">
+                    <div class="benefit-icon">✓</div>
+                    <div>
+                        <h4>心血管保护</h4>
+                        <p>改善冠心病心绞痛、急性心肌梗死、心律失常和心力衰竭，显著改善心肌酶谱</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">✓</div>
+                    <div>
+                        <h4>脑保护作用</h4>
+                        <p>改善脑梗死、脑出血等引起的脑缺氧症状，减少梗死面积达40%以上</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">✓</div>
+                    <div>
+                        <h4>病毒性心肌炎</h4>
+                        <p>辅助治疗病毒性心肌炎，改善心肌酶谱CK-MB水平显著降低</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">✓</div>
+                    <div>
+                        <h4>儿童适用性</h4>
+                        <p>权威指南一致推荐作为儿童心脑损伤相关疾病的优选用药，口服依从性高</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">✓</div>
+                    <div>
+                        <h4>新生儿脑病</h4>
+                        <p>改善新生儿窒息、缺氧缺血性脑病，减少神经系统损伤</p>
+                    </div>
+                </div>
+                <div class="benefit-item">
+                    <div class="benefit-icon">✓</div>
+                    <div>
+                        <h4>安全性良好</h4>
+                        <p>口服给药安全便捷，不良反应轻微，患者耐受性好</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dosage">
+            <h2>用法用量</h2>
+            <div class="dosage-info">
+                <p>💧 口服给药，方便安全</p>
+                <p>📏 成人：每次1-2g（10-20ml），每日2-3次</p>
+                <p>👶 儿童：&lt;1岁 每次0.5g（5ml），每日2次</p>
+                <p style="margin-left: 60px;">&gt;1岁 每次1-2g（10-20ml），每日2-3次</p>
+                <p>⏰ 饭后服用，疗程根据病情而定</p>
+            </div>
+        </div>
+
+        <div class="cta">
+            <h2 style="color: #FF6347; margin-bottom: 20px;">守护心脑健康 · 优选能量代谢方案</h2>
+            <p style="color: #666; margin-bottom: 30px; font-size: 18px;">
+                权威指南一致推荐FDP作为儿童心脑损伤相关疾病的优选用药<br>
+                中国心力衰竭诊断和治疗指南2024推荐心肌能量代谢药物
+            </p>
+
+            <div style="display: flex; justify-content: space-around; margin: 30px 0; flex-wrap: wrap;">
+                <div style="text-align: center; padding: 20px;">
+                    <h3 style="color: #FF6347;">临床证实</h3>
+                    <p style="color: #666;">Meta分析显示改善急性脑梗死<br>神经功能缺损OR 2.55</p>
+                </div>
+                <div style="text-align: center; padding: 20px;">
+                    <h3 style="color: #FF6347;">安全可靠</h3>
+                    <p style="color: #666;">口服给药安全便捷<br>不良反应轻微可耐受</p>
+                </div>
+                <div style="text-align: center; padding: 20px;">
+                    <h3 style="color: #FF6347;">双重保护</h3>
+                    <p style="color: #666;">心脑同治，一药多效<br>儿童成人均可使用</p>
+                </div>
+            </div>
+
+            <a href="#" class="cta-button">了解更多产品信息</a>
+
+            <div class="warning">
+                <strong>注意事项：</strong>
+                <p>• 高磷酸盐血症和肾功能衰竭者禁用</p>
+                <p>• 不良反应主要为轻微消化系统症状（腹胀、恶心等），一般可耐受</p>
+                <p>• 糖尿病患者使用对血糖影响小，相对安全</p>
+                <p>• 请在医师指导下使用</p>
+            </div>
+        </div>
+
+        <div class="footer">
+            <p>远大医药（中国）有限公司 | 学术推广 仅供医学专业人士参考</p>
+            <p style="margin-top: 10px; font-size: 14px;">
+                地址：武汉市硚口区硚口路160号城市广场A座23层
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // 添加滚动动画效果
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // 观察所有卡片元素
+        document.querySelectorAll('.feature-card, .benefit-item, .process-step').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+
+        // 添加数字递增动画
+        function animateValue(element, start, end, duration) {
+            let startTimestamp = null;
+            const step = (timestamp) => {
+                if (!startTimestamp) startTimestamp = timestamp;
+                const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+                element.textContent = Math.floor(progress * (end - start) + start) + '%';
+                if (progress < 1) {
+                    window.requestAnimationFrame(step);
+                }
+            };
+            window.requestAnimationFrame(step);
+        }
+
+        // 页面加载时的动画
+        window.addEventListener('load', () => {
+            document.body.style.opacity = '1';
+        });
+    </script>
+</body>
+</html>

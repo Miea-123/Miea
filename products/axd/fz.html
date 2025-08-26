@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>氨己烯酸（Vigabatrin）｜产品机制（MoA）蓝绿色版</title>
+  <meta name="description" content="氨己烯酸（Vigabatrin）通过选择性不可逆抑制GABA‑T提升突触GABA水平，从分子—细胞—网络—临床多层级阐述其机制与关键证据。"/>
+  <style>
+    :root{
+      /* 蓝绿色｜空灵而温柔 */
+      --brand:#14B8A6; /* teal */
+      --brand-2:#7AD7CF; /* mint */
+      --ink:#0f1420;
+      --muted:#5a6470;
+      --bg:#F5FBFA;
+      --card:#ffffff;
+      --line:#E6F3F1;
+      --ok:#0E918C;
+      --shadow:0 10px 30px rgba(20,184,166,.08);
+      --radius:20px;
+      --speed:12s; /* 动画默认速度 */
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:"Alibaba PuHuiTi","Alibaba PuHuiTi 2.0","PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif}
+    a{color:var(--ok);text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:1140px;margin:0 auto;padding:22px}
+
+    header.hero{position:relative;color:#074b46;background:linear-gradient(135deg,#CFF7F2,#7AD7CF 55%,#14B8A6)}
+    .hero-inner{max-width:1140px;margin:0 auto;padding:48px 22px 60px}
+    .eyebrow{letter-spacing:.12em;text-transform:uppercase;opacity:.8;font-size:.78rem}
+    h1{margin:.2rem 0 0;font-weight:800;line-height:1.15;color:#053c38}
+    .subtitle{margin:10px 0 0;font-size:1.05rem;opacity:.95;color:#064e48}
+    .chipbar{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+    .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.28);backdrop-filter:blur(4px);font-size:.85rem;color:#053c38}
+
+    /* 导航 */
+    .nav{position:sticky;top:0;z-index:20;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 6px 18px rgba(20,184,166,.05)}
+    .nav-inner{max-width:1140px;margin:0 auto;display:flex;gap:8px;align-items:center;padding:10px 16px}
+    .nav a{padding:8px 12px;border-radius:999px;color:#24514e;font-weight:600}
+    .nav a:hover{background:#ecfdfc}
+    .nav .right{margin-left:auto;display:flex;gap:10px;align-items:center}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow);font-weight:700;color:#0f514d}
+    .btn:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(20,184,166,.10)}
+
+    section{padding:34px 0}
+    h2{font-size:1.55rem;margin:0 0 12px;color:#063f3a}
+    .kicker{color:var(--muted);font-size:.92rem;margin-bottom:8px}
+
+    .grid{display:grid;gap:18px}
+    @media (min-width:900px){.cols-2{grid-template-columns:1fr 1fr}.cols-3{grid-template-columns:repeat(3,1fr)}}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+    .small{font-size:.92rem}
+    .muted{color:var(--muted)}
+    .divider{height:1px;background:var(--line);margin:14px 0}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#ecfdfc;border:1px solid #d1faf4;color:#0F766E;font-weight:700;font-size:.85rem}
+
+    /* MoA SVG 包裹 */
+    .svgwrap{background:#fff;border:1px solid var(--line);border-radius:18px;padding:12px;box-shadow:var(--shadow);overflow:auto}
+    svg{max-width:100%;height:auto}
+
+    /* 机制图：连线强弱 */
+    .edge-strong{stroke:#0F766E;stroke-width:4}
+    .edge-mid{stroke:#14B8A6;stroke-width:3}
+    .edge-weak{stroke:#7AD7CF;stroke-width:2}
+    .edge-flow{stroke-dasharray:6 8;animation:flow var(--speed) linear infinite}
+    @keyframes flow{to{stroke-dashoffset:-200}}
+
+    .node{fill:#fff;stroke:#CFEDEA;stroke-width:1.2}
+    .node-enz{fill:url(#enz);stroke:#8bded4}
+    .node-receptor{fill:#F0FDFB;stroke:#ccfbf1}
+    .hl{filter:drop-shadow(0 3px 8px rgba(20,184,166,.18))}
+
+    /* Tooltip */
+    #tip{position:fixed;z-index:40;pointer-events:none;background:#053c38;color:#eafffb;padding:8px 10px;border-radius:10px;font-size:.88rem;line-height:1.25;border:1px solid #0F766E;opacity:0;transform:translateY(-6px);transition:opacity .18s ease,transform .18s ease;max-width:280px}
+
+    /* 控制条 */
+    .control{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+    .control label{font-size:.9rem;color:#255a56}
+    input[type=range]{accent-color:#14B8A6}
+
+    details{border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:var(--shadow)}
+    details>summary{cursor:pointer;padding:12px 14px;font-weight:700}
+    details>.content{padding:0 14px 14px}
+
+    footer{padding:36px 0;color:#556}
+    .footgrid{display:grid;gap:12px}
+    @media(min-width:860px){.footgrid{grid-template-columns:2fr 1fr}}
+  </style>
+</head>
+<body>
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">Mechanism of Action</div>
+      <h1>氨己烯酸（Vigabatrin）— 产品机制</h1>
+      <p class="subtitle">🔬 选择性不可逆抑制 GABA‑T → 🌿 提升突触 GABA 水平 → 🧠 降低神经元兴奋性 → ⚡ 抑制痉挛样放电</p>
+      <div class="chipbar">
+        <span class="chip">🧪 分子：抑制 GABA‑T</span>
+        <span class="chip">🧫 细胞：GABA 受体通路增强</span>
+        <span class="chip">🕸️ 网络：E/I 失衡纠偏</span>
+        <span class="chip">👶 临床：尽早终止痉挛与高峰失律</span>
+      </div>
+    </div>
+  </header>
+
+  <nav class="nav" aria-label="页面导航">
+    <div class="nav-inner">
+      <a href="#overview">概览</a>
+      <a href="#mainsvg">机制全景</a>
+      <a href="#multilayer">多层级通路</a>
+      <a href="#receptors">受体与通道</a>
+      <a href="#network">网络效应</a>
+      <a href="#clinical">临床关联</a>
+      <a href="#refs">参考</a>
+      <div class="right control">
+        <label>动画速度</label>
+        <input id="speed" type="range" min="6" max="24" value="12" />
+        <button class="btn" id="btnExport">🖼️ 导出机制图</button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container">
+    <section id="overview">
+      <div class="kicker">Overview</div>
+      <h2>核心要点</h2>
+      <div class="grid cols-3">
+        <div class="card small"><span class="pill">🎯 靶点</span>
+          <p><b>GABA‑T（γ‑氨基丁酸转氨酶）不可逆抑制</b>，减少 GABA 降解，使突触/胞内 GABA 水平上升。</p>
+        </div>
+        <div class="card small"><span class="pill">🧩 效应</span>
+          <p>增强 <b>GABA<sub>A</sub></b>（Cl⁻ 内流，快抑制）与 <b>GABA<sub>B</sub></b>（K⁺ 外流/Ca²⁺ 抑制，慢抑制）介导的抑制性传递。</p>
+        </div>
+        <div class="card small"><span class="pill">🧠 结果</span>
+          <p>纠正兴奋/抑制（E/I）失衡，抑制痉挛样异常放电与高峰失律（hypsarrhythmia），支持早期控痉。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="mainsvg">
+      <div class="kicker">Mechanism Map</div>
+      <h2>机制全景示意（可交互）</h2>
+      <div class="svgwrap">
+        <svg id="moa" viewBox="0 0 1080 520" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="氨己烯酸作用机制示意图">
+          <defs>
+            <linearGradient id="enz" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#d4f8f3"/>
+              <stop offset="100%" stop-color="#b9efe7"/>
+            </linearGradient>
+            <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+              <path d="M0,0 L0,6 L6,3 z" fill="#0F766E"/>
+            </marker>
+          </defs>
+
+          <!-- 左：谷氨酸→GABA 合成（GAD） -->
+          <g class="hl" data-tip="GAD 将谷氨酸转化为 GABA（合成途径）。">
+            <rect class="node" x="40" y="60" width="220" height="70" rx="14"/>
+            <text x="150" y="100" text-anchor="middle" font-weight="700">GAD：谷氨酸 → GABA</text>
+          </g>
+
+          <!-- 中：GABA‑T 被抑制 -->
+          <g class="hl" data-tip="氨己烯酸选择性、不可逆抑制 GABA‑T，减少 GABA 降解。">
+            <rect class="node node-enz" x="400" y="60" width="220" height="70" rx="14"/>
+            <text x="510" y="94" text-anchor="middle" font-weight="700">GABA‑T（被抑制）</text>
+            <line x1="400" y1="60" x2="620" y2="130" class="edge-weak"/>
+            <line x1="400" y1="130" x2="620" y2="60" class="edge-weak"/>
+          </g>
+
+          <!-- GABA 升高块 -->
+          <g class="hl" data-tip="GABA 水平↑：突触与胞内可用性提升。">
+            <rect class="node" x="720" y="58" width="180" height="74" rx="14"/>
+            <text x="810" y="95" text-anchor="middle" font-weight="800">GABA ↑</text>
+          </g>
+
+          <!-- 流向：从GAD与GABA‑T至GABA↑ -->
+          <line x1="260" y1="95" x2="400" y2="95" class="edge-mid edge-flow" marker-end="url(#arrow)"/>
+          <line x1="620" y1="95" x2="720" y2="95" class="edge-strong edge-flow" marker-end="url(#arrow)"/>
+
+          <!-- 突触裂隙示意（中部） -->
+          <g>
+            <rect x="300" y="220" width="500" height="160" rx="18" fill="#ffffff" stroke="#CFEDEA"/>
+            <text x="550" y="245" text-anchor="middle" fill="#0F766E" font-weight="700">突触：前膜（左）⇄ 裂隙 ⇄ 后膜（右）</text>
+
+            <!-- 前膜囊泡释放 GABA -->
+            <g data-tip="前膜释放 GABA 至突触裂隙。">
+              <circle cx="330" cy="300" r="26" fill="#F0FDFB" stroke="#ccfbf1"/>
+              <text x="330" y="305" font-size="12" text-anchor="middle">囊泡</text>
+            </g>
+            <line x1="356" y1="300" x2="480" y2="300" class="edge-mid edge-flow" marker-end="url(#arrow)"/>
+
+            <!-- 后膜：GABA‑A 受体 -->
+            <g class="hl" data-tip="GABA<sub>A</sub> 受体：Cl⁻ 内流 → 膜电位超极化 → 快速抑制。">
+              <rect class="node node-receptor" x="480" y="270" width="160" height="60" rx="12"/>
+              <text x="560" y="305" text-anchor="middle" font-weight="700">GABA A 受体</text>
+            </g>
+            <line x1="640" y1="300" x2="740" y2="300" class="edge-strong edge-flow" marker-end="url(#arrow)"/>
+            <text x="690" y="290" font-size="12" fill="#0F766E">Cl⁻ 内流 → 快抑制</text>
+
+            <!-- 旁侧：GABA‑B 受体 -->
+            <g class="hl" data-tip="GABA<sub>B</sub> 受体：K⁺ 外流 / Ca²⁺ 抑制 → 慢性抑制。">
+              <rect class="node node-receptor" x="480" y="350" width="180" height="60" rx="12"/>
+              <text x="570" y="386" text-anchor="middle" font-weight="700">GABA B 受体</text>
+            </g>
+            <line x1="660" y1="380" x2="770" y2="380" class="edge-mid edge-flow" marker-end="url(#arrow)"/>
+            <text x="715" y="370" font-size="12" fill="#0F766E">K⁺ 外流 / Ca²⁺ ↓</text>
+
+            <!-- 转运体 GAT 回收（弱） -->
+            <g class="hl" data-tip="GAT 转运体回收 GABA（示意），总体仍以抑制增强为主。">
+              <rect class="node" x="320" y="355" width="120" height="46" rx="10"/>
+              <text x="380" y="383" text-anchor="middle" font-size="12" font-weight="700">GAT 回收</text>
+            </g>
+            <line x1="450" y1="378" x2="500" y2="330" class="edge-weak edge-flow" marker-end="url(#arrow)"/>
+          </g>
+
+          <!-- 右：整合效应：异常放电↓ -->
+          <g class="hl" data-tip="综合：兴奋性降低 → 异常放电减少 → 痉挛停止/减轻。">
+            <rect class="node" x="820" y="250" width="220" height="70" rx="14"/>
+            <text x="930" y="274" text-anchor="middle" font-weight="700">异常放电 ↓</text>
+            <text x="930" y="296" text-anchor="middle" fill="#0F766E">高峰失律（hypsarrhythmia）改善</text>
+          </g>
+
+          <line x1="780" y1="300" x2="820" y2="285" class="edge-strong edge-flow" marker-end="url(#arrow)"/>
+        </svg>
+      </div>
+      <p class="muted small">提示：线条粗细代表强度（strong/mid/weak）；虚线并带流动动画表示“方向性与持续性”。可用上方滑块调整动画速度，或点击“导出机制图”保存为 PNG。</p>
+    </section>
+
+    <section id="multilayer">
+      <div class="kicker">Molecular → Cellular → Network → Clinical</div>
+      <h2>多层级通路（纵向逻辑）</h2>
+      <div class="grid cols-2">
+        <div class="card small">
+          <span class="pill">分子层</span>
+          <ul>
+            <li>抑制 GABA‑T（不可逆），<b>减少降解</b>；</li>
+            <li>GABA 可用性 ↑（胞内/突触）；</li>
+            <li>（伴随）GAD 合成通路维持/促进。</li>
+          </ul>
+          <div class="divider"></div>
+          <span class="pill">细胞层</span>
+          <ul>
+            <li>GABA<sub>A</sub>：Cl⁻ 内流 → 膜电位超极化（快抑制）；</li>
+            <li>GABA<sub>B</sub>：K⁺ 外流、Ca²⁺ 通道抑制（慢抑制）；</li>
+            <li>突触前抑制：递质释放概率下降。</li>
+          </ul>
+        </div>
+        <div class="card small">
+          <span class="pill">网络层</span>
+          <ul>
+            <li>E/I 失衡纠偏：抑制性网络增益↑；
+            </li>
+            <li>棘波/高峰失律活动减少；
+            </li>
+            <li>癫痫环路兴奋性总体下调。</li>
+          </ul>
+          <div class="divider"></div>
+          <span class="pill">临床层</span>
+          <ul>
+            <li>⏱️ <b>起效快</b>：部分患儿 1–2 周内痉挛停止；</li>
+            <li>🎯 TSC 相关痉挛获益明确；</li>
+            <li>📉 EEG 高峰失律改善，支持发育结局。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="receptors">
+      <div class="kicker">Synaptic Inhibition</div>
+      <h2>受体与离子通道：抑制性传递增强</h2>
+      <div class="grid cols-3">
+        <div class="card small"><span class="pill">GABA<sub>A</sub></span>
+          <p>门控 Cl⁻ 通道，<b>快速抑制</b>；促进超极化，抑制过度放电。</p>
+        </div>
+        <div class="card small"><span class="pill">GABA<sub>B</sub></span>
+          <p>G 蛋白偶联：K⁺ 外流、Ca²⁺ 内流抑制，<b>慢性抑制</b>与突触前抑制。</p>
+        </div>
+        <div class="card small"><span class="pill">转运/GAT</span>
+          <p>GABA 回收调节突触浓度；整体平衡下，抑制性传递净效应↑。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="network">
+      <div class="kicker">Circuit-Level</div>
+      <h2>网络与环路效应</h2>
+      <div class="card small">
+        <ul>
+          <li>抑制皮层—丘脑异常环路的同步化倾向；</li>
+          <li>降低爆发式放电与节律性震荡异常；</li>
+          <li>与早期治疗策略（如 IESS 迅速控痉）协同，减少长期神经毒性暴露。</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="clinical">
+      <div class="kicker">Clinical Link</div>
+      <h2>与临床结局的关联（要点）</h2>
+      <div class="grid cols-2">
+        <div class="card small">
+          <ul>
+            <li>多数患儿 2 周左右出现明显控痉信号；</li>
+            <li>TSC 相关婴儿痉挛显示显著优势；</li>
+            <li>EEG 高峰失律改善与发育结局相关。</li>
+          </ul>
+        </div>
+        <div class="card small">
+          <p class="muted">安全性提示：关注视功能（ERG/行为视功能）随访，通常与累计用量/疗程相关；短疗程（≤6 个月）总体风险较低，需权衡风险‑获益。</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="refs">
+      <div class="kicker">References</div>
+      <h2>参考（节选）</h2>
+      <details>
+        <summary>展开/收起</summary>
+        <div class="content small">
+          <ul>
+            <li>Zuberi SM, Wirrell E, Yozawitz E, et al. ILAE classification… <i>Epilepsia</i>. 2022.</li>
+            <li>O'Callaghan FJK, et al. ICISS trial. <i>Lancet Neurol</i>. 2016.</li>
+            <li>Djuric M, et al. Vigabatrin long-term outcomes. <i>Epilepsia</i>. 2014.</li>
+            <li>Westall CA, et al. Retinal toxicity in children. <i>Neurology</i>. 2014.</li>
+            <li>Maguire MJ, et al. Visual field loss review. <i>Epilepsia</i>. 2010.</li>
+          </ul>
+          <p class="muted">注：适应症/用法以当前说明书与本地指南为准。</p>
+        </div>
+      </details>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footgrid">
+      <div>
+        <strong>免责声明</strong>
+        <p class="small muted">本页为产品机制信息展示，供专业人士学术交流使用，不替代医师个体化诊疗决策。</p>
+      </div>
+      <div class="right"><span class="muted small">© 2025 远大 · 医学部</span></div>
+    </div>
+  </footer>
+
+  <div id="tip" role="tooltip" aria-hidden="true"></div>
+
+  <script>
+    // 动画速度控制
+    const speed = document.getElementById('speed');
+    speed?.addEventListener('input', e=>{
+      const v = e.target.value; // 6-24
+      const s = Math.max(4, Math.min(40, v)) + 's';
+      document.documentElement.style.setProperty('--speed', s);
+    });
+
+    // 导出 SVG 为 PNG
+    const btn = document.getElementById('btnExport');
+    btn?.addEventListener('click', ()=>{
+      const svg = document.getElementById('moa');
+      if(!svg) return;
+      const xml = new XMLSerializer().serializeToString(svg);
+      const svg64 = btoa(unescape(encodeURIComponent(xml)));
+      const imgSrc = 'data:image/svg+xml;base64,'+svg64;
+      const img = new Image();
+      img.onload = function(){
+        const canvas = document.createElement('canvas');
+        canvas.width = svg.viewBox.baseVal.width;
+        canvas.height = svg.viewBox.baseVal.height;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0,0,canvas.width,canvas.height);
+        ctx.drawImage(img,0,0);
+        const url = canvas.toDataURL('image/png');
+        const a = document.createElement('a');
+        a.href = url; a.download = 'Vigabatrin_MoA.png';
+        document.body.appendChild(a); a.click(); a.remove();
+      };
+      img.src = imgSrc;
+    });
+
+    // 简易 tooltip（支持 HTML）
+    const tip = document.getElementById('tip');
+    const root = document.documentElement;
+    const showTip = (evt, html)=>{
+      tip.innerHTML = html;
+      tip.style.opacity = 1;
+      tip.style.transform = 'translateY(0)';
+      const x = evt.clientX + 12;
+      const y = evt.clientY + 12;
+      tip.style.left = x + 'px';
+      tip.style.top = y + 'px';
+      tip.setAttribute('aria-hidden','false');
+    };
+    const hideTip = ()=>{
+      tip.style.opacity = 0;
+      tip.style.transform = 'translateY(-6px)';
+      tip.setAttribute('aria-hidden','true');
+    };
+    document.addEventListener('mousemove', e=>{
+      const target = e.target.closest('[data-tip]');
+      if(target){
+        showTip(e, target.getAttribute('data-tip'));
+      } else if(tip.style.opacity > 0){
+        hideTip();
+      }
+    }, {passive:true});
+  </script>
+</body>
+</html>

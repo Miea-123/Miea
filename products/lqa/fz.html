@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>肾上腺素分子作用机制图 - 利其安®</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);
+            min-height: 100vh;
+            color: #f8fafc;
+            overflow-x: auto;
+            transition: all 0.3s ease;
+        }
+
+        /* 明色主题样式 */
+        body.light-theme {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);
+            color: #1e293b;
+        }
+
+        body.light-theme .mechanism-diagram {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-theme .molecule-structure {
+            background: rgba(59, 130, 246, 0.1);
+            border-color: #3b82f6;
+        }
+
+        body.light-theme .receptor-binding {
+            background: rgba(16, 185, 129, 0.1);
+            border-color: #10b981;
+        }
+
+        body.light-theme .pathway-step {
+            background: rgba(255, 255, 255, 0.7);
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: #1e293b;
+        }
+
+        body.light-theme .pathway-step:hover {
+            background: rgba(255, 255, 255, 0.9);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-theme .step-title {
+            color: #1e293b;
+        }
+
+        body.light-theme .step-description {
+            color: #475569;
+        }
+
+        body.light-theme .organ-card {
+            background: linear-gradient(135deg, rgba(59, 130, 246, 0.1), rgba(16, 185, 129, 0.1));
+            border: 2px solid rgba(59, 130, 246, 0.3);
+            color: #1e293b;
+        }
+
+        body.light-theme .organ-card:hover {
+            border-color: rgba(59, 130, 246, 0.6);
+            box-shadow: 0 15px 40px rgba(59, 130, 246, 0.2);
+        }
+
+        body.light-theme .organ-title {
+            color: #1e293b;
+        }
+
+        body.light-theme .organ-effects {
+            color: #475569;
+        }
+
+        body.light-theme .timeline {
+            background: rgba(255, 255, 255, 0.6);
+            color: #1e293b;
+        }
+
+        body.light-theme .timeline-labels {
+            color: #64748b;
+        }
+
+        body.light-theme .molecule-svg {
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        body.light-theme .molecule-svg text {
+            fill: #1e293b !important;
+        }
+
+        body.light-theme .molecule-visual {
+            color: #1e293b;
+        }
+
+        body.light-theme .molecule-visual p {
+            color: #475569;
+        }
+
+        body.light-theme .molecule-visual .functional-groups span {
+            color: #1e293b;
+        }
+
+        body.light-theme .molecule-title-main {
+            color: #3b82f6 !important;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .title {
+            font-size: 36px;
+            font-weight: 900;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: #cbd5e1;
+            margin-bottom: 30px;
+        }
+
+        .mechanism-diagram {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* 分子结构 */
+        .molecule-structure {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(59, 130, 246, 0.1);
+            border: 2px solid #3b82f6;
+            border-radius: 15px;
+            padding: 20px;
+            width: 300px;
+        }
+
+        .molecule-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #3b82f6;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .chemical-formula {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: #60a5fa;
+            margin-bottom: 10px;
+        }
+
+        .molecular-weight {
+            text-align: center;
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        /* 受体结合区域 */
+        .receptor-binding {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 2px solid #10b981;
+            border-radius: 15px;
+            padding: 20px;
+            width: 320px;
+        }
+
+        .receptor-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #10b981;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .receptor-types {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+        }
+
+        .receptor {
+            background: rgba(16, 185, 129, 0.2);
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        /* 中央流程图 */
+        .central-pathway {
+            margin: 200px auto 0;
+            max-width: 1200px;
+            position: relative;
+        }
+
+        .pathway-step {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            margin: 30px 0;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .pathway-step:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .step-number {
+            position: absolute;
+            top: -15px;
+            left: 30px;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 18px;
+        }
+
+        .step-title {
+            font-size: 20px;
+            font-weight: 700;
+            color: #f1f5f9;
+            margin-bottom: 15px;
+            padding-left: 20px;
+        }
+
+        .step-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .step-description {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        .step-visual {
+            text-align: center;
+            font-size: 60px;
+            opacity: 0.8;
+        }
+
+        /* 连接箭头 */
+        .arrow {
+            position: absolute;
+            right: 50%;
+            bottom: -20px;
+            transform: translateX(50%);
+            font-size: 30px;
+            color: #8b5cf6;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0.6; transform: translateX(50%) scale(1); }
+            50% { opacity: 1; transform: translateX(50%) scale(1.1); }
+        }
+
+        /* 效应器官系统 */
+        .target-organs {
+            margin-top: 60px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .organ-card {
+            background: linear-gradient(135deg, rgba(239, 68, 68, 0.1), rgba(245, 158, 11, 0.1));
+            border: 2px solid rgba(239, 68, 68, 0.3);
+            border-radius: 15px;
+            padding: 25px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .organ-card:hover {
+            border-color: rgba(239, 68, 68, 0.6);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(239, 68, 68, 0.2);
+        }
+
+        .organ-icon {
+            font-size: 50px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .organ-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fef2f2;
+            margin-bottom: 10px;
+        }
+
+        .organ-effects {
+            font-size: 14px;
+            color: #fecaca;
+            line-height: 1.5;
+        }
+
+        /* 时间轴 */
+        .timeline {
+            margin-top: 60px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+        }
+
+        .timeline-title {
+            text-align: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: #f59e0b;
+            margin-bottom: 30px;
+        }
+
+        .timeline-track {
+            position: relative;
+            height: 80px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #ec4899, #f59e0b);
+            border-radius: 40px;
+            margin: 20px 0;
+        }
+
+        .timeline-markers {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+        }
+
+        .timeline-marker {
+            background: white;
+            color: #1e293b;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 12px;
+            font-weight: 700;
+            position: relative;
+            z-index: 1;
+        }
+
+        .timeline-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
+        /* 分子式可视化 */
+        .molecule-visual {
+            margin-top: 40px;
+            text-align: center;
+        }
+
+        .molecule-svg {
+            max-width: 100%;
+            height: auto;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 1200px) {
+            .molecule-structure,
+            .receptor-binding {
+                position: static;
+                width: 100%;
+                max-width: 400px;
+                margin: 0 auto 30px;
+            }
+
+            .central-pathway {
+                margin-top: 40px;
+            }
+
+            .step-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .title {
+                font-size: 28px;
+            }
+
+            .mechanism-diagram {
+                padding: 20px;
+            }
+
+            .pathway-step {
+                padding: 20px;
+            }
+
+            .step-title {
+                font-size: 18px;
+            }
+
+            .target-organs {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* 动画效果 */
+        .fade-in {
+            animation: fadeIn 1s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .rotate {
+            animation: rotate 20s linear infinite;
+        }
+
+        /* 主题切换按钮 */
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            display: flex;
+            gap: 10px;
+        }
+
+        .theme-btn {
+            width: 50px;
+            height: 50px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+        }
+
+        .dark-theme-btn {
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            color: #f8fafc;
+            border: 2px solid #475569;
+        }
+
+        .dark-theme-btn.active {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-color: #60a5fa;
+            box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+        }
+
+        .light-theme-btn {
+            background: linear-gradient(135deg, #ffffff, #f1f5f9);
+            color: #1e293b;
+            border: 2px solid #cbd5e1;
+        }
+
+        .light-theme-btn.active {
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border-color: #f59e0b;
+            box-shadow: 0 0 20px rgba(245, 158, 11, 0.4);
+        }
+
+        /* 主题按钮工具提示 */
+        .theme-btn::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .theme-btn:hover::after {
+            opacity: 1;
+        }
+
+        body.light-theme .theme-btn::after {
+            background: rgba(0, 0, 0, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- 主题切换按钮 -->
+        <div class="theme-toggle">
+            <button class="theme-btn dark-theme-btn active" id="darkThemeBtn" data-tooltip="深色主题" onclick="switchTheme('dark')">
+                🌙
+            </button>
+            <button class="theme-btn light-theme-btn" id="lightThemeBtn" data-tooltip="明色主题" onclick="switchTheme('light')">
+                ☀️
+            </button>
+        </div>
+
+        <div class="header">
+            <h1 class="title">肾上腺素分子作用机制图</h1>
+            <p class="subtitle">利其安® - 预灌封肾上腺素注射液 · 分子水平作用机制详解</p>
+        </div>
+
+        <div class="mechanism-diagram">
+            <!-- 分子结构信息 -->
+            <div class="molecule-structure fade-in">
+                <h3 class="molecule-title">🧬 分子结构</h3>
+                <div class="chemical-formula">C₉H₁₃NO₃</div>
+                <div class="molecular-weight">分子量: 183.21 g/mol</div>
+                <div style="margin-top: 15px; font-size: 14px; color: #94a3b8;">
+                    <p><strong>化学名称:</strong></p>
+                    <p>(R)-4-(1-羟基-2-(甲氨基)乙基)苯-1,2-二醇</p>
+                </div>
+            </div>
+
+            <!-- 受体结合信息 -->
+            <div class="receptor-binding fade-in">
+                <h3 class="receptor-title">🎯 受体结合</h3>
+                <div class="receptor-types">
+                    <div class="receptor">α₁受体<br>血管收缩</div>
+                    <div class="receptor">α₂受体<br>负反馈调节</div>
+                    <div class="receptor">β₁受体<br>心脏兴奋</div>
+                    <div class="receptor">β₂受体<br>支气管扩张</div>
+                </div>
+                <div style="margin-top: 15px; font-size: 14px; color: #94a3b8; text-align: center;">
+                    <p>高亲和力，快速结合</p>
+                </div>
+            </div>
+
+            <!-- 中央作用机制流程 -->
+            <div class="central-pathway">
+                <div class="pathway-step fade-in">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">受体结合与激活</h3>
+                    <div class="step-content">
+                        <div class="step-description">
+                            <p><strong>肾上腺素与G蛋白偶联受体结合：</strong></p>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li>α受体：激活Gq/G11蛋白，启动IP3/DAG信号通路</li>
+                                <li>β受体：激活Gs蛋白，促进cAMP合成</li>
+                                <li>结合亲和力：β₁ > β₂ > α₁ > α₂</li>
+                                <li>结合时间：&lt; 1秒内完成初始结合</li>
+                            </ul>
+                        </div>
+                        <div class="step-visual">🔗</div>
+                    </div>
+                    <div class="arrow">⬇️</div>
+                </div>
+
+                <div class="pathway-step fade-in">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">胞内信号转导</h3>
+                    <div class="step-content">
+                        <div class="step-description">
+                            <p><strong>第二信使系统激活：</strong></p>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li><strong>cAMP通路：</strong>腺苷酸环化酶激活 → cAMP↑ → PKA激活</li>
+                                <li><strong>IP3/DAG通路：</strong>磷脂酶C激活 → IP3释放Ca²⁺ → PKC激活</li>
+                                <li><strong>Ca²⁺信号：</strong>胞内Ca²⁺浓度快速升高（10-100倍）</li>
+                                <li><strong>蛋白磷酸化：</strong>关键酶和离子通道磷酸化修饰</li>
+                            </ul>
+                        </div>
+                        <div class="step-visual">⚡</div>
+                    </div>
+                    <div class="arrow">⬇️</div>
+                </div>
+
+                <div class="pathway-step fade-in">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">效应器官响应</h3>
+                    <div class="step-content">
+                        <div class="step-description">
+                            <p><strong>多系统协调反应：</strong></p>
+                            <ul style="margin-top: 10px; padding-left: 20px;">
+                                <li><strong>心血管：</strong>心率↑、收缩力↑、血管收缩/舒张</li>
+                                <li><strong>呼吸系统：</strong>支气管平滑肌松弛、气道扩张</li>
+                                <li><strong>代谢系统：</strong>糖原分解↑、脂解↑、胰岛素释放↓</li>
+                                <li><strong>免疫系统：</strong>炎症介质释放↓、血管通透性↓</li>
+                            </ul>
+                        </div>
+                        <div class="step-visual">🎯</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 效应器官详细展示 -->
+            <div class="target-organs">
+                <div class="organ-card fade-in">
+                    <span class="organ-icon">❤️</span>
+                    <h4 class="organ-title">心血管系统</h4>
+                    <div class="organ-effects">
+                        • 心率增加 20-50%<br>
+                        • 心收缩力增强 40-80%<br>
+                        • 周围血管收缩<br>
+                        • 血压升高 30-60 mmHg<br>
+                        • 心输出量增加 50-100%
+                    </div>
+                </div>
+
+                <div class="organ-card fade-in">
+                    <span class="organ-icon">🫁</span>
+                    <h4 class="organ-title">呼吸系统</h4>
+                    <div class="organ-effects">
+                        • 支气管扩张<br>
+                        • 气道阻力降低 20-70%<br>
+                        • 呼吸频率增加<br>
+                        • 潮气量增加<br>
+                        • 氧合改善
+                    </div>
+                </div>
+
+                <div class="organ-card fade-in">
+                    <span class="organ-icon">🧠</span>
+                    <h4 class="organ-title">中枢神经</h4>
+                    <div class="organ-effects">
+                        • 意识状态改善<br>
+                        • 警觉性增强<br>
+                        • 反应速度加快<br>
+                        • 疼痛阈值提高<br>
+                        • 焦虑感增加
+                    </div>
+                </div>
+
+                <div class="organ-card fade-in">
+                    <span class="organ-icon">🔥</span>
+                    <h4 class="organ-title">代谢系统</h4>
+                    <div class="organ-effects">
+                        • 血糖升高 可达50%<br>
+                        • 脂解增加<br>
+                        • 糖原分解促进<br>
+                        • 基础代谢率↑<br>
+                        • 产热增加
+                    </div>
+                </div>
+
+                <div class="organ-card fade-in">
+                    <span class="organ-icon">🛡️</span>
+                    <h4 class="organ-title">免疫系统</h4>
+                    <div class="organ-effects">
+                        • 肥大细胞稳定<br>
+                        • 组胺释放↓<br>
+                        • 炎症介质↓<br>
+                        • 血管通透性↓<br>
+                        • 过敏反应抑制
+                    </div>
+                </div>
+
+                <div class="organ-card fade-in">
+                    <span class="organ-icon">🩸</span>
+                    <h4 class="organ-title">血液系统</h4>
+                    <div class="organ-effects">
+                        • 血小板聚集↑<br>
+                        • 凝血时间缩短<br>
+                        • 血液重新分布<br>
+                        • 血容量调节<br>
+                        • 微循环改善
+                    </div>
+                </div>
+            </div>
+
+            <!-- 药效时间轴 -->
+            <div class="timeline fade-in">
+                <h3 class="timeline-title">⏱️ 药效时间进程</h3>
+                <div class="timeline-track">
+                    <div class="timeline-markers">
+                        <div class="timeline-marker">起效</div>
+                        <div class="timeline-marker">峰效</div>
+                        <div class="timeline-marker">维持</div>
+                        <div class="timeline-marker">代谢</div>
+                        <div class="timeline-marker">清除</div>
+                    </div>
+                </div>
+                <div class="timeline-labels">
+                    <span>30秒-1分钟</span>
+                    <span>2-5分钟</span>
+                    <span>5-10分钟</span>
+                    <span>10-20分钟</span>
+                    <span>20-30分钟</span>
+                </div>
+                <div style="margin-top: 20px; text-align: center; color: #94a3b8; font-size: 14px;">
+                    <p><strong>给药途径影响起效时间：</strong></p>
+                    <p>静脉 &lt; 肌注 &lt; 皮下 &lt; 吸入 &lt; 口服</p>
+                </div>
+            </div>
+
+            <!-- 分子可视化区域 -->
+            <div class="molecule-visual fade-in">
+                <h3 style="font-size: 24px; color: #8b5cf6; margin-bottom: 20px;" class="molecule-title-main">🧪 肾上腺素分子三维结构</h3>
+                <svg class="molecule-svg rotate" width="400" height="300" viewBox="0 0 400 300">
+                    <!-- 分子骨架 -->
+                    <g stroke="#60a5fa" stroke-width="3" fill="none">
+                        <!-- 苯环 -->
+                        <polygon points="150,150 170,120 210,120 230,150 210,180 170,180" />
+                        
+                        <!-- 侧链 -->
+                        <line x1="230" y1="150" x2="280" y2="150" />
+                        <line x1="280" y1="150" x2="300" y2="120" />
+                        <line x1="300" y1="120" x2="340" y2="130" />
+                    </g>
+                    
+                    <!-- 原子 -->
+                    <!-- 碳原子 -->
+                    <circle cx="150" cy="150" r="8" fill="#4ade80" />
+                    <circle cx="170" cy="120" r="8" fill="#4ade80" />
+                    <circle cx="210" cy="120" r="8" fill="#4ade80" />
+                    <circle cx="230" cy="150" r="8" fill="#4ade80" />
+                    <circle cx="210" cy="180" r="8" fill="#4ade80" />
+                    <circle cx="170" cy="180" r="8" fill="#4ade80" />
+                    <circle cx="280" cy="150" r="8" fill="#4ade80" />
+                    <circle cx="300" cy="120" r="8" fill="#4ade80" />
+                    
+                    <!-- 氧原子 -->
+                    <circle cx="140" cy="120" r="8" fill="#ef4444" />
+                    <circle cx="140" cy="180" r="8" fill="#ef4444" />
+                    <circle cx="270" cy="120" r="8" fill="#ef4444" />
+                    
+                    <!-- 氮原子 -->
+                    <circle cx="340" cy="130" r="8" fill="#3b82f6" />
+                    
+                    <!-- 氢原子 -->
+                    <circle cx="120" cy="110" r="4" fill="#f8fafc" />
+                    <circle cx="120" cy="190" r="4" fill="#f8fafc" />
+                    <circle cx="260" cy="110" r="4" fill="#f8fafc" />
+                    <circle cx="360" cy="120" r="4" fill="#f8fafc" />
+                    <circle cx="360" cy="140" r="4" fill="#f8fafc" />
+                    
+                    <!-- 标签 -->
+                    <text x="190" y="100" fill="#f8fafc" font-size="12" text-anchor="middle">苯环</text>
+                    <text x="290" y="100" fill="#f8fafc" font-size="12" text-anchor="middle">羟基侧链</text>
+                    <text x="340" y="150" fill="#f8fafc" font-size="12" text-anchor="middle">氨基</text>
+                </svg>
+                
+                <div style="margin-top: 20px; color: #94a3b8; font-size: 14px;" class="molecule-info">
+                    <p><strong>关键功能基团：</strong></p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 10px; margin-top: 10px;" class="functional-groups">
+                        <span>🔴 羟基 (-OH): 受体结合</span>
+                        <span>🔵 氨基 (-NH): 受体特异性</span>
+                        <span>🟢 苯环: 结构稳定性</span>
+                        <span>🟡 侧链: 活性调节</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 底部信息 -->
+        <div style="margin-top: 60px; text-align: center; color: #64748b; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 30px;">
+            <p style="font-size: 16px; margin-bottom: 10px;">
+                <strong>利其安® - 预灌封肾上腺素注射液</strong>
+            </p>
+            <p style="font-size: 14px;">
+                分子机制图解 | 仅供医学专业人士参考 | 请遵循产品说明书使用
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // 主题切换功能
+        function switchTheme(theme) {
+            const body = document.body;
+            const darkBtn = document.getElementById('darkThemeBtn');
+            const lightBtn = document.getElementById('lightThemeBtn');
+            
+            if (theme === 'light') {
+                body.classList.add('light-theme');
+                lightBtn.classList.add('active');
+                darkBtn.classList.remove('active');
+                localStorage.setItem('theme', 'light');
+            } else {
+                body.classList.remove('light-theme');
+                darkBtn.classList.add('active');
+                lightBtn.classList.remove('active');
+                localStorage.setItem('theme', 'dark');
+            }
+        }
+
+        // 页面加载时恢复主题设置
+        function initTheme() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                switchTheme(savedTheme);
+            }
+        }
+
+        // 页面加载动画
+        document.addEventListener('DOMContentLoaded', function() {
+            // 初始化主题
+            initTheme();
+            
+            const elements = document.querySelectorAll('.fade-in');
+            elements.forEach((element, index) => {
+                element.style.animationDelay = `${index * 0.2}s`;
+            });
+
+            // 添加交互效果
+            const pathwaySteps = document.querySelectorAll('.pathway-step');
+            pathwaySteps.forEach(step => {
+                step.addEventListener('mouseenter', function() {
+                    if (document.body.classList.contains('light-theme')) {
+                        this.style.background = 'rgba(59, 130, 246, 0.15)';
+                    } else {
+                        this.style.background = 'rgba(139, 92, 246, 0.15)';
+                    }
+                });
+                
+                step.addEventListener('mouseleave', function() {
+                    if (document.body.classList.contains('light-theme')) {
+                        this.style.background = 'rgba(255, 255, 255, 0.7)';
+                    } else {
+                        this.style.background = 'rgba(255, 255, 255, 0.08)';
+                    }
+                });
+            });
+
+            // 器官卡片点击效果
+            const organCards = document.querySelectorAll('.organ-card');
+            organCards.forEach(card => {
+                card.addEventListener('click', function() {
+                    // 高亮效果
+                    if (document.body.classList.contains('light-theme')) {
+                        this.style.borderColor = 'rgba(59, 130, 246, 0.8)';
+                        this.style.boxShadow = '0 0 30px rgba(59, 130, 246, 0.4)';
+                    } else {
+                        this.style.borderColor = 'rgba(239, 68, 68, 0.8)';
+                        this.style.boxShadow = '0 0 30px rgba(239, 68, 68, 0.4)';
+                    }
+                    
+                    setTimeout(() => {
+                        if (document.body.classList.contains('light-theme')) {
+                            this.style.borderColor = 'rgba(59, 130, 246, 0.3)';
+                        } else {
+                            this.style.borderColor = 'rgba(239, 68, 68, 0.3)';
+                        }
+                        this.style.boxShadow = 'none';
+                    }, 1000);
+                });
+            });
+        });
+
+        // 滚动视差效果
+        window.addEventListener('scroll', function() {
+            const scrolled = window.pageYOffset;
+            const rate = scrolled * -0.5;
+            
+            const molecule = document.querySelector('.molecule-structure');
+            const receptor = document.querySelector('.receptor-binding');
+            
+            if (molecule && receptor) {
+                molecule.style.transform = `translateY(${rate * 0.3}px)`;
+                receptor.style.transform = `translateY(${rate * 0.2}px)`;
+            }
+        });
+
+        // 键盘快捷键支持
+        document.addEventListener('keydown', function(e) {
+            // 按 T 键切换主题
+            if (e.key === 't' || e.key === 'T') {
+                const currentTheme = document.body.classList.contains('light-theme') ? 'light' : 'dark';
+                switchTheme(currentTheme === 'light' ? 'dark' : 'light');
+            }
+        });
+    </script>
+</body>
+</html>

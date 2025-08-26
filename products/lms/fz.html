@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>尼美舒利｜分子机制图（蓝色系交互版）</title>
+<style>
+  :root{
+    --brand1:#38bdf8; /* sky-400 */
+    --brand2:#6366f1; /* indigo-500 */
+    --bg:#f6fbff;
+    --ink:#0f172a;
+    --muted:#475569;
+    --ok:#10b981; /* emerald */
+    --warn:#ef4444; /* red */
+    --card:#ffffff;
+    --shadow:0 10px 28px rgba(2,8,23,.08);
+    --radius:18px;
+    --leading:1.8;
+  }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:"Alibaba PuHuiTi","HarmonyOS Sans SC","Noto Sans SC",system-ui,-apple-system,Segoe UI,Roboto,"PingFang SC","Microsoft YaHei",sans-serif;line-height:var(--leading)}
+  .shell{max-width:1200px;margin:0 auto;padding:16px 16px 80px}
+  .hero{border-radius:22px;padding:22px;background:linear-gradient(120deg,rgba(56,189,248,.16),rgba(99,102,241,.16));box-shadow:var(--shadow)}
+  h1{margin:6px 0 6px;font-size:clamp(20px,3.4vw,34px)}
+  p.sub{color:var(--muted);margin:0}
+  .panel{display:grid;grid-template-columns:1fr 320px;gap:16px;margin-top:14px}
+  @media (max-width: 980px){.panel{grid-template-columns:1fr}}
+  .canvas{background:#fff;border-radius:20px;box-shadow:var(--shadow);padding:8px;position:relative}
+  .side{background:#fff;border-radius:20px;box-shadow:var(--shadow);padding:14px}
+  .group{margin-bottom:10px}
+  .group h3{margin:2px 0 8px;font-size:16px}
+  .legend{display:flex;flex-wrap:wrap;gap:8px}
+  .badge{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:#eff6ff;color:#1e293b;font-weight:700}
+  .dot{width:12px;height:12px;border-radius:999px;background:var(--brand2);display:inline-block}
+  .dot.ok{background:var(--ok)}
+  .dot.warn{background:var(--warn)}
+  .tip{font-size:12px;color:var(--muted)}
+  .toolbar{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 0}
+  .toolbar label{display:flex;align-items:center;gap:8px;background:#fff;border-radius:999px;padding:6px 10px;box-shadow:var(--shadow);cursor:pointer}
+  .toolbar input{accent-color:var(--brand2)}
+  .floating-tip{position:absolute;pointer-events:none;background:#0f172a;color:#fff;padding:6px 10px;border-radius:10px;font-size:12px;opacity:0;transform:translate(-50%,-110%);transition:.15s}
+</style>
+</head>
+<body>
+<div class="shell">
+  <div class="hero">
+    <h1>尼美舒利（Nimesulide）— 分子‑细胞‑组织 机制图 🔬</h1>
+    <p class="sub">蓝色系交互版：可按层级与通路开关查看；线条粗细代表证据强度（粗=强），端帽形态代表作用类型（► 激活；⟂ 抑制）。</p>
+    <div class="toolbar" id="toolbar">
+      <label><input type="checkbox" data-toggle="molecular" checked> 分子层（COX‑2 / NF‑κB / ROS）</label>
+      <label><input type="checkbox" data-toggle="cellular" checked> 细胞层（中性粒细胞/软骨细胞）</label>
+      <label><input type="checkbox" data-toggle="tissue" checked> 组织层（滑膜/关节滑液/痛觉敏化）</label>
+      <label><input type="checkbox" data-toggle="pk" checked> PK/到位性（滑液浓度维持）</label>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="canvas">
+      <div id="tooltip" class="floating-tip"></div>
+      <svg id="mech" viewBox="0 0 1200 820" xmlns="http://www.w3.org/2000/svg" aria-label="尼美舒利作用机制图" role="img">
+        <defs>
+          <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="var(--brand1)"/><stop offset="1" stop-color="var(--brand2)"/></linearGradient>
+          <filter id="card" x="-10%" y="-10%" width="120%" height="120%">
+            <feDropShadow dx="0" dy="6" stdDeviation="8" flood-color="#000" flood-opacity=".08"/>
+          </filter>
+          <!-- 箭头与抑制端帽 -->
+          <marker id="arrow" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto">
+            <polygon points="0,0 12,6 0,12" fill="url(#g1)"/>
+          </marker>
+          <marker id="flat" markerWidth="14" markerHeight="14" refX="2" refY="7" orient="auto">
+            <rect x="0" y="1" width="4" height="12" fill="var(--brand2)" rx="1"/>
+          </marker>
+        </defs>
+
+        <!-- 中心：尼美舒利 -->
+        <g id="center" transform="translate(520,80)" filter="url(#card)">
+          <rect x="0" y="0" rx="18" ry="18" width="200" height="80" fill="#fff"/>
+          <rect x="0" y="0" rx="18" ry="18" width="200" height="80" fill="url(#g1)" opacity=".12"/>
+          <text x="100" y="35" text-anchor="middle" font-size="20" font-weight="800">尼美舒利</text>
+          <text x="100" y="58" text-anchor="middle" fill="#475569" font-size="14">Nimesulide</text>
+        </g>
+
+        <!-- 分子层：COX-2 抑制 → PGE2↓ / NF-κB 下调 / 抗氧化 -->
+        <g id="molecular" data-layer="molecular">
+          <!-- COX-2 节点 -->
+          <g transform="translate(240,230)" filter="url(#card)">
+            <rect width="180" height="70" rx="16" fill="#fff"/>
+            <text x="90" y="40" text-anchor="middle" font-weight="700">COX‑2</text>
+          </g>
+          <!-- PGE2 节点 -->
+          <g transform="translate(60,360)" filter="url(#card)">
+            <rect width="180" height="70" rx="16" fill="#fff"/>
+            <text x="90" y="30" text-anchor="middle" font-weight="700">PGE₂</text>
+            <text x="90" y="52" text-anchor="middle" fill="#475569" font-size="12">炎性前列腺素</text>
+          </g>
+          <!-- NF-κB 节点 -->
+          <g transform="translate(470,230)" filter="url(#card)">
+            <rect width="190" height="70" rx="16" fill="#fff"/>
+            <text x="95" y="40" text-anchor="middle" font-weight="700">NF‑κB（表达）↓</text>
+          </g>
+          <!-- ROS 节点 -->
+          <g transform="translate(760,230)" filter="url(#card)">
+            <rect width="180" height="70" rx="16" fill="#fff"/>
+            <text x="90" y="30" text-anchor="middle" font-weight="700">ROS／氧化应激</text>
+            <text x="90" y="52" text-anchor="middle" fill="#475569" font-size="12">超氧阴离子、LPO</text>
+          </g>
+
+          <!-- 连线（粗=强证据） -->
+          <!-- 尼美舒利 ⟂ COX-2 -->
+          <path d="M620,120 C520,150 460,180 420,240" fill="none" stroke="url(#g1)" stroke-width="6" marker-end="url(#flat)"/>
+          <!-- COX-2 → PGE2 （被抑制后下降）-->
+          <path d="M240,265 C200,300 200,330 200,360" fill="none" stroke="url(#g1)" stroke-width="4" marker-end="url(#arrow)"/>
+          <!-- 尼美舒利 ⟂ NF-κB 表达（间接）-->
+          <path d="M620,120 C620,170 620,200 565,230" fill="none" stroke="url(#g1)" stroke-width="3" marker-end="url(#flat)"/>
+          <!-- 尼美舒利 ⟂ ROS 产生（抗氧化）-->
+          <path d="M620,120 C740,160 820,180 850,230" fill="none" stroke="url(#g1)" stroke-width="3" marker-end="url(#flat)"/>
+        </g>
+
+        <!-- 细胞层：中性粒细胞、软骨细胞/MMPs、炎症因子 -->
+        <g id="cellular" data-layer="cellular">
+          <!-- 中性粒细胞 -->
+          <g transform="translate(440,360)" filter="url(#card)">
+            <rect width="200" height="70" rx="16" fill="#fff"/>
+            <text x="100" y="30" text-anchor="middle" font-weight="700">中性粒细胞活化↓</text>
+            <text x="100" y="52" text-anchor="middle" fill="#475569" font-size="12">趋化/黏附/脱颗粒</text>
+          </g>
+          <!-- 促炎介质 -->
+          <g transform="translate(700,360)" filter="url(#card)">
+            <rect width="220" height="70" rx="16" fill="#fff"/>
+            <text x="110" y="30" text-anchor="middle" font-weight="700">IL‑1β / IL‑6 / TNF‑α ↓</text>
+            <text x="110" y="52" text-anchor="middle" fill="#475569" font-size="12">促炎信号下调</text>
+          </g>
+          <!-- 软骨细胞 / MMPs -->
+          <g transform="translate(80,500)" filter="url(#card)">
+            <rect width="240" height="80" rx="16" fill="#fff"/>
+            <text x="120" y="35" text-anchor="middle" font-weight="700">软骨保护 / MMPs↓</text>
+            <text x="120" y="58" text-anchor="middle" fill="#475569" font-size="12">MMP‑3/‑9 表达与基质降解</text>
+          </g>
+
+          <!-- 分支连线 -->
+          <!-- NF-κB → 促炎介质（被抑制后下降） -->
+          <path d="M565,300 C650,320 720,330 810,360" fill="none" stroke="url(#g1)" stroke-width="3" marker-end="url(#arrow)"/>
+          <!-- ROS → 中性粒细胞活化 -->
+          <path d="M850,300 C760,320 640,330 540,360" fill="none" stroke="url(#g1)" stroke-width="2" marker-end="url(#arrow)"/>
+          <!-- 介质 → 软骨 MMPs 表达 -->
+          <path d="M810,430 C700,480 520,520 320,540" fill="none" stroke="url(#g1)" stroke-width="2" marker-end="url(#arrow)"/>
+        </g>
+
+        <!-- 组织层：痛觉敏化、滑膜炎、肿胀/疼痛等临床征象 -->
+        <g id="tissue" data-layer="tissue">
+          <!-- 外周痛觉敏化 -->
+          <g transform="translate(60,660)" filter="url(#card)">
+            <rect width="260" height="80" rx="16" fill="#fff"/>
+            <text x="130" y="35" text-anchor="middle" font-weight="700">外周痛觉敏化↓</text>
+            <text x="130" y="58" text-anchor="middle" fill="#475569" font-size="12">TRPV1/PG 相关通路</text>
+          </g>
+          <!-- 滑膜炎 / 水肿 -->
+          <g transform="translate(360,660)" filter="url(#card)">
+            <rect width="240" height="80" rx="16" fill="#fff"/>
+            <text x="120" y="35" text-anchor="middle" font-weight="700">滑膜炎/水肿↓</text>
+            <text x="120" y="58" text-anchor="middle" fill="#475569" font-size="12">血管通透性/渗出</text>
+          </g>
+          <!-- 功能改善 -->
+          <g transform="translate(640,660)" filter="url(#card)">
+            <rect width="240" height="80" rx="16" fill="#fff"/>
+            <text x="120" y="35" text-anchor="middle" font-weight="700">疼痛评分↓ · 功能↑</text>
+            <text x="120" y="58" text-anchor="middle" fill="#475569" font-size="12">起效快 · 短疗程</text>
+          </g>
+
+          <!-- 连线：PGE2 → 痛觉敏化 ； 细胞层 → 组织层 -->
+          <path d="M200,430 C200,520 200,600 190,660" fill="none" stroke="url(#g1)" stroke-width="5" marker-end="url(#arrow)"/>
+          <path d="M540,430 C520,520 480,600 480,660" fill="none" stroke="url(#g1)" stroke-width="3" marker-end="url(#arrow)"/>
+          <path d="M320,580 C360,610 420,640 480,660" fill="none" stroke="url(#g1)" stroke-width="2" marker-end="url(#arrow)"/>
+          <path d="M810,430 C810,520 760,620 760,660" fill="none" stroke="url(#g1)" stroke-width="2" marker-end="url(#arrow)"/>
+        </g>
+
+        <!-- PK/到位性层：滑液浓度维持 -->
+        <g id="pk" data-layer="pk">
+          <g transform="translate(920,520)" filter="url(#card)">
+            <rect width="220" height="90" rx="16" fill="#fff"/>
+            <text x="110" y="32" text-anchor="middle" font-weight="700">滑液浓度维持 ↑</text>
+            <text x="110" y="56" text-anchor="middle" fill="#475569" font-size="12">清除慢于血浆 · 到位性</text>
+          </g>
+          <path d="M850,300 C940,380 980,440 1030,520" fill="none" stroke="url(#g1)" stroke-width="3" marker-end="url(#arrow)"/>
+          <path d="M1030,610 C980,640 900,650 880,700" fill="none" stroke="url(#g1)" stroke-width="2" marker-end="url(#arrow)"/>
+        </g>
+
+      </svg>
+    </div>
+
+    <aside class="side">
+      <div class="group">
+        <h3>图例 Legend</h3>
+        <div class="legend">
+          <span class="badge"><span class="dot"></span> 激活（►箭头）</span>
+          <span class="badge"><span class="dot warn"></span> 抑制（⟂平头）</span>
+          <span class="badge">线条粗细 = 证据强度</span>
+        </div>
+        <p class="tip">提示：将鼠标悬停在线或节点上可查看说明；在上方切换层级显示。</p>
+      </div>
+      <div class="group">
+        <h3>临床结局关联</h3>
+        <ul>
+          <li>COX‑2 抑制 → PGE₂↓ → 外周痛觉敏化下降，疼痛评分下降</li>
+          <li>NF‑κB 下调 & 抗氧化 → 促炎介质↓，软骨基质降解减轻</li>
+          <li>PK 到位性 → 关节相关疼痛控制更稳，配合短疗程策略</li>
+        </ul>
+      </div>
+      <div class="group">
+        <h3>使用与合规</h3>
+        <ul>
+          <li>遵循最小有效剂量与最短疗程；12 岁以下/肝损禁用</li>
+          <li>发热或类流感症状禁用；避免与其他 NSAIDs 联用</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</div>
+
+<script>
+  // 图层开关
+  const toggles = document.querySelectorAll('[data-toggle]');
+  toggles.forEach(cb=>cb.addEventListener('change',()=>{
+    const layerId = cb.getAttribute('data-toggle');
+    const layer = document.querySelector(`[data-layer="${layerId}"]`);
+    if(layer) layer.style.display = cb.checked ? 'block' : 'none';
+  }));
+
+  // 简易悬浮提示
+  const tip = document.getElementById('tooltip');
+  const svg = document.getElementById('mech');
+  function showTip(evt, text){
+    tip.textContent = text;
+    tip.style.left = evt.clientX + 'px';
+    tip.style.top = evt.clientY + 'px';
+    tip.style.opacity = 1;
+  }
+  function hideTip(){ tip.style.opacity = 0; }
+
+  // 绑定提示（为关键节点/连线附加标题）
+  const hints = [
+    {sel:'#center', text:'尼美舒利：NSAID，倾向性抑制 COX‑2，并具抗氧化/下调 NF‑κB 等效应'},
+    {sel:'g[data-layer="molecular"] text', text:'分子层要点：COX‑2 抑制、NF‑κB 下调、抗氧化（ROS↓）'},
+    {sel:'g[data-layer="cellular"] text', text:'细胞层要点：中性粒细胞活化↓；促炎因子↓；MMPs↓'},
+    {sel:'g[data-layer="tissue"] text', text:'组织层要点：痛觉敏化↓，滑膜炎/水肿↓，功能改善'},
+    {sel:'g[data-layer="pk"] text', text:'到位性：关节滑液浓度维持优于血浆，有利于关节疼痛控制'},
+  ];
+  hints.forEach(h=>{
+    svg.querySelectorAll(h.sel).forEach(el=>{
+      el.addEventListener('mousemove', (e)=>showTip(e, h.text));
+      el.addEventListener('mouseleave', hideTip);
+    });
+  });
+</script>
+</body>
+</html>

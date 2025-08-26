@@ -1,0 +1,13 @@
+{
+  "navItems": [
+    {
+      "title": "产品介绍",
+      "page": "/products/axd/cp.html"
+    },
+    {
+      "title": "分子机制",
+      "page": "/products/axd/fz.html"
+    }
+  ],
+  "defaultPage": "/products/axd/cp.html"
+}

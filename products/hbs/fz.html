@@ -1,0 +1,732 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地尔硫䓬 (Diltiazem) 分子机制图</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #f8f4ff 0%, #f1ebff 50%, #e8dfff 100%);
+            padding: 20px;
+            line-height: 1.4;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* 动态装饰元素 */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(139, 115, 191, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(165, 142, 204, 0.06) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(190, 175, 220, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 15px 50px rgba(139, 115, 191, 0.15);
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #8B73BF 0%, #6B5B9D 100%);
+            color: white;
+            text-align: center;
+            padding: 30px;
+            font-size: 28px;
+            font-weight: bold;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="headerPattern" width="20" height="20" patternUnits="userSpaceOnUse"><circle cx="10" cy="10" r="1" fill="rgba(255,255,255,0.1)"/></pattern></defs><rect width="100" height="100" fill="url(%23headerPattern)"/></svg>');
+            pointer-events: none;
+        }
+        
+        .subtitle {
+            background: linear-gradient(135deg, #A58ECC 0%, #9B7FC8 100%);
+            color: white;
+            text-align: center;
+            padding: 18px;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(165, 142, 204, 0.3);
+        }
+        
+        .main-points {
+            background: linear-gradient(135deg, #BEAFDC 0%, #B5A5D8 100%);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            font-size: 16px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(190, 175, 220, 0.3);
+        }
+        
+        .points-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            padding: 25px;
+            background: linear-gradient(135deg, #faf8ff 0%, #f5f2ff 100%);
+        }
+        
+        .point-box {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 8px 25px rgba(139, 115, 191, 0.12);
+            border-left: 4px solid #BEAFDC;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .point-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #8B73BF 0%, #A58ECC 100%);
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+        
+        .point-box:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 40px rgba(139, 115, 191, 0.2);
+        }
+        
+        .point-box:hover::before {
+            transform: scaleX(1);
+        }
+        
+        .point-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .point-content {
+            color: #4a5568;
+            font-size: 12px;
+            line-height: 1.4;
+        }
+        
+        .pathways-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0;
+            margin-top: 20px;
+        }
+        
+        .pathway-column {
+            padding: 25px;
+        }
+        
+        .cardiovascular {
+            background: linear-gradient(135deg, #f9f6ff 0%, #f4efff 100%);
+        }
+        
+        .renal {
+            background: linear-gradient(135deg, #faf8ff 0%, #f0ebff 100%);
+        }
+        
+        .vascular {
+            background: linear-gradient(135deg, #f6f3ff 0%, #ebe5ff 100%);
+        }
+        
+        .pathway-header {
+            text-align: center;
+            padding: 15px;
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            margin-bottom: 25px;
+            box-shadow: 0 6px 20px rgba(139, 115, 191, 0.25);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cardiovascular .pathway-header {
+            background: linear-gradient(135deg, #8B73BF 0%, #6B5B9D 100%);
+        }
+        
+        .renal .pathway-header {
+            background: linear-gradient(135deg, #A58ECC 0%, #9B7FC8 100%);
+        }
+        
+        .vascular .pathway-header {
+            background: linear-gradient(135deg, #BEAFDC 0%, #B5A5D8 100%);
+        }
+        
+        .pathway-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(45deg, rgba(255,255,255,0.1) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.1) 75%);
+            background-size: 10px 10px;
+            pointer-events: none;
+        }
+        
+        .mechanism-box {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 18px;
+            box-shadow: 0 8px 25px rgba(139, 115, 191, 0.1);
+            border-left: 5px solid;
+            position: relative;
+            transition: all 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+        
+        .mechanism-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(139, 115, 191, 0.03) 0%, rgba(165, 142, 204, 0.03) 100%);
+            border-radius: 15px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+        
+        .mechanism-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(139, 115, 191, 0.18);
+        }
+        
+        .mechanism-box:hover::before {
+            opacity: 1;
+        }
+        
+        .cardiovascular .mechanism-box {
+            border-left-color: #8B73BF;
+        }
+        
+        .renal .mechanism-box {
+            border-left-color: #A58ECC;
+        }
+        
+        .vascular .mechanism-box {
+            border-left-color: #BEAFDC;
+        }
+        
+        .mechanism-number {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 14px;
+            box-shadow: 0 4px 15px rgba(139, 115, 191, 0.3);
+        }
+        
+        .cardiovascular .mechanism-number {
+            background: linear-gradient(135deg, #8B73BF 0%, #6B5B9D 100%);
+        }
+        
+        .renal .mechanism-number {
+            background: linear-gradient(135deg, #A58ECC 0%, #9B7FC8 100%);
+        }
+        
+        .vascular .mechanism-number {
+            background: linear-gradient(135deg, #BEAFDC 0%, #B5A5D8 100%);
+        }
+        
+        .mechanism-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            margin-left: 22px;
+            font-size: 14px;
+        }
+        
+        .mechanism-content {
+            color: #4a5568;
+            font-size: 12px;
+            line-height: 1.4;
+            margin-left: 22px;
+        }
+        
+        .arrow {
+            color: #8B73BF;
+            font-size: 16px;
+            margin: 0 5px;
+        }
+        
+        .ion {
+            background: linear-gradient(135deg, #A58ECC 0%, #8B73BF 100%);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+        }
+        
+        .clinical-section {
+            background: linear-gradient(135deg, #8B73BF 0%, #6B5B9D 100%);
+            padding: 30px;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .clinical-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="clinicalPattern" width="50" height="50" patternUnits="userSpaceOnUse"><circle cx="12" cy="12" r="1" fill="rgba(255,255,255,0.08)"/><circle cx="38" cy="38" r="1.2" fill="rgba(255,255,255,0.06)"/><circle cx="25" cy="5" r="0.8" fill="rgba(255,255,255,0.1)"/><circle cx="5" cy="45" r="1" fill="rgba(255,255,255,0.05)"/><circle cx="45" cy="25" r="0.6" fill="rgba(255,255,255,0.09)"/></pattern></defs><rect width="100" height="100" fill="url(%23clinicalPattern)"/></svg>');
+            pointer-events: none;
+        }
+        
+        .clinical-header {
+            text-align: center;
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 25px;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+        
+        .clinical-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+        
+        .clinical-box {
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(139, 115, 191, 0.15);
+            border-top: 4px solid;
+            transition: all 0.4s ease;
+            position: relative;
+            backdrop-filter: blur(10px);
+            overflow: hidden;
+        }
+        
+        .clinical-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(139, 115, 191, 0.03) 0%, rgba(165, 142, 204, 0.03) 100%);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+        
+        .clinical-box:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 20px 50px rgba(139, 115, 191, 0.25);
+        }
+        
+        .clinical-box:hover::before {
+            opacity: 1;
+        }
+        
+        .clinical-box:nth-child(1) { border-top-color: #8B73BF; }
+        .clinical-box:nth-child(2) { border-top-color: #A58ECC; }
+        .clinical-box:nth-child(3) { border-top-color: #BEAFDC; }
+        .clinical-box:nth-child(4) { border-top-color: #B5A5D8; }
+        
+        .clinical-grid:last-child .clinical-box:nth-child(1) { border-top-color: #6B5B9D; }
+        .clinical-grid:last-child .clinical-box:nth-child(2) { border-top-color: #9B7FC8; }
+        .clinical-grid:last-child .clinical-box:nth-child(3) { border-top-color: #8B73BF; }
+        .clinical-grid:last-child .clinical-box:nth-child(4) { border-top-color: #A58ECC; }
+        
+        .clinical-icon {
+            font-size: 28px;
+            margin-bottom: 12px;
+            filter: drop-shadow(0 2px 4px rgba(139, 115, 191, 0.3));
+        }
+        
+        .clinical-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 14px;
+        }
+        
+        .clinical-content {
+            color: #4a5568;
+            font-size: 11px;
+            line-height: 1.4;
+        }
+        
+        .section-title {
+            font-weight: bold;
+            color: #2c3e50;
+            margin-bottom: 18px;
+            font-size: 15px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(255,255,255,0.95) 0%, rgba(255,255,255,0.9) 100%);
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(139, 115, 191, 0.12);
+            border-left: 4px solid #BEAFDC;
+        }
+        
+        .evidence-note {
+            background: linear-gradient(135deg, rgba(255,255,255,0.98) 0%, rgba(255,255,255,0.95) 100%);
+            border-radius: 12px;
+            padding: 18px;
+            margin-top: 18px;
+            font-size: 12px;
+            color: #2c3e50;
+            border-left: 4px solid #B5A5D8;
+            box-shadow: 0 8px 25px rgba(181, 165, 216, 0.15);
+            backdrop-filter: blur(5px);
+        }
+        
+        .edit-icon {
+            color: #8B73BF;
+            font-size: 14px;
+            margin-left: 8px;
+            filter: drop-shadow(0 1px 2px rgba(139, 115, 191, 0.3));
+        }
+        
+        @media (max-width: 768px) {
+            .points-grid,
+            .pathways-section,
+            .clinical-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+            
+            .header {
+                font-size: 24px;
+                padding: 25px 20px;
+            }
+            
+            .pathway-column {
+                padding: 20px;
+            }
+        }
+
+        /* 增强视觉层次感 */
+        .pathway-column:nth-child(2) {
+            box-shadow: inset 0 0 20px rgba(139, 115, 191, 0.05);
+        }
+        
+        /* 添加细微的动画效果 */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-3px); }
+        }
+        
+        .clinical-icon {
+            animation: float 3s ease-in-out infinite;
+        }
+        
+        .clinical-icon:nth-child(odd) {
+            animation-delay: 0.5s;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            地尔硫䓬 (Diltiazem) 分子机制图
+        </div>
+        
+        <div class="subtitle">
+            非二氢吡啶类钙通道阻滞剂-L型钙通道α1C亚单位选择性结合
+        </div>
+        
+        <div class="main-points">
+            主要分子靶点
+        </div>
+        
+        <div class="points-grid">
+            <div class="point-box">
+                <div class="point-title">L型钙通道 (Cav1.2)</div>
+                <div class="point-content">主要靶点，α1C亚单位结合位点，阻断Ca²⁺内流</div>
+            </div>
+            <div class="point-box">
+                <div class="point-title">T型钙通道 (Cav3.1/3.2)</div>
+                <div class="point-content">弱/非主要靶点，仅在高浓度或实验条件下观察到显著作用，临床剂量作用弱</div>
+            </div>
+            <div class="point-box">
+                <div class="point-title">钙调蛋白(CaM)</div>
+                <div class="point-content">降低Ca²⁺内流间接减少CaM激活，非直接结合；影响心肌细胞Ca²⁺-CaM依赖信号</div>
+            </div>
+        </div>
+        
+        <div class="pathways-section">
+            <div class="pathway-column cardiovascular">
+                <div class="pathway-header">心血管系统分子通路</div>
+                
+                <div class="mechanism-box">
+                    <div class="mechanism-number">1</div>
+                    <div class="mechanism-title">L型钙通道阻断</div>
+                    <div class="mechanism-content">
+                        地尔硫䓬结合Cav1.2α1C亚单位→ 通道构象改变 → Ca²⁺内流↓ → 细胞内钙离子浓度([Ca²⁺]i )降低
+                        <span class="edit-icon">🔬</span>
+                    </div>
+                </div>
+                
+                <div class="mechanism-box">
+                    <div class="mechanism-number">2</div>
+                    <div class="mechanism-title">心肌收缩力调节通路</div>
+                    <div class="mechanism-content">
+                        [Ca²⁺]i↓→ 细胞内Ca²⁺-肌钙蛋白C结合↓→ 肌动蛋白-肌球蛋白交联↓ → 收缩力↓→ 心输出量↓
+                        <span class="edit-icon">👥</span>
+                    </div>
+                </div>
+                
+                <div class="mechanism-box">
+                    <div class="mechanism-number">3</div>
+                    <div class="mechanism-title">心率调节通路</div>
+                    <div class="mechanism-content">
+                        窦房结/房室结L型钙通道阻断 → 4期自发除极速度↓/房室传导减慢 → 心率↓、PR间期延长 ；并延缓房室结传导（PR间期延长），阻滞快速房性冲动传导
+                        <span class="edit-icon">👥</span>
+                    </div>
+                </div>
+                
+                <div class="mechanism-box">
+                    <div class="mechanism-number">4</div>
+                    <div class="mechanism-title">血管平滑肌舒张通路</div>
+                    <div class="mechanism-content">
+                        [Ca²⁺]i↓ → 肌球蛋白轻链激酶(MLCK)活性↓→肌球蛋白去磷酸化 → 平滑肌舒张 → 外周阻力↓
+                        <span class="edit-icon">👥</span>
+                    </div>
+                </div>
+                
+                <div class="mechanism-box">
+                    <div class="mechanism-number">5</div>
+                    <div class="mechanism-title">冠状动脉扩张通路</div>
+                    <div class="mechanism-content">
+                        冠脉平滑肌Ca²⁺↓ → 血管舒张 → 冠脉血流↑ → 心肌氧供↑ → 抗心绞痛作用；解除冠脉痉挛
+                        <span class="edit-icon">👥</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pathway-column renal">
+                <div class="pathway-header">肾脏系统分子通路</div>
+                
+                <div class="section-title">A、血流动力学机制</div>
+                
+                <div class="mechanism-box">
+                    <div class="mechanism-number">1</div>
+                    <div class="mechanism-title">肾血管L型钙通道阻断</div>
+                    <div class="mechanism-content">
+                        作用于入球小动脉Cav1.2 → 平滑肌[Ca²⁺]i↓ → 阻力↓；<br>
+                        拮抗Ang II介导的出球小动脉收缩（间接）
+                        <span class="edit-icon">🔬</span>
+                    </div>
+                </div>
+                
+                <div class="mechanism-box">
+                    <div class="mechanism-number">2</div>
+                    <div class="mechanism-title">肾血流动力学改善</div>
+                    <div class="mechanism-content">
+                        肾血管阻力↓ → 肾血流量(RBF)↑；肾小球滤过率GFR维持或轻度变化→ 肾小球高灌注/高压缓解
+                        <span class="edit-icon">👥</span>
+                    </div>
+                </div>
+                
+                <div class="section-title">B、非血流动力学机制</div>
+                
+                <div class="mechanism-box">
+                    <div class="mechanism-number">3</div>
+                    <div class="mechanism-title">足细胞保护与肾小球基底膜(GBM)负电荷屏障恢复</div>
+                    <div class="mechanism-content">
+                        Ca²⁺内流↓ → 足细胞凋亡↓防止足突融合；减少炎症/氧化应激对GBM硫酸乙酰肝素蛋白聚糖的损伤 → 阴离子位点密度↑、蛋白质通透率↓ → 蛋白尿下降
+                        <span class="edit-icon">🔬</span>
+                    </div>
+                </div>
+                
+                <div class="mechanism-box">
+                    <div class="mechanism-number">4</div>
+                    <div class="mechanism-title">抗炎、抗氧化与抗纤维化</div>
+                    <div class="mechanism-content">
+                        抑制Ca²⁺依赖NADPH氧化酶激活 → 活性氧(ROS)↓；下调TNF-α/IL-6/MCP-1等炎症因子；抑制TGF-β1/Smad → 胶原I/III沉积↓、系膜增生↓ → 延缓肾小球硬化与间质纤维化
+                        <span class="edit-icon">🔬</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="pathway-column vascular">
+                <div class="pathway-header">脑血管系统分子通路</div>
+                
+                <div class="mechanism-box">
+                    <div class="mechanism-number">1</div>
+                    <div class="mechanism-title">脑动脉 L 型钙通道阻断</div>
+                    <div class="mechanism-content">
+                        作用于脑血管平滑肌Cav1.2 → 细胞内[Ca²⁺]i↓ → MLCK活性↓ → 平滑肌舒张 → 脑血管扩张 → 局部/全脑血流(CBF)↑
+                        <span class="edit-icon">🔬</span>
+                    </div>
+                </div>
+                
+                <div class="mechanism-box">
+                    <div class="mechanism-number">2</div>
+                    <div class="mechanism-title">内皮功能与NO/cGMP通路</div>
+                    <div class="mechanism-content">
+                        剪切力改善 → 内皮一氧化氮合酶(eNOS)激活 → NO↑ → 环磷酸鸟苷(cGMP)↑ → 进一步血管舒张与微循环灌注改善
+                        <span class="edit-icon">🔬</span>
+                    </div>
+                </div>
+                
+                <div class="mechanism-box">
+                    <div class="mechanism-number">3</div>
+                    <div class="mechanism-title">微循环与血小板活化调控</div>
+                    <div class="mechanism-content">
+                        钙依赖性血小板激活倾向↓ + 微循环通透性优化 → 微血栓形成与脑水肿风险下降
+                        <span class="edit-icon">🔬</span>
+                    </div>
+                </div>
+                
+                <div class="mechanism-box">
+                    <div class="mechanism-number">4</div>
+                    <div class="mechanism-title">抗缺血/再灌注损伤</div>
+                    <div class="mechanism-content">
+                        减少神经元钙超载与氧自由基生成，抑制炎性因子释放与凋亡通路激活 → 脑缺血区域细胞保护（动物与转化研究为主）
+                        <span class="edit-icon">🔬</span>
+                    </div>
+                </div>
+                
+                <div class="evidence-note">
+                    <strong>👥 临床证据：</strong>RCT/队列研究/Meta分析<br>
+                    <strong>🔬 动物/体外证据：</strong>动物模型/细胞实验
+                </div>
+            </div>
+        </div>
+        
+        <div class="clinical-section">
+            <div class="clinical-header">临床效应及分子基础</div>
+            
+            <div class="clinical-grid">
+                <div class="clinical-box">
+                    <div class="clinical-icon">📺</div>
+                    <div class="clinical-title">抗高血压</div>
+                    <div class="clinical-content">
+                        心输出量↓ + 外周阻力↓<br>
+                        后负荷下降 → 血压降低
+                    </div>
+                </div>
+                
+                <div class="clinical-box">
+                    <div class="clinical-icon">💖</div>
+                    <div class="clinical-title">抗心绞痛</div>
+                    <div class="clinical-content">
+                        冠脉扩张 + 痉挛缓解<br>
+                        心肌氧耗↓ → 供需平衡改善
+                    </div>
+                </div>
+                
+                <div class="clinical-box">
+                    <div class="clinical-icon">⚙️</div>
+                    <div class="clinical-title">心率控制</div>
+                    <div class="clinical-content">
+                        频率依赖性阻滞窦房结自律性 + 房室传导减慢
+                    </div>
+                </div>
+                
+                <div class="clinical-box">
+                    <div class="clinical-icon">💗</div>
+                    <div class="clinical-title">抗心律失常</div>
+                    <div class="clinical-content">
+                        房室结传导↓、折返抑制<br>
+                        用于房颤/房扑/PSVT等
+                    </div>
+                </div>
+            </div>
+            
+            <div class="clinical-grid">
+                <div class="clinical-box">
+                    <div class="clinical-icon">🛡️</div>
+                    <div class="clinical-title">肾保护</div>
+                    <div class="clinical-content">
+                        平衡出入球+ RBF↑ + 肾内压↓<br>
+                        足细胞/GBM保护 → 蛋白尿↓
+                    </div>
+                </div>
+                
+                <div class="clinical-box">
+                    <div class="clinical-icon">❤️</div>
+                    <div class="clinical-title">心肌保护</div>
+                    <div class="clinical-content">
+                        钙超载预防 + 氧化应激↓<br>
+                        细胞凋亡与不良重构抑制
+                    </div>
+                </div>
+            
+                <div class="clinical-box">
+                    <div class="clinical-icon">🩸</div>
+                    <div class="clinical-title">血管保护</div>
+                    <div class="clinical-content">
+                        内皮功能改善 + 动脉顺应性↑<br>
+                        动脉粥样硬化进展延缓
+                    </div>
+                </div>
+                
+                <div class="clinical-box">
+                    <div class="clinical-icon">🧠</div>
+                    <div class="clinical-title">脑保护</div>
+                    <div class="clinical-content">
+                        脑血流↑ + 微循环改善<br>
+                        再灌注损伤风险下降
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

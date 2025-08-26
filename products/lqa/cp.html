@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>利其安®｜预灌封肾上腺素｜医学信息推广页·移动优先</title>
+  <meta name="description" content="利其安®（预灌封肾上腺素）" />
+  <style>
+    /* --------------------------- 基础与主题 --------------------------- */
+    @font-face { font-family: "AlibabaPuHuiTi"; src: local("AlibabaPuHuiTi"), local("Alibaba PuHuiTi"); font-display: swap; }
+    :root {
+      /* 品牌色：急救取向（琥珀→珊瑚） */
+      --brand-1: #f59e0b; /* amber-500 */
+      --brand-2: #f97316; /* orange-500 */
+      --brand-3: #ef4444; /* red-500 */
+      --ink-1: #0f172a;  /* slate-900 */
+      --ink-2: #334155;  /* slate-700 */
+      --ink-3: #64748b;  /* slate-500 */
+      --bg: #fffdfa;     /* 温暖底色 */
+      --card: #ffffff;
+      --line: #e5e7eb;
+      --ok: #059669;     /* 绿 */
+      --info: #2563eb;   /* 蓝 */
+      --warn: #b45309;   /* 褐 */
+      --grad: linear-gradient(90deg, var(--brand-1), var(--brand-2), var(--brand-3));
+      --radius-lg: 20px;
+      --radius-md: 14px;
+      --shadow: 0 10px 30px rgba(15, 23, 42, .08);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      font-family: "AlibabaPuHuiTi", -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+      margin: 0;
+      color: var(--ink-1);
+      background:
+        radial-gradient(1200px 600px at 10% -10%, rgba(245, 158, 11,.08), transparent 60%),
+        radial-gradient(800px 400px at 100% 0, rgba(239, 68, 68,.06), transparent 60%),
+        var(--bg);
+      line-height: 1.75;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 18px; }
+    .section { padding: 56px 0; }
+
+    h1, h2, h3 { margin: 0 0 12px; line-height: 1.25; }
+    h1 { font-size: clamp(28px, 4.8vw, 40px); letter-spacing: .2px; }
+    h2 { font-size: clamp(22px, 3.6vw, 28px); }
+    h3 { font-size: clamp(18px, 3vw, 22px); }
+    p, li { color: var(--ink-2); }
+    .muted { color: var(--ink-3); }
+
+    /* --------------------------- 顶部导航（汉堡） --------------------------- */
+    .topbar {
+      position: sticky; top: 0; inset-inline: 0; z-index: 40;
+      backdrop-filter: saturate(1.2) blur(8px);
+      background: color-mix(in hsl, white 80%, transparent);
+      border-bottom: 1px solid var(--line);
+    }
+    .topbar-wrap { display: flex; align-items: center; justify-content: space-between; padding: 12px 0; }
+    .brand { display: flex; align-items: center; gap: 12px; font-weight: 800; }
+    .brand-badge {
+      width: 38px; height: 38px; border-radius: 12px; color: white; font-weight: 900;
+      background: var(--grad); display: grid; place-items: center; box-shadow: var(--shadow);
+    }
+    .brand-title { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; font-size: 18px; }
+    .hamburger { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 10px; border: 1px solid var(--line); background: #fff; }
+    .hamburger:active { transform: scale(.98); }
+
+    /* 抽屉导航 */
+    .drawer { position: fixed; inset: 0; z-index: 50; display: none; }
+    .drawer.active { display: block; }
+    .drawer-backdrop { position: absolute; inset: 0; background: rgba(0,0,0,.25); }
+    .drawer-panel {
+      position: absolute; right: 0; top: 0; height: 100%; width: min(86vw, 360px);
+      background: #fff; box-shadow: -10px 0 30px rgba(15,23,42,.15); padding: 18px; overflow-y: auto;
+      display: grid; grid-auto-rows: max-content; gap: 12px;
+    }
+    .nav-link { display: flex; align-items: center; gap: 10px; padding: 12px 14px; border-radius: 12px; text-decoration: none; color: var(--ink-1); border: 1px solid #f1f5f9; }
+    .nav-link.active, .nav-link:hover { background: color-mix(in hsl, var(--brand-1) 10%, white); }
+
+    /* --------------------------- Hero / 核心价值 --------------------------- */
+    .hero { padding: 32px 0 16px; }
+    .hero-card {
+      background: #fff; border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow);
+      padding: 22px; display: grid; gap: 14px;
+    }
+    .kv { display: grid; grid-template-columns: 1fr; gap: 12px; }
+    .kv-badges { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 10px; }
+    .badge {
+      display: inline-flex; align-items: center; gap: 8px; padding: 8px 12px; border-radius: 999px; font-size: 13px; font-weight: 700;
+      background: var(--grad); color: #fff; box-shadow: var(--shadow);
+    }
+
+    /* 指标卡 */
+    .stats { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; }
+    .stat { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 14px; text-align: center; }
+    .stat strong { font-size: 20px; background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; }
+    .stat span { display: block; font-size: 12px; color: var(--ink-3); }
+    @media (max-width: 720px){ .stats{ grid-template-columns: repeat(2,1fr); } }
+
+    /* --------------------------- 场景化流程 --------------------------- */
+    .cards { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
+    .card { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius-md); box-shadow: var(--shadow); overflow: hidden; }
+    .card-h { padding: 16px 16px 0; }
+    .card-b { padding: 12px 16px 16px; }
+    .chip { display: inline-flex; align-items: center; gap: 8px; padding: 6px 10px; font-size: 12px; border-radius: 999px; background: color-mix(in hsl, var(--brand-1) 15%, white); }
+    .flow { display: grid; gap: 12px; }
+    .step { display: grid; grid-template-columns: 28px 1fr; gap: 10px; align-items: start; }
+    .step .dot { width: 28px; height: 28px; border-radius: 999px; background: var(--grad); color: #fff; display: grid; place-items: center; font-weight: 800; }
+    .step h4 { margin: 0 0 6px; }
+
+    @media (max-width: 900px){ .cards{ grid-template-columns: 1fr; } }
+
+    /* --------------------------- 快速剂量（可一键复制） --------------------------- */
+    .dose-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 12px; }
+    .dose { border: 1px dashed #f0abfc; background: #fff; border-radius: 16px; padding: 14px; position: relative; }
+    .dose h4 { margin: 0 0 6px; font-size: 16px; }
+    .dose p { margin: 4px 0; font-size: 14px; }
+    .copy { position: absolute; top: 10px; right: 10px; border: 1px solid var(--line); background:#fff; border-radius: 10px; padding: 6px 8px; font-size: 12px; }
+    @media (max-width: 900px){ .dose-grid{ grid-template-columns: 1fr; } }
+
+    /* --------------------------- 用法·安全·信息说明（合并） --------------------------- */
+    .grid-2 { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
+    @media (max-width: 900px){ .grid-2{ grid-template-columns: 1fr; } }
+    .note { padding: 12px; border-radius: 12px; border: 1px solid var(--line); background: #fff; }
+    .note.warn { border-color: #fed7aa; background: #fffbeb; }
+    .list { padding-left: 18px; margin: 8px 0; }
+
+    /* --------------------------- 资料 & FAQ --------------------------- */
+    .dl-grid { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 12px; }
+    @media (max-width: 900px){ .dl-grid{ grid-template-columns: repeat(2,1fr); } }
+    .dl { text-align: center; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 16px; }
+    .dl .ico { width: 56px; height: 56px; border-radius: 999px; background: var(--grad); color:#fff; display:grid; place-items:center; margin: 0 auto 10px; font-weight: 900; }
+
+    details { background: #fff; border: 1px solid var(--line); border-radius: 14px; padding: 14px 16px; }
+    details + details { margin-top: 10px; }
+    summary { cursor: pointer; font-weight: 700; }
+
+    /* --------------------------- 底部 CTA & 页脚 --------------------------- */
+    .cta-bar { position: sticky; bottom: 0; inset-inline: 0; z-index: 30; backdrop-filter: blur(10px) saturate(1.5); background: color-mix(in hsl, white 86%, transparent); border-top: 1px solid var(--line); }
+    .cta-wrap { display: grid; grid-template-columns: 1fr auto; gap: 10px; align-items: center; padding: 10px 16px; }
+    .btn { display: inline-flex; align-items: center; gap: 8px; padding: 12px 16px; border-radius: 12px; border: 1px solid var(--line); background:#fff; text-decoration: none; color: var(--ink-1); font-weight: 700; }
+    .btn.primary { background: var(--grad); color: #fff; border: none; box-shadow: var(--shadow); }
+
+    footer { padding: 28px 0 48px; color: var(--ink-3); }
+
+    /* 动效 */
+    .fade { animation: fadeUp .5s ease both; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+  /* === 视觉美化增强包 v2 === */
+    :root{--glass-bg:rgba(255,255,255,.88);--glass-line:color-mix(in hsl, var(--brand-1) 10%, var(--line))}
+    h2{position:relative}
+    h2::after{content:"";display:block;width:72px;height:4px;border-radius:999px;background:var(--grad);margin-top:8px}
+    .card{background:var(--glass-bg);border:1px solid var(--glass-line);box-shadow:0 12px 28px rgba(15,23,42,.08)}
+    .hero-card{position:relative;overflow:hidden}
+    .hero-card::before{content:"";position:absolute;left:-60px;top:-60px;width:220px;height:220px;background:radial-gradient(closest-side at 50% 50%, rgba(245,158,11,.22), transparent 70%);filter:blur(8px)}
+    .hero-card::after{content:"";position:absolute;right:-60px;bottom:-60px;width:260px;height:260px;background:radial-gradient(closest-side at 50% 50%, rgba(239,68,68,.18), transparent 70%);filter:blur(10px)}
+    .btn{position:relative;transition:transform .18s ease, box-shadow .18s ease;background:linear-gradient(#fff,#fff) padding-box, linear-gradient(90deg,#e5e7eb,#e5e7eb) border-box;border:1px solid transparent}
+    .btn:hover{transform:translateY(-1px);box-shadow:0 10px 24px rgba(15,23,42,.12)}
+    .btn:active{transform:translateY(0)}
+    .btn.primary{background:var(--grad);color:#fff;border:none;box-shadow:0 12px 26px rgba(239,68,68,.25)}
+    .badge{box-shadow:0 10px 22px rgba(239,68,68,.20)}
+    .dose{background:linear-gradient(#fff,#fff) padding-box, var(--grad) border-box;border:1px solid transparent;box-shadow:0 10px 24px rgba(15,23,42,.06)}
+    .copy{background:#fff;transition:background .2s ease}
+    .copy:hover{background:color-mix(in hsl, var(--brand-1) 10%, white)}
+    .step{position:relative}
+    .step:not(:last-child)::before{content:"";position:absolute;left:13px;top:30px;bottom:-12px;width:2px;background:color-mix(in hsl, var(--brand-1) 20%, #e2e8f0)}
+    .step .dot{box-shadow:inset 0 0 0 2px #fff;outline:2px solid color-mix(in hsl, var(--brand-1) 35%, #f1f5f9)}
+    .drawer-panel{background:rgba(255,255,255,.9);backdrop-filter:blur(10px);border-left:1px solid #eef2f7}
+    .progress{position:fixed;top:0;left:0;height:3px;width:0;background:var(--grad);z-index:1000;box-shadow:0 0 .5px rgba(0,0,0,.25)}
+    .cta-bar{box-shadow:0 -12px 30px rgba(15,23,42,.06);border-top:1px solid color-mix(in hsl, var(--brand-1) 12%, var(--line))}
+  </style>
+</head>
+<body>
+  <div id="progress" class="progress" aria-hidden="true"></div>
+  <!-- 顶部导航 -->
+  <header class="topbar">
+    <div class="container topbar-wrap">
+      <div class="brand">
+        <div class="brand-badge" aria-hidden="true">利</div>
+        <div class="brand-title">利其安®｜预灌封肾上腺素</div>
+      </div>
+      <button class="hamburger" aria-label="打开导航" id="openNav">☰</button>
+    </div>
+  </header>
+
+  <!-- 抽屉导航 -->
+  <div class="drawer" id="drawer" aria-hidden="true">
+    <div class="drawer-backdrop" id="closeNav"></div>
+    <nav class="drawer-panel" role="navigation">
+      <a class="nav-link" href="#kv">🏷️ 核心价值</a>
+      <a class="nav-link" href="#scenes">📋 场景化流程</a>
+      <a class="nav-link" href="#dose">💊 快速剂量</a>
+      <a class="nav-link" href="#use">📚 用法·安全·信息说明</a>
+      <a class="nav-link" href="#evidence">📊 循证证据</a>
+      <a class="nav-link" href="#safety">🛡️ 安全性</a>
+      <a class="nav-link" href="#economics">💰 卫生经济学</a>
+      <a class="nav-link" href="#guidelines">📘 应用指南</a>
+      <a class="nav-link" href="#dl">📁 资料与培训</a>
+      <a class="nav-link" href="#faq">❓ 常见问题</a>
+      <a class="nav-link" href="#contact">🤝 联系协作</a>
+    </nav>
+  </div>
+
+  <!-- Hero / 核心价值 -->
+  <section class="hero section" id="kv">
+    <div class="container">
+      <div class="hero-card fade">
+        <h1>更快、更准、更安全 </h1>
+        <h1>—— 面向急救一线的即用型解决方案 ⚡</h1>
+        <p class="muted">聚焦临床决策关键节点，减少跳转、一步到位找到“怎么用、何时用、如何更安全”。</p>
+        <div class="kv-badges" aria-label="核心价值">
+          <span class="badge">⏱️ 即开即用 · 减少备药时间</span>
+          <span class="badge">🎯 预设浓度 · 降低换算差错</span>
+          <span class="badge">🛡️ 无菌密封 · 控制微粒/内毒素</span>
+          <span class="badge">📈 标准化流程 · 支持培训考核</span>
+        </div>
+        <div class="stats" style="margin-top:8px">
+          <div class="stat"><strong>50%</strong><span>减少备药时间</span></div>
+          <div class="stat"><strong>80%</strong><span>降低用药错误率</span></div>
+          <div class="stat"><strong>24/7</strong><span>全天候就绪</span></div>
+          <div class="stat"><strong>1mg/1mL</strong><span>预填充规格</span></div>
+        </div>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:8px;">
+          <a class="btn primary" href="#dose">📌 直达：快速剂量</a>
+          <button class="btn" id="copyQuick">📋 复制急救要点</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 场景化流程 -->
+  <section class="section" id="scenes">
+    <div class="container">
+      <h2>场景化临床流程</h2>
+      <p class="muted" style="margin:6px 0 14px">将指南要点转为可操作的 3 步流程卡，便于培训与查漏。</p>
+      <div class="cards">
+        <!-- 过敏性休克 -->
+        <article class="card fade">
+          <div class="card-h">
+            <span class="chip">🫀 过敏性休克｜第一线救治</span>
+            <h3>识别 → 给药（IM）→ 复评</h3>
+          </div>
+          <div class="card-b">
+            <div class="flow">
+              <div class="step">
+                <div class="dot">1</div>
+                <div>
+                  <h4>立即识别</h4>
+                  <p class="muted">皮疹/血压下降/呼吸困难等典型体征，启动过敏流程。</p>
+                </div>
+              </div>
+              <div class="step">
+                <div class="dot">2</div>
+                <div>
+                  <h4>快速给药</h4>
+                  <p class="muted">成人 <strong>IM 0.3–0.5 mg</strong>，儿童按体重；首选大腿前外侧。</p>
+                </div>
+              </div>
+              <div class="step">
+                <div class="dot">3</div>
+                <div>
+                  <h4>监测复评</h4>
+                  <p class="muted">5–15 分钟可重复；持续心电/血压/呼吸监测，准备高级生命支持。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+        <!-- 心脏骤停 -->
+        <article class="card fade">
+          <div class="card-h">
+            <span class="chip">💔 心脏骤停｜CPR 关键药物</span>
+            <h3>高质量按压 → 用药（IV/IO）→ 冲管</h3>
+          </div>
+          <div class="card-b">
+            <div class="flow">
+              <div class="step">
+                <div class="dot">1</div>
+                <div>
+                  <h4>启动 CPR</h4>
+                  <p class="muted">优先保证高质量胸外按压与早期除颤。</p>
+                </div>
+              </div>
+              <div class="step">
+                <div class="dot">2</div>
+                <div>
+                  <h4>药物给予</h4>
+                  <p class="muted">成人 <strong>IV/IO 1 mg</strong>，每 3–5 分钟重复，按节律与循环情况评估。</p>
+                </div>
+              </div>
+              <div class="step">
+                <div class="dot">3</div>
+                <div>
+                  <h4>快速冲管</h4>
+                  <p class="muted">立即以 <strong>20 mL NS</strong> 冲管，确保药液进入中心循环。</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- 快速剂量 -->
+  <section class="section" id="dose">
+    <div class="container">
+      <h2>快速剂量（可一键复制）</h2>
+      <div class="dose-grid" style="margin-top:12px">
+        <div class="dose fade" data-copy="成人 过敏性休克：IM 0.3–0.5 mg；5–15 分钟可重复；首选大腿前外侧。">
+          <button class="copy" aria-label="复制剂量">复制</button>
+          <h4>过敏性休克 · 成人</h4>
+          <p>IM <strong>0.3–0.5 mg</strong>；5–15 分钟可重复。</p>
+          <p class="muted">部位：大腿前外侧优先；避免臀部。</p>
+        </div>
+        <div class="dose fade" data-copy="儿童 过敏性休克：体重>30 kg：IM 0.3 mg；15–30 kg：IM 0.15 mg；5–15 分钟可重复。">
+          <button class="copy" aria-label="复制剂量">复制</button>
+          <h4>过敏性休克 · 儿童</h4>
+          <p>＞30 kg：IM <strong>0.3 mg</strong>；15–30 kg：IM <strong>0.15 mg</strong>。</p>
+          <p class="muted">同上复评与监测。</p>
+        </div>
+        <div class="dose fade" data-copy="心脏骤停 成人：IV/IO 1 mg，每 3–5 分钟重复；随后 20 mL NS 冲管。">
+          <button class="copy" aria-label="复制剂量">复制</button>
+          <h4>心脏骤停 · 成人</h4>
+          <p>IV/IO <strong>1 mg</strong>，每 <strong>3–5</strong> 分钟重复。</p>
+          <p class="muted">随后 <strong>20 mL NS</strong> 冲管。</p>
+        </div>
+      </div>
+      <p class="muted" style="margin-top:10px">※ 实际用法以医师临床判断与最新版指南/说明书为准。</p>
+    </div>
+  </section>
+
+  <!-- 用法·安全·信息说明（合并） -->
+  <section class="section" id="use">
+    <div class="container">
+      <h2>用法 · 安全 · 信息说明（合并展示）</h2>
+
+      <div class="grid-2" style="margin-top:12px">
+        <div class="note">
+          <h3>警示与禁忌</h3>
+          <ul class="list">
+            <li>严密监测血压、心率、节律；高危患者优先可复苏设备到位。</li>
+            <li>对肾上腺素或辅料已知严重过敏者禁用。</li>
+            <li>对闭角型青光眼、严重心律失常等患者谨慎评估风险获益。</li>
+          </ul>
+        </div>
+        <div class="note warn">
+          <h3>注意事项</h3>
+          <ul class="list">
+            <li>IM 注射首选大腿前外侧；避免臀部，以降低注射失败风险。</li>
+            <li>IV 用药后建议 <strong>20 mL NS</strong> 快速冲管，确保有效递送。</li>
+            <li>与某些吸入麻醉药、三环抗抑郁药、β受体阻滞剂合用时需评估相互作用。</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top:12px">
+        <div class="note">
+          <h3>不良反应与监测</h3>
+          <ul class="list">
+            <li>常见：心悸、震颤、焦虑、皮肤苍白等，多为短暂可逆。</li>
+            <li>少见：严重高血压、心律失常、心肌缺血等，需立刻处理。</li>
+            <li>建立用药记录与不良事件反馈机制，支持真实世界安全性评估。</li>
+          </ul>
+        </div>
+        <div class="note">
+          <h3>储存与稳定性</h3>
+          <ul class="list">
+            <li>避光保存，遵循推荐温度范围；开启前保持密封完整。</li>
+            <li>外观异常或超过有效期不得使用。</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="note" style="margin-top:12px">
+        <h3>信息说明</h3>
+        <p class="muted">本页为医疗专业人士提供学术信息与操作提示，旨在辅助培训与质控；不替代临床决策。请以产品说明书与最新权威指南为准，并结合患者个体化评估执行。</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- 资料与培训 -->
+  <section class="section" id="evidence">
+    <div class="container">
+      <h2>循证医学证据</h2>
+      <div class="cards" style="grid-template-columns: repeat(3, minmax(0,1fr));">
+        <article class="card fade"><div class="card-h"><span class="chip">📈 Meta 分析</span><h3>过敏反应治疗效果</h3></div><div class="card-b"><ul class="list"><li>症状缓解时间缩短 <strong>35%</strong></li><li>住院率降低 <strong>28%</strong></li><li>二次给药需求减少 <strong>22%</strong></li></ul></div></article>
+        <article class="card fade"><div class="card-h"><span class="chip">🏥 真实世界研究（12 家三甲，n=2,450）</span><h3>急诊科应用</h3></div><div class="card-b"><ul class="list"><li>首剂给药时间 <strong>3.2±0.8 分钟</strong></li><li>用药错误率 <strong>0.08%</strong></li><li>医护满意度 <strong>94.7%</strong></li></ul></div></article>
+        <article class="card fade"><div class="card-h"><span class="chip">🚑 院前急救（EMS）</span><h3>复苏相关结局</h3></div><div class="card-b"><ul class="list"><li>ROSC 率提升 <strong>18%</strong></li><li>生存出院率增加 <strong>12%</strong></li><li>神经功能预后改善 <strong>15%</strong></li></ul></div></article>
+      </div>
+      <p class="muted" style="margin-top:8px">注：数据用于学术交流与演示，请结合本机构循证评估与最新指南使用。</p>
+    </div>
+  </section>
+
+  <section class="section" id="safety">
+    <div class="container">
+      <h2>安全性分析</h2>
+      <div class="grid-2" style="margin-top:12px">
+        <article class="card fade"><div class="card-h"><span class="chip">🧪 制剂与质量指标</span></div><div class="card-b"><table style="width:100%;border-collapse:collapse"><tbody>
+          <tr><td style="padding:8px;border-bottom:1px solid var(--line)"><strong>无菌保证</strong></td><td style="padding:8px;border-bottom:1px solid var(--line)"><strong>SAL 10⁻⁶</strong></td></tr>
+          <tr><td style="padding:8px;border-bottom:1px solid var(--line)"><strong>包装完整性</strong></td><td style="padding:8px;border-bottom:1px solid var(--line)">密封性测试 100% 合格</td></tr>
+          <tr><td style="padding:8px;border-bottom:1px solid var(--line)"><strong>微粒污染</strong></td><td style="padding:8px;border-bottom:1px solid var(--line)">符合 <strong>USP 788</strong> 标准</td></tr>
+          <tr><td style="padding:8px"><strong>细菌内毒素</strong></td><td style="padding:8px">&lt; <strong>0.5 EU/mL</strong></td></tr>
+        </tbody></table></div></article>
+        <article class="card fade"><div class="card-h"><span class="chip">📋 不良反应监测（n=10,000）</span></div><div class="card-b"><ul class="list"><li>过敏反应加重发生率 <strong>&lt;0.05%</strong>（极罕见）</li><li>建议建立 AE 记录与反馈通道，支持真实世界安全性评估</li></ul></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="economics">
+    <div class="container">
+      <h2>卫生经济学价值</h2>
+      <div class="grid-2" style="margin-top:12px">
+        <article class="card fade"><div class="card-h"><span class="chip">💰 成本效益</span><h3>医院运营成本对比</h3></div><div class="card-b"><table style="width:100%;border-collapse:collapse"><thead><tr><th style="text-align:left;padding:8px;border-bottom:1px solid var(--line)">成本项目</th><th style="text-align:left;padding:8px;border-bottom:1px solid var(--line)">传统安瓿</th><th style="text-align:left;padding:8px;border-bottom:1px solid var(--line)">预灌封</th><th style="text-align:left;padding:8px;border-bottom:1px solid var(--line)">节省</th></tr></thead><tbody>
+          <tr><td style="padding:8px;border-bottom:1px solid var(--line)">人力成本</td><td style="padding:8px;border-bottom:1px solid var(--line)">100%</td><td style="padding:8px;border-bottom:1px solid var(--line)"><strong>65%</strong></td><td style="padding:8px;border-bottom:1px solid var(--line)"><strong>35%↓</strong></td></tr>
+          <tr><td style="padding:8px;border-bottom:1px solid var(--line)">材料损耗</td><td style="padding:8px;border-bottom:1px solid var(--line)">100%</td><td style="padding:8px;border-bottom:1px solid var(--line)"><strong>45%</strong></td><td style="padding:8px;border-bottom:1px solid var(--line)"><strong>55%↓</strong></td></tr>
+          <tr><td style="padding:8px;border-bottom:1px solid var(--line)">差错处理</td><td style="padding:8px;border-bottom:1px solid var(--line)">100%</td><td style="padding:8px;border-bottom:1px solid var(--line)"><strong>20%</strong></td><td style="padding:8px;border-bottom:1px solid var(--line)"><strong>80%↓</strong></td></tr>
+          <tr><td style="padding:8px">培训成本</td><td style="padding:8px">100%</td><td style="padding:8px"><strong>70%</strong></td><td style="padding:8px"><strong>30%↓</strong></td></tr>
+        </tbody></table></div></article>
+        <article class="card fade"><div class="card-h"><span class="chip">📊 效益量化</span><h3>年度经济效益</h3></div><div class="card-b"><div class="stats" style="margin-top:0"><div class="stat"><strong>¥285万</strong><span>年度直接成本节省</span></div><div class="stat"><strong>¥156万</strong><span>避免差错损失</span></div><div class="stat"><strong>1.8 倍</strong><span>投资回报率</span></div><div class="stat"><strong>14 个月</strong><span>投资回收期</span></div></div></div></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="guidelines">
+    <div class="container">
+      <h2>临床应用指南（要点速览）</h2>
+      <div class="grid-2" style="margin-top:12px">
+        <article class="card fade"><div class="card-h"><span class="chip">🚨 过敏性休克</span></div><div class="card-b"><table style="width:100%;border-collapse:collapse"><thead><tr><th style="text-align:left;padding:8px;border-bottom:1px solid var(--line)">患者群体</th><th style="text-align:left;padding:8px;border-bottom:1px solid var(--line)">首次剂量</th><th style="text-align:left;padding:8px;border-bottom:1px solid var(--line)">途径</th><th style="text-align:left;padding:8px;border-bottom:1px solid var(--line)">重复间隔</th></tr></thead><tbody>
+          <tr><td style="padding:8px;border-bottom:1px solid var(--line)">成人</td><td style="padding:8px;border-bottom:1px solid var(--line)"><strong>0.3–0.5 mg</strong></td><td style="padding:8px;border-bottom:1px solid var(--line)">IM</td><td style="padding:8px;border-bottom:1px solid var(--line)">5–15 分钟</td></tr>
+          <tr><td style="padding:8px;border-bottom:1px solid var(--line)">儿童（>30 kg）</td><td style="padding:8px;border-bottom:1px solid var(--line)"><strong>0.3 mg</strong></td><td style="padding:8px;border-bottom:1px solid var(--line)">IM</td><td style="padding:8px;border-bottom:1px solid var(--line)">5–15 分钟</td></tr>
+          <tr><td style="padding:8px">儿童（15–30 kg）</td><td style="padding:8px"><strong>0.15 mg</strong></td><td style="padding:8px">IM</td><td style="padding:8px">5–15 分钟</td></tr>
+        </tbody></table></div></article>
+        <article class="card fade"><div class="card-h"><span class="chip">💔 心脏骤停</span></div><div class="card-b"><table style="width:100%;border-collapse:collapse"><thead><tr><th style="text-align:left;padding:8px;border-bottom:1px solid var(--line)">患者群体</th><th style="text-align:left;padding:8px;border-bottom:1px solid var(--line)">剂量</th><th style="text-align:left;padding:8px;border-bottom:1px solid var(--line)">途径</th><th style="text-align:left;padding:8px;border-bottom:1px solid var(--line)">重复间隔</th></tr></thead><tbody>
+          <tr><td style="padding:8px;border-bottom:1px solid var(--line)">成人</td><td style="padding:8px;border-bottom:1px solid var(--line)"><strong>1 mg</strong></td><td style="padding:8px;border-bottom:1px solid var(--line)">IV/IO</td><td style="padding:8px;border-bottom:1px solid var(--line)">3–5 分钟</td></tr>
+          <tr><td style="padding:8px;border-bottom:1px solid var(--line)">儿童</td><td style="padding:8px;border-bottom:1px solid var(--line)"><strong>0.01 mg/kg</strong></td><td style="padding:8px;border-bottom:1px solid var(--line)">IV/IO</td><td style="padding:8px;border-bottom:1px solid var(--line)">3–5 分钟</td></tr>
+          <tr><td style="padding:8px">新生儿</td><td style="padding:8px"><strong>0.01–0.03 mg/kg</strong></td><td style="padding:8px">IV/IO</td><td style="padding:8px">3–5 分钟</td></tr>
+        </tbody></table></div></article>
+      </div>
+      <p class="muted" style="margin-top:8px">※ 以上为要点速览，临床决策请以说明书与最新版权威指南为准。</p>
+    </div>
+  </section>
+
+  <section class="section" id="dl">
+    <div class="container">
+      <h2>资料下载与培训支持</h2>
+      <div class="dl-grid" style="margin-top:12px">
+        <div class="dl"><div class="ico">📘</div><h3>产品学术手册</h3><p class="muted">机制、规格、质量控制</p><a class="btn" href="#">下载 PDF</a></div>
+        <div class="dl"><div class="ico">🎯</div><h3>操作流程卡</h3><p class="muted">过敏/CPR 单页速查</p><a class="btn" href="#">下载 PDF</a></div>
+        <div class="dl"><div class="ico">🎥</div><h3>培训视频</h3><p class="muted">标准化演示与考核</p><a class="btn" href="#">在线观看</a></div>
+        <div class="dl"><div class="ico">🧮</div><h3>经济学模型</h3><p class="muted">院内成本敏感性分析</p><a class="btn" href="#">下载 Excel</a></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="container">
+      <h2>常见问题（FAQ）</h2>
+      <details class="fade"><summary>与传统安瓿相比，临床流程有哪些本质区别？</summary>
+        <p class="muted">预设浓度、即用型、减少换算与配液步骤，有助于压缩“识别→首剂”链路时间并降低差错点。</p>
+      </details>
+      <details class="fade"><summary>过敏性休克反复发作时的处理要点？</summary>
+        <p class="muted">遵循 5–15 分钟复评与重复给药策略，同时完善液体复苏、气道管理与继发预防措施。</p>
+      </details>
+      <details class="fade"><summary>如何开展院内标准化培训与质控？</summary>
+        <p class="muted">建议采用流程卡+情景化演练+闭环考核，结合用药记录与不良事件反馈，形成持续改进机制。</p>
+      </details>
+    </div>
+  </section>
+
+  <!-- 联系协作 -->
+  <section class="section" id="contact">
+    <div class="container">
+      <h2>携手共进 · 共建急救高质量标准</h2>
+      <p class="muted">我们提供院前/院内全链路培训、质控支持与学术材料共建，助力临床效率与安全提升。</p>
+      <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:8px;">
+        <a class="btn primary" href="#">预约学术交流</a>
+        <a class="btn" href="#">申请试用支持</a>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>© 本页内容仅供医务人员参考；请以说明书为准。</p>
+    </div>
+  </footer>
+
+  <!-- 底部粘性 CTA -->
+  <div class="cta-bar" role="region" aria-label="操作区">
+    <div class="container cta-wrap">
+      <div class="muted">需要素材或院内培训方案？</div>
+      <div style="display:flex; gap:8px; flex-wrap:wrap;">
+        <a class="btn" href="#dl">📁 下载资料</a>
+        <a class="btn primary" href="#contact">🤝 联系我们</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 汉堡抽屉
+    const drawer = document.getElementById('drawer');
+    const openNav = document.getElementById('openNav');
+    const closeNav = document.getElementById('closeNav');
+    openNav.addEventListener('click', () => { drawer.classList.add('active'); drawer.setAttribute('aria-hidden','false'); });
+    closeNav.addEventListener('click', () => { drawer.classList.remove('active'); drawer.setAttribute('aria-hidden','true'); });
+    drawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => drawer.classList.remove('active')));
+
+    // 平滑滚动
+    document.querySelectorAll('a[href^="#"]').forEach(a => {
+      a.addEventListener('click', e => {
+        const id = a.getAttribute('href');
+        if (id.length > 1) {
+          e.preventDefault();
+          document.querySelector(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // 一键复制：急救要点（Hero）
+    const quickText = `利其安® 急救要点\n过敏性休克：成人 IM 0.3–0.5 mg；儿童>30 kg 0.3 mg；15–30 kg 0.15 mg；5–15 分钟重复；首选大腿前外侧。\n心脏骤停：成人 IV/IO 1 mg，每 3–5 分钟重复；随后 20 mL NS 冲管。\n请以说明书与最新指南为准。`;
+    document.getElementById('copyQuick').addEventListener('click', () => copyText(quickText));
+
+    // 一键复制：剂量卡
+    document.querySelectorAll('.dose').forEach(card => {
+      card.querySelector('.copy').addEventListener('click', () => copyText(card.dataset.copy));
+    });
+
+    async function copyText(text){
+      try { await navigator.clipboard.writeText(text); toast('已复制到剪贴板'); }
+      catch { fallbackCopy(text); toast('已复制到剪贴板'); }
+    }
+    function fallbackCopy(text){ const ta=document.createElement('textarea'); ta.value=text; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); }
+
+    // 轻提示
+    function toast(msg){
+      const el = document.createElement('div');
+      el.textContent = msg; el.style.cssText = `position:fixed;left:50%;top:16px;translate:-50% 0;background:var(--ink-1);color:#fff;padding:10px 14px;border-radius:12px;box-shadow:var(--shadow);z-index:1000;opacity:.98;`;
+      document.body.appendChild(el); setTimeout(()=>{ el.style.transition='all .3s'; el.style.opacity='0'; el.style.translate='-50% -10px'; setTimeout(()=>el.remove(), 280); }, 1400);
+    }
+    // 滚动进度条（页面美观增强）
+  function updateProgress(){
+    const doc=document.documentElement; const total=(doc.scrollHeight-doc.clientHeight)||1;
+    const pct=Math.min(100,Math.max(0,(doc.scrollTop/total)*100));
+    const bar=document.getElementById('progress'); if(bar) bar.style.width=pct+'%';
+  }
+  updateProgress();
+  window.addEventListener('scroll', updateProgress, {passive:true});
+  window.addEventListener('resize', updateProgress);
+</script>
+</body>
+</html>

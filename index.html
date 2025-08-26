@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>多产品目录导航</title>
+  <style>
+    :root {
+      /* 基础色板 */
+      --rose-501: #3fcaf4; --pink-501: #48b3ec;
+      --rose-500:#f43f5e; --pink-500:#ec4899;
+      --sky-500:#0ea5e9; --indigo-600:#4f46e5;
+      --emerald-500:#10b981; --teal-500:#14b8a6;
+      --violet-500:#8b5cf6; --fuchsia-500:#d946ef;
+      --amber-500:#f59e0b; --yellow-400:#facc15;
+      --muted:#6b7280; --surface:#ffffff; --ring:#e5e7eb; --card-shadow:0 8px 24px rgba(0,0,0,.06);
+    }
+
+    body{margin:0; font:16px/1.5 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial; color:#111827; background:#f9fafb;}
+    .page{min-height:100%; padding:24px;}
+    .container{max-width:1100px;margin:0 auto;}
+
+    .header{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px}
+    .title{font-weight:800;letter-spacing:-.02em;font-size:28px}
+    .subtitle{color:var(--muted);font-size:14px;margin-top:4px}
+
+    .toolbar{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0 18px}
+    .search{position:relative;flex:1;min-width:260px}
+    .search input{width:100%;box-sizing:border-box;padding:10px 12px 10px 38px;border-radius:14px;border:1px solid #e5e7eb;outline:none}
+    .search .icon{position:absolute;left:12px;top:50%;transform:translateY(-50%);font-size:16px;color:var(--muted)}
+
+    .filters{display:flex;gap:8px;flex-wrap:wrap}
+    .chip{padding:8px 12px;border-radius:999px;border:1px solid #e5e7eb;background:#f8fafc;color:#111827;cursor:pointer;font-size:13px}
+    .chip.active{color:#fff; border-color:transparent}
+    .chip[data-group="全部"].active{background:linear-gradient(90deg,var(--rose-501),var(--pink-501));}
+    .chip[data-group="远大天津"].active{background:linear-gradient(90deg,var(--rose-500),var(--pink-500));}
+    .chip[data-group="心血管组"].active{background:linear-gradient(90deg,var(--sky-500),var(--indigo-600));}
+    .chip[data-group="急救组"].active{background:linear-gradient(90deg,var(--emerald-500),var(--teal-500));}
+    .chip[data-group="罕见病组"].active{background:linear-gradient(90deg,var(--violet-500),var(--fuchsia-500));}
+    .chip[data-group="普药组"].active {background: linear-gradient(90deg, var(--amber-500), var(--yellow-400));}
+
+    .grid{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:16px}
+    @media (min-width:640px){.grid{grid-template-columns:repeat(2,1fr)}}
+    @media (min-width:960px){.grid{grid-template-columns:repeat(3,1fr)}}
+    @media (min-width:1200px){.grid{grid-template-columns:repeat(4,1fr)}}
+
+    .card{background:var(--surface);border-radius:18px;box-shadow:var(--card-shadow);border:1px solid var(--ring);padding:14px 14px 12px;transition:transform .15s ease, box-shadow .2s ease}
+    .card:hover{transform:translateY(-2px); box-shadow:0 10px 28px rgba(0,0,0,.08)}
+    .card-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+    .card-title{display:flex;align-items:center;gap:10px;font-weight:700}
+
+    /* 药片外观通用样式 */
+    .pill{display:inline-flex;align-items:center;justify-content:center;width:48px;height:24px;border-radius:999px;border:1px solid #e5e7eb;position:relative;overflow:hidden;background:linear-gradient(90deg,#fff,#fafafa)}
+    .pill svg{width:42px;height:18px}
+    .pill:hover{transform:translateY(-1px)}
+
+    .badge{padding:6px 10px;border-radius:999px;font-size:12px;font-weight:600;color:#fff;border:0;}
+    .badge[data-group="全部"]{background:linear-gradient(90deg,var(--rose-501),var(--pink-501));}
+    .badge[data-group="远大天津"]{background:linear-gradient(90deg,var(--rose-500),var(--pink-500));}
+    .badge[data-group="心血管组"]{background:linear-gradient(90deg,var(--sky-500),var(--indigo-600));}
+    .badge[data-group="急救组"]{background:linear-gradient(90deg,var(--emerald-500),var(--teal-500));}
+    .badge[data-group="罕见病组"]{background:linear-gradient(90deg,var(--violet-500),var(--fuchsia-500));}
+    .badge[data-group="普药组"] {background: linear-gradient(90deg, var(--amber-500), var(--yellow-400));}
+
+    .card-desc{color:var(--muted);font-size:13px}
+    .card-link{margin-top:8px;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600}
+
+    .empty{padding:36px;border:1px dashed #e5e7eb;border-radius:14px;text-align:center;color:var(--muted)}
+    a{color:inherit;text-decoration:none}
+    .modal{
+      display: flex;
+      top: auto;
+      justify-content: center; /* 水平居中 */
+      align-items: center; /* 垂直居中 */
+      font-size: 12px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page" id="page">
+    <div class="container">
+      <header class="header">
+        <div>
+          <div class="title">产品目录导航</div>
+          <div class="subtitle">快速按类目浏览与搜索，点击卡片跳转到产品页</div>
+        </div>
+             </header>
+
+      <section class="toolbar">
+        <div class="search">
+          <span class="icon">🔎</span>
+          <input id="search" placeholder="搜索产品或类目…" aria-label="搜索产品或类目" />
+        </div>
+        <div class="filters" id="filters"></div>
+      </section>
+
+      <main class="grid" id="grid"></main>
+      <div class="empty" id="empty" style="display:none">未找到匹配的结果，请更换关键词或切换分组。</div>
+
+      <footer class="subtitle" style="margin-top:16px">提示：产品链接为示例路径（/products/slug），可按实际路由调整。</footer>
+    </div>
+    <div class="modal">
+            <img src="/static/head-logo.png" width="20"/>
+            <a href="https://beian.miit.gov.cn/" rel="noreferrer" target="_blank">鄂ICP备2025141963号</a>
+    </div>
+  </div>
+
+  <script>
+    // 全局变量存储配置
+    // 使用 fetch 加载 config.json
+    async function loadConfig() {
+      try {
+        // 1. 添加 await 获取 response
+        const response = await fetch('/config.json');
+
+        // 2. 检查响应状态
+        if (!response.ok) {
+          throw new Error(`HTTP错误! 状态码: ${response.status}`);
+        }
+
+        // 3. 添加 await 解析 JSON
+        const config = await response.json();
+        initApp(config);
+        console.log('加载的配置:', config);
+        // 在这里使用配置...
+        return config; // 返回配置以便其他代码使用
+
+      } catch (error) {
+        console.error('加载配置失败:', error);
+        alert(`无法加载配置文件: ${error.message}`);
+        throw error; // 重新抛出错误以便外部捕获
+      }
+    }
+    // 页面加载时自动读取
+    window.addEventListener('DOMContentLoaded', loadConfig);
+    function initApp(config) {
+      const DATA = config.DATA;
+      const GROUPS = config.GROUPS;
+
+      const grid = document.getElementById('grid');
+      const filters = document.getElementById('filters');
+      const search = document.getElementById('search');
+      const empty = document.getElementById('empty');
+
+      let activeGroup = '全部';
+
+      function renderFilters() {
+        filters.innerHTML = '';
+        GROUPS.forEach(g => {
+          const btn = document.createElement('button');
+          btn.className = 'chip' + (g === activeGroup ? ' active' : '');
+          btn.textContent = g;
+          btn.dataset.group = g;
+          btn.addEventListener('click', () => {
+            activeGroup = g;
+            render();
+            renderFilters();
+          });
+          filters.appendChild(btn);
+        });
+      }
+
+      // 生成不同组别的药片 SVG
+      function pillSVG(group) {
+        // 每组一套左右渐变色
+        const palettes = {
+          '远大天津': {a1: '#f43f5e', a2: '#ec4899', b1: '#ffffff', b2: '#ffe4e6', stroke: '#fecdd3'},
+          '心血管组': {a1: '#0ea5e9', a2: '#4f46e5', b1: '#ffffff', b2: '#e0e7ff', stroke: '#bfdbfe'},
+          '急救组': {a1: '#10b981', a2: '#14b8a6', b1: '#ffffff', b2: '#e6fffb', stroke: '#a7f3d0'},
+          '罕见病组': {a1: '#8b5cf6', a2: '#d946ef', b1: '#ffffff', b2: '#f5e9ff', stroke: '#ede9fe'},
+          '普药组': { a1:'#f59e0b', a2:'#facc15', b1:'#ffffff', b2:'#fffbea',  stroke:'#fde68a' },
+          '默认': {a1: '#9ca3af', a2: '#6b7280', b1: '#ffffff', b2: '#f3f4f6', stroke: '#e5e7eb'},
+        };
+        const p = palettes[group] || palettes['默认'];
+        return `
+        <svg viewBox="0 0 120 48" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <linearGradient id="halfA_${group}" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="${p.a1}"/>
+              <stop offset="100%" stop-color="${p.a2}"/>
+            </linearGradient>
+            <linearGradient id="halfB_${group}" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stop-color="${p.b1}"/>
+              <stop offset="100%" stop-color="${p.b2}"/>
+            </linearGradient>
+            <linearGradient id="shine_${group}" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#ffffff" stop-opacity=".65"/>
+              <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <g>
+            <rect x="1" y="1" rx="24" ry="24" width="118" height="46" fill="url(#halfB_${group})" stroke="${p.stroke}"/>
+            <clipPath id="leftHalf_${group}"><rect x="1" y="1" rx="24" ry="24" width="59" height="46"/></clipPath>
+            <rect x="1" y="1" rx="24" ry="24" width="118" height="46" fill="url(#halfA_${group})" clip-path="url(#leftHalf_${group})"/>
+            <rect x="8" y="4" rx="22" ry="22" width="104" height="18" fill="url(#shine_${group})"/>
+          </g>
+        </svg>`;
+      }
+
+      function render() {
+        const kw = search.value.trim();
+        const list = DATA.filter(p => (activeGroup === '全部' || p.group === activeGroup) && (kw === '' || p.name.includes(kw) || p.group.includes(kw)));
+        grid.innerHTML = '';
+        list.forEach(p => grid.appendChild(card(p)));
+        empty.style.display = list.length ? 'none' : 'block';
+      }
+
+      function card(p) {
+        const a = document.createElement('a');
+        console.log(p)
+        a.href = p.href;
+        a.className = 'card';
+
+        const leading = `<span class="pill" title="${p.group}">${pillSVG(p.group)}</span>`;
+
+        a.innerHTML = `
+        <div class="card-head">
+          <div class="card-title">
+            ${leading}
+            <span>${p.name}</span>
+          </div>
+          <span class="badge" data-group="${p.group}">${p.group}</span>
+        </div>
+        <div class="card-desc">单击查看「${p.name}」详情与资料。</div>
+        <div class="card-link">进入页面 ➜</div>
+      `;
+        return a;
+      }
+
+      search.addEventListener('input', render);
+
+      renderFilters();
+      render();
+    }
+  </script>
+</body>
+</html>

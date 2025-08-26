@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>乐美汀®（拉呋替丁）分子机制图 · 场景高对比</title>
+  <style>
+    :root{
+      --bg:#f8fafc; --ink:#0f172a; --muted:#475569; --line:#e2e8f0;
+      --act:#0ea5e9; --inh:#b91c1c; --dim:#94a3b8; /* slate-400 */
+      --chip:#f1f5f9; --chipActive:#e2e8f0; --card:#fff;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:var(--bg);color:var(--ink);font-family:"Noto Sans SC","Alibaba PuHuiTi","Microsoft YaHei",system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;font-size:15px;line-height:1.6}
+    .container{max-width:1200px;margin:0 auto;padding:14px}
+    header{position:sticky;top:0;z-index:10;background:#ffffffcc;backdrop-filter:blur(6px);border-bottom:1px solid var(--line)}
+    header h1{margin:.2rem 0;font-size:clamp(18px,2.2vw,26px);font-weight:800}
+    header .sub{color:var(--muted);font-size:.92rem}
+
+    .controls{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:8px}
+    .chip{display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;background:var(--chip);border:1px solid var(--line);cursor:pointer;font-weight:700;font-size:.9rem;color:#0f172a}
+    .chip.active{background:var(--chipActive)}
+    .toolbar{display:flex;gap:10px;align-items:center;margin-left:auto}
+    .toolbar label{color:var(--muted);font-size:.9rem;display:flex;align-items:center;gap:6px}
+    input[type="range"]{accent-color:var(--act)}
+    .btn{appearance:none;border:1px solid var(--line);background:var(--card);padding:6px 10px;border-radius:10px;font-weight:700;cursor:pointer}
+
+    .panel{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px;box-shadow:0 6px 18px rgba(2,6,23,.04)}
+    .row{display:grid;grid-template-columns:1fr;gap:12px;margin-top:12px}
+
+    .small{font-size:.92rem;color:var(--muted)}
+
+    /* 节点配色 */
+    .node-drug{fill:#ecfeff;stroke:#bae6fd}
+    .node-mol{fill:#f8fafc;stroke:#e2e8f0}
+    .node-cell{fill:#f0fdf4;stroke:#dcfce7}
+    .node-tissue{fill:#fff7ed;stroke:#ffedd5}
+    .node-organ{fill:#fff1f2;stroke:#ffe4e6}
+    .node-dim{opacity:.35}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>乐美汀®（拉呋替丁）分子机制图</h1>
+      <div class="sub">分子 → 细胞 → 组织 → 器官｜<b>高对比场景高亮</b>：相关路径加粗着色，其它路径自动灰化/虚线</div>
+      <div class="controls">
+        <div class="chip active" data-scn="base">基础</div>
+        <div class="chip" data-scn="night">夜间症状</div>
+        <div class="chip" data-scn="nsaids">NSAIDs/阿司匹林</div>
+        <div class="chip" data-scn="hp">HP 根除</div>
+        <div class="chip" data-scn="cv">抗栓人群</div>
+        <div class="toolbar">
+          <label>线宽× <input id="gain" type="range" min="0.6" max="1.8" step="0.05" value="1.0"></label>
+          <label><input id="contrast" type="checkbox" checked /> 高对比</label>
+          <button class="btn" id="png">导出 PNG</button>
+          <button class="btn" id="svg">导出 SVG</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="panel">
+      <!-- 仍采用泳道分区，提高层面区隔；列距较V4稍加大 -->
+      <svg id="mech" viewBox="0 0 1450 720" width="100%" height="auto" role="img" aria-label="拉呋替丁机制图（高对比）">
+        <defs>
+          <marker id="arrow" markerWidth="10" markerHeight="10" refX="10" refY="5" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0f172a"/></marker>
+          <marker id="bar" markerWidth="12" markerHeight="12" refX="6" refY="6" orient="auto" markerUnits="userSpaceOnUse"><path d="M 0 2 L 12 2 L 12 10 L 0 10 z" fill="#b91c1c"/></marker>
+          <filter id="soft"><feDropShadow dx="0" dy="1.2" stdDeviation="2" flood-color="#000" flood-opacity=".06"/></filter>
+        </defs>
+        <g id="lanes" fill="#000" fill-opacity="0.03" stroke="var(--line)">
+          <rect x="30"  y="54" width="240" height="620" rx="8"/>
+          <rect x="330" y="54" width="280" height="620" rx="8"/>
+          <rect x="670" y="54" width="280" height="620" rx="8"/>
+          <rect x="1010" y="54" width="280" height="620" rx="8"/>
+          <rect x="1330" y="54" width="90" height="620" rx="8"/>
+        </g>
+        <g font-size="12" fill="#475569" font-weight="700">
+          <text x="150" y="36" text-anchor="middle">中心/药物</text>
+          <text x="470" y="36" text-anchor="middle">分子</text>
+          <text x="810" y="36" text-anchor="middle">细胞</text>
+          <text x="1150" y="36" text-anchor="middle">组织</text>
+          <text x="1375" y="36" text-anchor="middle">器官/临床</text>
+        </g>
+        <g id="nodes"></g>
+        <g id="edges"></g>
+      </svg>
+    </section>
+
+    <section class="row">
+      <div class="panel small">
+        <b>提示</b>：切换上方“人群/场景”，系统将对<strong>相关通路</strong>加粗、着色并保持 100% 不透明；其余通路会灰化（20% 不透明、虚线）。
+      </div>
+    </section>
+  </main>
+
+  <script>
+  (function(){
+    const cols = { center:150, mol:470, cell:810, tissue:1150, organ:1375 };
+    const nodeW=170, nodeH=56;
+
+    const nodesData = [
+      {id:'laf', label:'拉呋替丁', x:cols.center, y:120, kind:'drug'},
+      {id:'h2r', label:'H₂ 受体（壁细胞）', x:cols.mol, y:120, kind:'mol'},
+      {id:'camp', label:'cAMP / PKA', x:cols.mol, y:200, kind:'mol'},
+      {id:'pump', label:'H⁺/K⁺-ATPase', x:cols.mol, y:280, kind:'mol'},
+      {id:'trpv1', label:'TRPV1 / CSAN', x:cols.mol, y:380, kind:'mol'},
+      {id:'cgrp', label:'CGRP / NO', x:cols.mol, y:460, kind:'mol'},
+
+      {id:'parietal', label:'壁细胞\n胃酸分泌↓', x:cols.cell, y:200, kind:'cell'},
+      {id:'mucus', label:'黏液细胞\n黏蛋白↑', x:cols.cell, y:340, kind:'cell'},
+      {id:'goblet', label:'杯状细胞\nMUC2↑', x:cols.cell, y:420, kind:'cell'},
+      {id:'endo', label:'内皮细胞\n血流↑', x:cols.cell, y:500, kind:'cell'},
+
+      {id:'gel', label:'黏液凝胶层↑', x:cols.tissue, y:340, kind:'tissue'},
+      {id:'tight', label:'紧密连接稳固\n(ZO‑1/occludin)', x:cols.tissue, y:420, kind:'tissue'},
+      {id:'inos', label:'iNOS↓ / 炎症↓', x:cols.tissue, y:500, kind:'tissue'},
+      {id:'invade', label:'细菌黏附/侵袭↓', x:cols.tissue, y:260, kind:'tissue'},
+
+      {id:'ph', label:'胃内 pH↑\n（夜间覆盖优）', x:cols.organ, y:200, kind:'organ'},
+      {id:'ulcer', label:'溃疡愈合质量↑\n（扁平瘢痕↑）', x:cols.organ, y:300, kind:'organ'},
+      {id:'nsaid', label:'NSAIDs/阿司匹林\n小肠损伤↓', x:cols.organ, y:420, kind:'organ'},
+      {id:'hp', label:'HP 根除方案\n疗效等效', x:cols.organ, y:520, kind:'organ'}
+    ];
+
+    const edgesData = [
+      {from:'laf', to:'h2r', type:'inh', w:2.4, scene:{night:3.6, base:2.4}},
+      {from:'h2r', to:'camp', type:'act', w:1.8},
+      {from:'camp', to:'pump', type:'act', w:1.8},
+      {from:'pump', to:'parietal', type:'act', w:1.8},
+      {from:'parietal', to:'ph', type:'inh', w:2.2, scene:{night:3.0}},
+
+      {from:'laf', to:'trpv1', type:'act', w:2.0, scene:{nsaids:3.0, base:2.0, cv:2.6}},
+      {from:'trpv1', to:'cgrp', type:'act', w:1.8, scene:{nsaids:2.6, cv:2.2}},
+      {from:'cgrp', to:'mucus', type:'act', w:1.9, scene:{nsaids:2.7, cv:2.2}},
+      {from:'cgrp', to:'goblet', type:'act', w:1.7, scene:{nsaids:2.4, cv:2.0}},
+      {from:'cgrp', to:'endo', type:'act', w:1.7, scene:{nsaids:2.3, cv:2.0}},
+
+      {from:'mucus', to:'gel', type:'act', w:1.8},
+      {from:'goblet', to:'gel', type:'act', w:1.7},
+      {from:'endo', to:'tight', type:'act', w:1.6},
+      {from:'endo', to:'inos', type:'inh', w:1.6},
+      {from:'gel', to:'invade', type:'inh', w:1.8},
+
+      {from:'invade', to:'ulcer', type:'inh', w:1.8},
+      {from:'tight', to:'nsaid', type:'act', w:1.6, scene:{nsaids:2.4, cv:2.0}},
+      {from:'inos', to:'nsaid', type:'inh', w:1.6, scene:{nsaids:2.4, cv:2.0}},
+      {from:'gel', to:'nsaid', type:'act', w:1.7, scene:{nsaids:2.6, cv:2.2}},
+
+      {from:'gel', to:'ulcer', type:'act', w:1.6},
+      {from:'mucus', to:'ulcer', type:'act', w:1.4},
+      {from:'goblet', to:'ulcer', type:'act', w:1.4},
+      {from:'parietal', to:'ulcer', type:'inh', w:1.4},
+
+      {from:'parietal', to:'hp', type:'act', w:1.5, scene:{hp:2.2}}
+    ];
+
+    const svg = document.getElementById('mech');
+    const gNodes = document.getElementById('nodes');
+    const gEdges = document.getElementById('edges');
+
+    function nodeBox(n){
+      const g=document.createElementNS('http://www.w3.org/2000/svg','g');
+      g.setAttribute('transform',`translate(${n.x-nodeW/2},${n.y-nodeH/2})`);
+      g.setAttribute('filter','url(#soft)');
+      const r=document.createElementNS('http://www.w3.org/2000/svg','rect');
+      r.setAttribute('width',nodeW); r.setAttribute('height',nodeH); r.setAttribute('rx',12); r.setAttribute('ry',12);
+      r.setAttribute('class', n.kind==='drug'?'node-drug': n.kind==='mol'?'node-mol': n.kind==='cell'?'node-cell': n.kind==='tissue'?'node-tissue':'node-organ');
+      r.setAttribute('stroke-width','1'); g.appendChild(r);
+      const t=document.createElementNS('http://www.w3.org/2000/svg','text');
+      t.setAttribute('x',nodeW/2); t.setAttribute('y',nodeH/2); t.setAttribute('text-anchor','middle'); t.setAttribute('dominant-baseline','middle');
+      t.setAttribute('font-size','12'); t.setAttribute('font-weight','700'); t.setAttribute('fill','#0f172a'); t.textContent=n.label; g.appendChild(t);
+      g.setAttribute('data-id',n.id); return g;
+    }
+
+    const nodeMap={}; nodesData.forEach(n=>{ nodeMap[n.id]=n; gNodes.appendChild(nodeBox(n)); });
+
+    function edgePath(a,b,type,w){
+      const x1=a.x+nodeW/2-2, y1=a.y, x2=b.x-nodeW/2+2, y2=b.y; const mx=(x1+x2)/2;
+      const p=document.createElementNS('http://www.w3.org/2000/svg','path');
+      p.setAttribute('d',`M ${x1} ${y1} C ${mx} ${y1}, ${mx} ${y2}, ${x2} ${y2}`);
+      p.setAttribute('fill','none'); p.setAttribute('stroke', type==='act'? 'var(--act)' : 'var(--inh)');
+      p.setAttribute('stroke-width', w); p.setAttribute('opacity','0.95');
+      p.setAttribute('marker-end', type==='act'? 'url(#arrow)' : 'url(#bar)');
+      return p;
+    }
+
+    const edgeEls = edgesData.map((e)=>{
+      const el=edgePath(nodeMap[e.from], nodeMap[e.to], e.type, e.w);
+      el.dataset.basew=e.w; if(e.scene){el.dataset.scene=JSON.stringify(e.scene)}; el.dataset.from=e.from; el.dataset.to=e.to;
+      gEdges.appendChild(el); return el;
+    });
+
+    function applyScene(scene){
+      document.querySelectorAll('.chip').forEach(c=>c.classList.toggle('active', c.dataset.scn===scene));
+      const gain=parseFloat(document.getElementById('gain').value);
+      const highContrast = document.getElementById('contrast').checked;
+
+      // 1) 计算“主通路/次通路/其他”
+      const primaryEdges=new Set();
+      const secondaryNodes=new Set();
+      edgeEls.forEach(el=>{
+        const scn = el.dataset.scene? JSON.parse(el.dataset.scene):{};
+        if(scene!=="base" && scn[scene]!==undefined){ primaryEdges.add(el); secondaryNodes.add(el.dataset.from); secondaryNodes.add(el.dataset.to); }
+      });
+
+      const secondaryEdges=new Set();
+      if(scene!=="base"){
+        edgeEls.forEach(el=>{ if(secondaryNodes.has(el.dataset.from) || secondaryNodes.has(el.dataset.to)){ if(!primaryEdges.has(el)) secondaryEdges.add(el); }});
+      }
+
+      // 2) 样式应用
+      const dimOpacity = highContrast? 0.18 : 0.45;
+      const dimDash = highContrast? '5 4' : '3 3';
+
+      edgeEls.forEach(el=>{
+        const base=parseFloat(el.dataset.basew);
+        const scn = el.dataset.scene? JSON.parse(el.dataset.scene):{};
+        let w=(scn[scene]??scn['base']??base)*gain;
+        let stroke=el.getAttribute('data-type')==='act'? 'var(--act)' : 'var(--inh)';
+        // data-type 未设置，重新赋值
+        if(!el.getAttribute('data-type')){ const idx=edgeEls.indexOf&&edgeEls.indexOf(el); }
+
+        // 强化对比：主/次/其他
+        el.removeAttribute('stroke-dasharray');
+        el.style.opacity = 0.95; // reset
+        el.style.stroke = (el.getAttribute('stroke'));
+
+        if(scene==='base' || !highContrast){
+          // 常规：只按宽度
+          el.setAttribute('stroke-width', w);
+          el.setAttribute('stroke', stroke);
+          el.style.opacity = 0.95;
+        } else {
+          if(primaryEdges.has(el)){
+            w = Math.max(2.6, w*1.6); // 主通路显著加粗
+            el.setAttribute('stroke-width', w);
+            el.setAttribute('stroke', stroke);
+            el.style.opacity = 1.0;
+          }else if(secondaryEdges.has(el)){
+            w = Math.max(1.6, w*1.15); // 次通路中等强调
+            el.setAttribute('stroke-width', w);
+            el.setAttribute('stroke', stroke);
+            el.style.opacity = 0.85;
+          }else{
+            // 其他通路灰化
+            w = Math.max(1.0, w*0.6);
+            el.setAttribute('stroke-width', w);
+            el.setAttribute('stroke', 'var(--dim)');
+            el.style.opacity = dimOpacity;
+            el.setAttribute('stroke-dasharray', dimDash);
+          }
+        }
+      });
+
+      // 3) 节点高亮（主/次通路涉及的节点着色，其它降噪）
+      const nodeEls = Array.from(gNodes.children);
+      if(scene==='base' || !highContrast){ nodeEls.forEach(n=>n.classList.remove('node-dim')); }
+      else{
+        const hit = new Set(); primaryEdges.forEach(el=>{ hit.add(el.dataset.from); hit.add(el.dataset.to); }); secondaryEdges.forEach(el=>{ hit.add(el.dataset.from); hit.add(el.dataset.to); });
+        nodeEls.forEach(n=>{ const id=n.getAttribute('data-id'); if(hit.has(id)) n.classList.remove('node-dim'); else n.classList.add('node-dim'); });
+      }
+    }
+
+    document.addEventListener('click',e=>{ const chip=e.target.closest('.chip'); if(chip){ applyScene(chip.dataset.scn||'base'); }});
+    document.getElementById('gain').addEventListener('input',()=>{ const active=document.querySelector('.chip.active')?.dataset.scn||'base'; applyScene(active); });
+    document.getElementById('contrast').addEventListener('change',()=>{ const active=document.querySelector('.chip.active')?.dataset.scn||'base'; applyScene(active); });
+
+    // 初始
+    applyScene('base');
+
+    // 导出
+    const svgEl=document.getElementById('mech');
+    document.getElementById('svg').addEventListener('click',()=>{ const s=new XMLSerializer().serializeToString(svgEl); const blob=new Blob([s],{type:'image/svg+xml'}); const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='lafutidine_mechanism.svg'; a.click(); });
+    document.getElementById('png').addEventListener('click',()=>{ const s=new XMLSerializer().serializeToString(svgEl); const img=new Image(); const src='data:image/svg+xml;base64,'+btoa(unescape(encodeURIComponent(s))); img.onload=()=>{ const c=document.createElement('canvas'); c.width=1850; c.height=980; const ctx=c.getContext('2d'); ctx.fillStyle='#ffffff'; ctx.fillRect(0,0,c.width,c.height); ctx.drawImage(img,0,0,1850,980); c.toBlob(b=>{ const a=document.createElement('a'); a.href=URL.createObjectURL(b); a.download='lafutidine_mechanism.png'; a.click(); }); }; img.src=src; });
+  })();
+  </script>
+</body>
+</html>

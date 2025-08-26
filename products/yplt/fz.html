@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>依普利酮(Eplerenone)核心分子机制图</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', Arial, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            padding: 20px;
+            line-height: 1.4;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #ff7e5f 0%, #feb47b 100%);
+            color: white;
+            text-align: center;
+            padding: 25px;
+            font-size: 28px;
+            font-weight: bold;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .subtitle {
+            background: linear-gradient(135deg, #ff6b6b 0%, #feca57 100%);
+            color: white;
+            padding: 15px;
+            text-align: center;
+            font-size: 16px;
+        }
+        
+        .main-content {
+            padding: 20px;
+            background: #ffffff;
+        }
+        
+        .icon-legend {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border-left: 4px solid #ff7e5f;
+        }
+        
+        .legend-title {
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+        
+        .legend-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            font-size: 13px;
+            color: #6c757d;
+        }
+        
+        .legend-icon {
+            margin-right: 8px;
+            font-size: 16px;
+        }
+        
+        .key-points {
+            background: linear-gradient(135deg, #fff7f0 0%, #ffe4d6 100%);
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+        
+        .key-points h3 {
+            color: #495057;
+            margin-bottom: 15px;
+            font-size: 18px;
+            text-align: center;
+            font-weight: 600;
+        }
+        
+        .points-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        
+        .point-item {
+            background: rgba(255,255,255,0.8);
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 4px solid #ff9f7f;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+        
+        .point-item h4 {
+            color: #ff7e5f;
+            margin-bottom: 8px;
+            font-size: 14px;
+            font-weight: 600;
+        }
+        
+        .point-item p {
+            color: #6c757d;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+        
+        .pathways-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .pathway-card {
+            border-radius: 12px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .cardiovascular {
+            background: linear-gradient(135deg, #ff8a65 0%, #ffab91 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 10px rgba(255, 154, 118, 0.2);
+        }
+        
+        .endocrine {
+            background: linear-gradient(135deg, #ff9575 0%, #ffb39b 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 10px rgba(255, 176, 136, 0.2);
+        }
+        
+        .renal {
+            background: linear-gradient(135deg, #ffa270 0%, #ffbfa0 100%);
+            color: #ffffff;
+            box-shadow: 0 4px 10px rgba(255, 197, 161, 0.2);
+        }
+        
+        .pathway-title {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            text-align: center;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .pathway-subtitle {
+            font-size: 12px;
+            opacity: 0.95;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        
+        .mechanism-item {
+            background: rgba(255,255,255,0.2);
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 8px;
+            border-left: 4px solid rgba(255,255,255,0.5);
+            backdrop-filter: blur(5px);
+        }
+        
+        .mechanism-number {
+            display: inline-block;
+            background: white;
+            color: #ff7e5f;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            font-weight: bold;
+            font-size: 14px;
+            margin-right: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .mechanism-title {
+            font-weight: bold;
+            margin-bottom: 5px;
+            font-size: 14px;
+        }
+        
+        .mechanism-desc {
+            font-size: 12px;
+            opacity: 0.95;
+        }
+        
+        .evidence-icon {
+            display: inline-block;
+            margin-left: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            position: relative;
+        }
+        
+        .evidence-icon::after {
+            content: attr(data-tooltip);
+            position: absolute;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #6a4028;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 6px;
+            font-size: 12px;
+            white-space: nowrap;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s;
+            z-index: 1000;
+        }
+        
+        .evidence-icon:hover::after {
+            opacity: 1;
+        }
+        
+        .evidence-box {
+            background: #fff9f5;
+            padding: 12px;
+            border-radius: 8px;
+            margin-top: 10px;
+            border-left: 4px solid #ffb088;
+            border: 1px solid #ffe0cc;
+        }
+        
+        .evidence-title {
+            font-weight: bold;
+            color: #ff7e5f;
+            margin-bottom: 5px;
+            font-size: 13px;
+        }
+        
+        .evidence-desc {
+            color: #6c757d;
+            font-size: 11px;
+        }
+        
+        .clinical-foundation {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 20px;
+            margin-top: 30px;
+            border: 1px solid #e9ecef;
+        }
+        
+        .foundation-title {
+            text-align: center;
+            font-size: 20px;
+            font-weight: bold;
+            color: #495057;
+            margin-bottom: 20px;
+        }
+        
+        .foundation-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        
+        .foundation-item {
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            border-left: 4px solid #ff9f7f;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+        
+        .foundation-item h4 {
+            color: #ff7e5f;
+            margin-bottom: 8px;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            font-weight: 600;
+        }
+        
+        .foundation-item p {
+            color: #6c757d;
+            font-size: 12px;
+            line-height: 1.5;
+        }
+        
+        @media (max-width: 768px) {
+            .pathways-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .points-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .foundation-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            依普利酮 (Eplerenone) 核心分子机制图
+        </div>
+        
+        <div class="subtitle">
+            高选择性盐皮质激素受体 (MR/NR3C2) 拮抗剂，对雄激素/孕激素受体亲和力极低
+        </div>
+            
+            <div class="key-points">
+                <h3>主要分子靶点</h3>
+                <div class="points-grid">
+                    <div class="point-item">
+                        <h4>MR复合体（NR3C2）</h4>
+                        <p>依普利酮与MR竞争性结合，阻断醛固酮诱导的受体激活→抑制核内转录（GRE基因元件）</p>
+                    </div>
+                    <div class="point-item">
+                        <h4>下游转录靶基因</h4>
+                        <p>SGK1、ENaC(SCNN1A/B/G)、Na⁺/K⁺-ATPase、ROMK(KCNJ1)、NCC(SLC12A3)等→阻断Na⁺潴留、K⁺排泄增加等效应</p>
+                    </div>
+                    <div class="point-item">
+                        <h4>炎症/纤维化/氧化应激通路</h4>
+                        <p>抑制NF-κB激活、TGF-β1/Smad纤维化信号、NADPH氧化酶(NOX2/NOX4)→降低炎症、纤维化与ROS生成</p>
+                    </div>
+                    <div class="point-item">
+                        <h4>血管/内皮通路</h4>
+                        <p>阻断内皮/平滑肌MR→改善eNOS功能、减少内皮钙超载与内皮素-1上调，抑制血管重构与硬化</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pathways-grid">
+                <div class="pathway-card cardiovascular">
+                    <div class="pathway-title">心血管系统分子通路</div>
+                    <div class="pathway-subtitle">核心：抗纤维化/抗重构/抗炎氧化→改善预后（心衰/高血压）</div>
+                    
+                    <div class="mechanism-item">
+                        <span class="mechanism-number">1</span>
+                        <div class="mechanism-title">拮抗心肌细胞与心脏成纤维细胞MR
+                            <span class="evidence-icon" data-tooltip="动物模型/细胞实验">🔬</span>
+                        </div>
+                        <div class="mechanism-desc">依普利酮竞争MR→阻断醛固酮-MR复合体入核→下游SGK1等转录↓</div>
+                    </div>
+                    
+                    <div class="mechanism-item">
+                        <span class="mechanism-number">2</span>
+                        <div class="mechanism-title">抑制炎症/氧化应激/纤维化
+                            <span class="evidence-icon" data-tooltip="RCT/队列研究/Meta分析">📈</span>
+                            <span class="evidence-icon" data-tooltip="动物模型/细胞实验">🔬</span>
+                        </div>
+                        <div class="mechanism-desc">NF-κB信号下调、NOX2/NOX4介导的ROS↓、TGF-β1/Smad3激活↓、NLRP3炎症小体激活↓、巨噬细胞由M1向M2极化转向→成纤维细胞活性↓、胶原沉积↓、心肌间质纤维化↓</div>
+                    </div>
+                    
+                    <div class="mechanism-item">
+                        <span class="mechanism-number">3</span>
+                        <div class="mechanism-title">抑制肥厚与电-结构重构
+                            <span class="evidence-icon" data-tooltip="RCT/队列研究/Meta分析">📈</span>
+                            <span class="evidence-icon" data-tooltip="动物模型/细胞实验">🔬</span>
+                        </div>
+                        <div class="mechanism-desc">抑制MAPK、calcineurin-NFAT等通路→心肌肥厚信号下降；减少心室重构与室性不稳定基质</div>
+                    </div>
+                    
+                    <div class="mechanism-item">
+                        <span class="mechanism-number">4</span>
+                        <div class="mechanism-title">内皮功能/血管硬度改善
+                            <span class="evidence-icon" data-tooltip="RCT/队列研究/Meta分析">📈</span>
+                            <span class="evidence-icon" data-tooltip="动物模型/细胞实验">🔬</span>
+                        </div>
+                        <div class="mechanism-desc">内皮eNOS功能改善，内皮素-1下调→小动脉顺应性↑、动脉硬度↓、冠状微循环灌注改善</div>
+                    </div>
+                </div>
+                
+                <div class="pathway-card endocrine">
+                    <div class="pathway-title">内分泌系统分子通路</div>
+                    <div class="pathway-subtitle">核心：原醛症治疗/激素轴调节/选择性MR拮抗</div>
+                    
+                    <div class="mechanism-item">
+                        <span class="mechanism-number">1</span>
+                        <div class="mechanism-title">原发性醛固酮增多症（PA）
+                            <span class="evidence-icon" data-tooltip="国内外权威指南共识推荐">📑</span>
+                            <span class="evidence-icon" data-tooltip="RCT/队列研究/Meta分析">📈</span>
+                        </div>
+                        <div class="mechanism-desc">醛固酮分泌瘤/双侧增生→过度MR激活→依普利酮竞争性阻断，对抗病理性醛固酮过多，恢复电解质平衡与血压调控</div>
+                    </div>
+                    
+                    <div class="mechanism-item">
+                        <span class="mechanism-number">2</span>
+                        <div class="mechanism-title">选择性MR拮抗与激素轴平衡
+                            <span class="evidence-icon" data-tooltip="RCT/队列研究/Meta分析">📈</span>
+                        </div>
+                        <div class="mechanism-desc">依普利酮对雄激素受体/孕激素受体亲和力极低→避免男性乳腺发育、性功能障碍、女性月经紊乱等内分泌副作用</div>
+                    </div>
+                    
+                    <div class="mechanism-item">
+                        <span class="mechanism-number">3</span>
+                        <div class="mechanism-title">RAAS反馈调节
+                            <span class="evidence-icon" data-tooltip="动物模型/细胞实验">🔬</span>
+                            <span class="evidence-icon" data-tooltip="RCT/队列研究/Meta分析">📈</span>
+                        </div>
+                        <div class="mechanism-desc">MR阻断→醛固酮分泌代偿↑、肾素活性↑（系统性 RAAS 激活）→需监测电解质</div>
+                    </div>
+                    
+                    <div class="mechanism-item">
+                        <div class="mechanism-title">原醛症特异性机制</div>
+                        <div class="mechanism-desc">肾上腺皮质腺瘤或增生→醛固酮自主分泌→MR过度激活→严重Na⁺潴留/K⁺丢失/代谢性碱中毒；依普利酮通过高选择性MR拮抗，对抗病理状态下过度醛固酮效应，是原醛症药物治疗的首选</div>
+                    </div>
+                    
+                    <div class="evidence-box">
+                        <div class="evidence-title">建议所有高血压患者筛查PA 
+                            <span class="evidence-icon" data-tooltip="国内外权威指南共识推荐">📑</span>
+                        </div>
+                        <div class="evidence-desc">ARR筛查→确认试验→分型/AVS→保守手术；双侧/不宜手术→MRA（依普利酮）</div>
+                    </div>
+                </div>
+                
+                <div class="pathway-card renal">
+                    <div class="pathway-title">肾脏系统分子通路</div>
+                    <div class="pathway-subtitle">核心：抗蛋白尿（部分与血压无关）/抗纤维化/体液调控</div>
+                    
+                    <div class="mechanism-item">
+                        <span class="mechanism-number">1</span>
+                        <div class="mechanism-title">远曲集合管Na⁺转运抑制
+                            <span class="evidence-icon" data-tooltip="动物模型/细胞实验">🔬</span>
+                        </div>
+                        <div class="mechanism-desc">阻断MR→抑制SGK1→ENaC/Na⁺/K⁺-ATPase转录与膜插入→Na⁺重吸收↓、水潴留↓→体液容量与血压下降</div>
+                    </div>
+                    
+                    <div class="mechanism-item">
+                        <span class="mechanism-number">2</span>
+                        <div class="mechanism-title">肾小球与小管-间质保护
+                            <span class="evidence-icon" data-tooltip="RCT/队列研究/Meta分析">📈</span>
+                            <span class="evidence-icon" data-tooltip="动物模型/细胞实验">🔬</span>
+                        </div>
+                        <div class="mechanism-desc">抑制肾内TGF-β/Smad、炎症与ROS→足细胞损伤↓、系膜扩张与硬化↓→蛋白尿下降（独立于血压之外的效应）</div>
+                    </div>
+                    
+                    <div class="mechanism-item">
+                        <span class="mechanism-number">3</span>
+                        <div class="mechanism-title">肾血流动力学与RAAS交互
+                            <span class="evidence-icon" data-tooltip="动物模型/细胞实验">🔬</span>
+                        </div>
+                        <div class="mechanism-desc">改善肾血流动力学与管-球反馈→降低肾内压力负荷→抑制局部 RAAS 过度激活（对 AngII/醛固酮轴的负向调节）</div>
+                    </div>
+                </div>
+            </div>
+
+        <div class="main-content">
+            <div class="icon-legend">
+                <div class="legend-title">📊 证据来源图标说明</div>
+                <div class="legend-grid">
+                    <div class="legend-item">
+                        <span class="legend-icon">📈</span>
+                        <span>临床证据：RCT/队列研究/Meta分析</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-icon">🔬</span>
+                        <span>动物/体外证据：动物模型/细胞实验</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-icon">📑</span>
+                        <span>国内外权威指南共识推荐</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="clinical-foundation">
+                <div class="foundation-title">临床效应及分子基础</div>
+                <div class="foundation-grid">
+                    <div class="foundation-item">
+                        <h4>🫀 降压与容量管理</h4>
+                        <p>阻断MR介导的Na⁺/水潴留，降低血容量、改善外周阻力和血压水平</p>
+                    </div>
+                    
+                    <div class="foundation-item">
+                        <h4>💖 心肌与血管保护</h4>
+                        <p>抗炎、抗纤维化、改善心肌重构，降低心衰及心血管事件风险</p>
+                    </div>
+                    
+                    <div class="foundation-item">
+                        <h4>🩺 原醛症治疗</h4>
+                        <p>一线药物治疗选择，对抗病理性醛固酮过多，恢复电解质平衡，改善心血管预后</p>
+                    </div>
+                    
+                    <div class="foundation-item">
+                        <h4>🫘 肾脏保护</h4>
+                        <p>改善肾血流动力学与滤过功能，减少蛋白尿，延缓肾功能下降</p>
+                    </div>
+                    
+                    <div class="foundation-item">
+                        <h4>⚡ 代谢与电生理稳定</h4>
+                        <p>改善内皮功能，调节心肌离子稳态，降低心律失常风险</p>
+                    </div>
+                    
+                    <div class="foundation-item">
+                        <h4>🎯 高选择性优势</h4>
+                        <p>相较螺内酯而言，对MR选择性更高，性激素受体亲和力低；性腺相关不良反应少，长期用药耐受性好</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

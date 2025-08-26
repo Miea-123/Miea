@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>诺复康® 药理机制可视化</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 20px;flex-direction: column;
+    }
+    .app-container { width: 100%; max-width: 1600px; background: rgba(255,255,255,.95); border-radius: 24px; box-shadow: 0 20px 60px rgba(0,0,0,.3); overflow: hidden; }
+    .header { background: linear-gradient(135deg, #1e40af 0%, #3b82f6 100%); color:#fff; padding: 30px 40px; text-align: center; }
+    .main-title { font-size: 36px; font-weight: 800; margin-bottom: 8px; text-shadow: 0 2px 4px rgba(0,0,0,.2); }
+    .sub-title { font-size: 18px; opacity: .95; }
+    .content { display:flex; height: 700px; }
+    .control-panel { width: 320px; background:#f8fafc; padding:30px; border-right:1px solid #e5e7eb; overflow-y:auto; }
+    .panel-title { font-size:20px; font-weight:700; color:#1f2937; margin-bottom:20px; display:flex; align-items:center; gap:10px; }
+    .panel-icon { width:32px; height:32px; background:linear-gradient(135deg,#3b82f6 0%,#6366f1 100%); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:18px; }
+    .button-group { display:flex; flex-direction:column; gap:12px; margin-bottom:30px; }
+    .control-btn { padding:14px 20px; background:#fff; border:2px solid #e5e7eb; border-radius:12px; font-size:15px; font-weight:500; color:#374151; cursor:pointer; transition:.3s; display:flex; align-items:center; gap:10px; }
+    .control-btn:hover { background:#f9fafb; border-color:#3b82f6; transform: translateX(4px); }
+    .control-btn.active { background:linear-gradient(135deg,#3b82f6 0%,#6366f1 100%); color:#fff; border-color:transparent; box-shadow:0 4px 12px rgba(59,130,246,.4); }
+    .info-card { background:#fff; border-radius:12px; padding:20px; margin-top:20px; border:1px solid #e5e7eb; }
+    .info-card-title { font-size:16px; font-weight:600; color:#1e40af; margin-bottom:12px; display:flex; align-items:center; gap:8px; }
+    .info-card-content { font-size:14px; line-height:1.6; color:#4b5563; }
+    .highlight { display:inline-block; padding:2px 6px; background:#fef3c7; border-radius:4px; color:#92400e; font-weight:600; }
+    .main-canvas { flex:1; position:relative; background: radial-gradient(circle at center,#fff 0%,#f0f9ff 50%,#e0f2fe 100%); overflow:hidden; }
+    .molecule-center { position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); width:160px; height:160px; background:linear-gradient(135deg,#1e40af 0%, #6366f1 50%, #3b82f6 100%); border-radius:50%; display:flex; flex-direction:column; align-items:center; justify-content:center; color:#fff; box-shadow:0 0 0 20px rgba(59,130,246,.1),0 0 0 40px rgba(59,130,246,.05),0 10px 40px rgba(30,64,175,.3); cursor:pointer; z-index:100; animation:breathe 3s ease-in-out infinite; }
+    @keyframes breathe { 0%,100%{ transform:translate(-50%,-50%) scale(1)} 50%{ transform:translate(-50%,-50%) scale(1.05)} }
+    .molecule-center:hover { animation:none; transform:translate(-50%,-50%) scale(1.1); }
+    .molecule-name { font-size:28px; font-weight:800; margin-bottom:4px; }
+    .molecule-name-en { font-size:14px; opacity:.9; }
+    .receptor-node { position:absolute; width:200px; background:#fff; border-radius:16px; padding:20px; box-shadow:0 8px 24px rgba(0,0,0,.12); cursor:pointer; transition:.3s cubic-bezier(.4,0,.2,1); z-index:50; }
+    .receptor-node:hover { transform: translateY(-8px) scale(1.05); box-shadow:0 12px 32px rgba(0,0,0,.15); }
+    .receptor-node.active-receptor { border:3px solid #10b981; background:linear-gradient(135deg,#fff 0%, #f0fdf4 100%); }
+    .receptor-node.inactive-receptor { border:3px solid #ef4444; background:linear-gradient(135deg,#fff 0%, #fef2f2 100%); }
+    .receptor-header { display:flex; align-items:center; margin-bottom:12px; }
+    .receptor-icon { width:40px; height:40px; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:20px; margin-right:12px; }
+    .active-receptor .receptor-icon { background:linear-gradient(135deg,#10b981 0%, #34d399 100%); }
+    .inactive-receptor .receptor-icon { background:linear-gradient(135deg,#ef4444 0%, #f87171 100%); }
+    .receptor-info { flex:1; }
+    .receptor-title { font-size:18px; font-weight:700; margin-bottom:4px; }
+    .active-receptor .receptor-title { color:#059669; }
+    .inactive-receptor .receptor-title { color:#dc2626; }
+    .receptor-status { font-size:14px; font-weight:500; }
+    .receptor-description { font-size:13px; color:#6b7280; margin-top:8px; line-height:1.5; }
+    #receptor-a1a { top:100px; left:100px; }
+    #receptor-a1b { top:100px; right:100px; }
+    #receptor-a1d { top:50px; left:50%; transform:translateX(-50%); }
+    .effect-node { position:absolute; width:180px; background:linear-gradient(135deg,#fff 0%, #f0f9ff 100%); border:2px solid #3b82f6; border-radius:16px; padding:18px; box-shadow:0 8px 24px rgba(59,130,246,.15); cursor:pointer; transition:.3s cubic-bezier(.4,0,.2,1); z-index:50; text-align:center; }
+    .effect-node:hover { transform: translateY(-8px) scale(1.05); box-shadow:0 12px 32px rgba(59,130,246,.25); background:linear-gradient(135deg,#fff 0%, #dbeafe 100%); }
+    .effect-icon { font-size:48px; margin-bottom:12px; }
+    .effect-title { font-size:16px; font-weight:700; color:#1e40af; margin-bottom:6px; }
+    .effect-result { font-size:14px; color:#059669; font-weight:600; }
+    #effect-heart { bottom:120px; left:50%; transform:translateX(-50%); }
+    #effect-vessel { bottom:100px; left:120px; }
+    #effect-coronary { bottom:100px; right:120px; }
+    .connection-path { position:absolute; inset:0; z-index:10; pointer-events:none; }
+    .path-line { stroke-width:3; fill:none; stroke-linecap:round; opacity:0; transition:opacity .5s ease; }
+    .path-line.visible { opacity:.7; animation: dash 2s linear infinite; }
+    @keyframes dash { from { stroke-dashoffset:0 } to { stroke-dashoffset:-20 } }
+    .path-active { stroke:#10b981; stroke-dasharray:10,5; }
+    .path-inactive { stroke:#ef4444; stroke-dasharray:5,5; }
+    .path-effect { stroke:#3b82f6; stroke-dasharray:8,4; }
+    .detail-panel { width:380px; background:#fff; padding:30px; border-left:1px solid #e5e7eb; overflow-y:auto; }
+    .detail-header { margin-bottom:24px; }
+    .detail-title { font-size:24px; font-weight:700; color:#1f2937; margin-bottom:8px; }
+    .detail-subtitle { font-size:14px; color:#6b7280; }
+    .detail-content { font-size:15px; line-height:1.8; color:#374151; }
+    .feature-box { background:linear-gradient(135deg,#f0f9ff 0%, #e0f2fe 100%); border-radius:12px; padding:16px; margin:20px 0; }
+    .feature-title { font-size:14px; font-weight:600; color:#1e40af; margin-bottom:12px; text-transform:uppercase; letter-spacing:.5px; }
+    .feature-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .feature-item { display:flex; align-items:center; gap:8px; padding:8px; background:#fff; border-radius:8px; }
+    .feature-check { width:24px; height:24px; background:linear-gradient(135deg,#10b981 0%, #34d399 100%); border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; font-size:14px; flex-shrink:0; }
+    .feature-text { font-size:13px; color:#4b5563; }
+    .selected { animation: pulse-shadow .6s ease; }
+    @keyframes pulse-shadow { 0%{ box-shadow:0 8px 24px rgba(0,0,0,.12);} 50%{ box-shadow:0 8px 32px rgba(59,130,246,.4);} 100%{ box-shadow:0 8px 24px rgba(0,0,0,.12);} }
+    .particle { position:absolute; width:4px; height:4px; background:rgba(99,102,241,.3); border-radius:50%; pointer-events:none; }
+    @media (max-width: 1400px){ .control-panel{ width:280px } .detail-panel{ width:340px } }
+    @media (max-width: 1200px){ .content{ flex-direction:column; height:auto } .control-panel,.detail-panel{ width:100%; border:none; border-bottom:1px solid #e5e7eb } .main-canvas{ height:600px } }
+  </style>
+</head>
+<body>
+  <div class="app-container">
+    <div class="header">
+      <h1 class="main-title">诺复康® 药理作用机制可视化（修复版）</h1>
+      <p class="sub-title">选择性α1受体激动剂 · 不收缩冠脉血管 · 心肌保护</p>
+    </div>
+    <div class="content">
+      <div class="control-panel">
+        <div class="panel-title"><div class="panel-icon">🎮</div><span>控制中心</span></div>
+        <div class="button-group" id="btnGroup">
+          <button class="control-btn active" data-action="complete"><span>🔍</span><span>完整机制</span></button>
+          <button class="control-btn" data-action="receptors"><span>🎯</span><span>受体作用</span></button>
+          <button class="control-btn" data-action="effects"><span>💊</span><span>临床效应</span></button>
+          <button class="control-btn" data-action="animate"><span>▶️</span><span>动画演示</span></button>
+        </div>
+        <div class="info-card">
+          <div class="info-card-title"><span>💡</span><span>使用说明</span></div>
+          <div class="info-card-content">点击中心的<span class="highlight">甲氧明</span>查看整体机制，或点击各个受体和器官了解详细作用。通过按钮切换不同视图模式。</div>
+        </div>
+        <div class="info-card">
+          <div class="info-card-title"><span>🔬</span><span>核心优势</span></div>
+          <div class="info-card-content">• 不激动冠脉α1D受体<br>• 不收缩冠脉血管<br>• 增加冠脉血流<br>• 不增加心率和心肌氧耗<br>• 无药物蓄积</div>
+        </div>
+      </div>
+      <div class="main-canvas" id="canvas">
+        <svg class="connection-path" id="paths" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <defs>
+            <marker id="arrowGreen" markerWidth="10" markerHeight="10" refX="9" refY="4.5" orient="auto">
+              <path d="M0,0 L0,9 L9,4.5 z" fill="#10b981" opacity="0.8"/>
+            </marker>
+            <marker id="arrowBlue" markerWidth="10" markerHeight="10" refX="9" refY="4.5" orient="auto">
+              <path d="M0,0 L0,9 L9,4.5 z" fill="#3b82f6" opacity="0.8"/>
+            </marker>
+          </defs>
+          <path id="path-a1a" class="path-line path-active" d="M50 50 Q 30 30 20 20" marker-end="url(#arrowGreen)"/>
+          <path id="path-a1b" class="path-line path-active" d="M50 50 Q 70 30 80 20" marker-end="url(#arrowGreen)"/>
+          <path id="path-a1d" class="path-line path-inactive" d="M50 45 L 50 20"/>
+          <path id="path-heart" class="path-line path-effect" d="M50 55 L 50 75" marker-end="url(#arrowBlue)"/>
+          <path id="path-vessel" class="path-line path-effect" d="M45 55 Q 30 65 20 75" marker-end="url(#arrowBlue)"/>
+          <path id="path-coronary" class="path-line path-effect" d="M55 55 Q 70 65 80 75" marker-end="url(#arrowBlue)"/>
+        </svg>
+        <div class="molecule-center" id="molecule"><div class="molecule-name">甲氧明</div><div class="molecule-name-en">Methoxamine</div></div>
+        <div id="receptor-a1a" class="receptor-node active-receptor"><div class="receptor-header"><div class="receptor-icon">✓</div><div class="receptor-info"><div class="receptor-title">α1A受体</div><div class="receptor-status">强激动</div></div></div><div class="receptor-description">心肌细胞保护<br>维持正常生长</div></div>
+        <div id="receptor-a1b" class="receptor-node active-receptor"><div class="receptor-header"><div class="receptor-icon">✓</div><div class="receptor-info"><div class="receptor-title">α1B受体</div><div class="receptor-status">强激动</div></div></div><div class="receptor-description">血压调节<br>外周阻力增加</div></div>
+        <div id="receptor-a1d" class="receptor-node inactive-receptor"><div class="receptor-header"><div class="receptor-icon">✗</div><div class="receptor-info"><div class="receptor-title">α1D受体</div><div class="receptor-status">不激动</div></div></div><div class="receptor-description">冠脉不收缩<br>保护冠脉血流</div></div>
+        <div id="effect-heart" class="effect-node"><div class="effect-icon">❤️</div><div class="effect-title">心脏</div><div class="effect-result">不增心率/氧耗</div></div>
+        <div id="effect-vessel" class="effect-node"><div class="effect-icon">🩸</div><div class="effect-title">外周血管</div><div class="effect-result">血压稳定↑</div></div>
+        <div id="effect-coronary" class="effect-node"><div class="effect-icon">💗</div><div class="effect-title">冠状动脉</div><div class="effect-result">血流增加↑</div></div>
+      </div>
+      <div class="detail-panel">
+        <div class="detail-header">
+          <div class="detail-title" id="detailTitle">诺复康作用机制</div>
+          <div class="detail-subtitle" id="detailSubtitle">选择性α1受体激动剂</div>
+        </div>
+        <div class="detail-content" id="detailContent">诺复康(甲氧明)通过选择性激动α1A和α1B受体，维持循环稳定和心肌保护。其独特优势在于<span class="highlight">不激动冠脉α1D受体</span>，因此不会引起冠脉收缩，反而能增加冠脉血流，对冠心病患者更加安全。</div>
+        <div class="feature-box">
+          <div class="feature-title">临床优势</div>
+          <div class="feature-grid">
+            <div class="feature-item"><div class="feature-check">✓</div><div class="feature-text">起效快速 1分钟</div></div>
+            <div class="feature-item"><div class="feature-check">✓</div><div class="feature-text">持续15-40分钟</div></div>
+            <div class="feature-item"><div class="feature-check">✓</div><div class="feature-text">不收缩冠脉</div></div>
+            <div class="feature-item"><div class="feature-check">✓</div><div class="feature-text">增加冠脉血流</div></div>
+            <div class="feature-item"><div class="feature-check">✓</div><div class="feature-text">不增加心率</div></div>
+            <div class="feature-item"><div class="feature-check">✓</div><div class="feature-text">无药物蓄积</div></div>
+          </div>
+        </div>
+        <div class="feature-box">
+          <div class="feature-title">对比优势</div>
+          <div class="detail-content" style="margin-top:12px;">
+            <strong>vs 去氧肾上腺素：</strong>冠脉血流增加更明显<br>
+            <strong>vs 去甲肾上腺素：</strong>不增加心率和心肌氧耗<br>
+            <strong>vs 间羟胺：</strong>无药物蓄积和快速耐受性
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <script>
+    // —— 数据与映射 ——
+    const detailData = {
+      a1a: { title: 'α1A受体激动作用', subtitle: '心肌保护机制', content: '甲氧明通过<span class="highlight">强激动α1A受体</span>，实现心肌保护作用。α1A受体主要分布于心肌细胞，激动后能够维持心肌细胞正常生长和功能，提供心肌保护，不增加心肌氧耗，特别适合心功能不全患者。' },
+      a1b: { title: 'α1B受体激动作用', subtitle: '血压调节机制', content: '通过<span class="highlight">激动α1B受体</span>，诺复康引起外周血管适度收缩，增加外周血管阻力，有效提升血压。这种作用平稳可控，起效快速(1分钟)，持续时间适中(15-40分钟)，便于临床精确调控。' },
+      a1d: { title: 'α1D受体不激动', subtitle: '诺复康独特优势', content: '这是诺复康的<span class="highlight">核心竞争优势</span>！α1D受体主要分布于冠状动脉，诺复康不激动此受体，因此<span class="highlight">不会引起冠脉收缩</span>。相反，通过其他机制反而能增加冠脉血流，对冠心病患者更安全。' },
+      heart: { title: '心脏保护效应', subtitle: '维持心功能稳定', content: '诺复康对心脏的保护作用表现在多个方面：<span class="highlight">不增加心率</span>（避免反射性心动过速），<span class="highlight">不增加心肌氧耗</span>，维持心内膜与心外膜血流比平衡。这些特性使其成为心脏手术和心功能不全患者的理想选择。' },
+      vessel: { title: '外周血管效应', subtitle: '稳定提升血压', content: '通过激动外周血管α1受体，引起血管<span class="highlight">适度收缩</span>，有效提升血压。作用平稳，不会引起血压剧烈波动。起效快速(静注1分钟起效)，作用持续时间适中，便于临床滴定调节。' },
+      coronary: { title: '冠状动脉保护', subtitle: '不收缩冠脉 · 增加冠脉血流', content: '不激动冠脉<span class="highlight">α1D受体</span>，避免冠脉痉挛；通过改善灌注与微循环，<span class="highlight">增加冠脉血流</span>，对冠心病患者更安全。' }
+    };
+
+    const map = {
+      receptorToPath: { a1a: 'path-a1a', a1b: 'path-a1b', a1d: 'path-a1d' },
+      effectToPath: { heart: 'path-heart', vessel: 'path-vessel', coronary: 'path-coronary' }
+    };
+
+    // —— 工具函数 ——
+    const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+    const $ = (sel, root = document) => root.querySelector(sel);
+
+    function setDetail(key){
+      const d = detailData[key];
+      if(!d) return;
+      $('#detailTitle').innerHTML = d.title;
+      $('#detailSubtitle').innerHTML = d.subtitle;
+      $('#detailContent').innerHTML = d.content;
+    }
+
+    function clearSelected(){
+      $$('.receptor-node, .effect-node').forEach(el => el.classList.remove('selected'));
+    }
+
+    function showPaths(ids){
+      // 首先全部隐藏
+      $$('.path-line').forEach(p => p.classList.remove('visible'));
+      // 再显示需要的
+      ids.forEach(id => { const el = document.getElementById(id); if(el) el.classList.add('visible'); });
+    }
+
+    function setActiveBtn(action){
+      $$('#btnGroup .control-btn').forEach(b => b.classList.toggle('active', b.dataset.action === action));
+    }
+
+    // —— 交互函数 ——
+    function showComplete(){
+      setActiveBtn('complete');
+      showPaths(['path-a1a','path-a1b','path-a1d','path-heart','path-vessel','path-coronary']);
+      clearSelected();
+      setDetail('a1a');
+    }
+
+    function showReceptorsOnly(){
+      setActiveBtn('receptors');
+      showPaths(['path-a1a','path-a1b','path-a1d']);
+      clearSelected();
+      setDetail('a1b');
+    }
+
+    function showEffectsOnly(){
+      setActiveBtn('effects');
+      showPaths(['path-heart','path-vessel','path-coronary']);
+      clearSelected();
+      setDetail('heart');
+    }
+
+    function selectReceptor(key){
+      setActiveBtn('');
+      clearSelected();
+      const node = document.getElementById(`receptor-${key}`);
+      if(node){ node.classList.add('selected'); }
+      showPaths([ map.receptorToPath[key] ]);
+      setDetail(key);
+    }
+
+    function selectEffect(key){
+      setActiveBtn('');
+      clearSelected();
+      const node = document.getElementById(`effect-${key}`);
+      if(node){ node.classList.add('selected'); }
+      showPaths([ map.effectToPath[key] ]);
+      setDetail(key);
+    }
+
+    function selectAll(){ showComplete(); }
+
+    function playAnimation(){
+      setActiveBtn('animate');
+      clearSelected();
+      const steps = [
+        () => showPaths(['path-a1a']),
+        () => showPaths(['path-a1b']),
+        () => showPaths(['path-a1d']),
+        () => showPaths(['path-heart']),
+        () => showPaths(['path-vessel']),
+        () => showPaths(['path-coronary']),
+        () => showPaths(['path-a1a','path-a1b','path-a1d','path-heart','path-vessel','path-coronary'])
+      ];
+      let i = 0;
+      setDetail('a1a');
+      const timer = setInterval(() => {
+        steps[i++]?.();
+        if(i===steps.length) clearInterval(timer);
+      }, 700);
+    }
+
+    // —— 初始化与事件绑定 ——
+    function bindEvents(){
+      // 左侧按钮
+      $('#btnGroup').addEventListener('click', (e) => {
+        const btn = e.target.closest('.control-btn');
+        if(!btn) return;
+        const action = btn.dataset.action;
+        if(action === 'complete') return showComplete();
+        if(action === 'receptors') return showReceptorsOnly();
+        if(action === 'effects') return showEffectsOnly();
+        if(action === 'animate') return playAnimation();
+      });
+
+      // 中心分子
+      $('#molecule').addEventListener('click', selectAll);
+
+      // 受体与效应节点
+      $('#receptor-a1a').addEventListener('click', () => selectReceptor('a1a'));
+      $('#receptor-a1b').addEventListener('click', () => selectReceptor('a1b'));
+      $('#receptor-a1d').addEventListener('click', () => selectReceptor('a1d'));
+      $('#effect-heart').addEventListener('click', () => selectEffect('heart'));
+      $('#effect-vessel').addEventListener('click', () => selectEffect('vessel'));
+      $('#effect-coronary').addEventListener('click', () => selectEffect('coronary'));
+    }
+
+    function init(){
+      bindEvents();
+      showComplete(); // 默认展示完整机制
+    }
+
+    document.addEventListener('DOMContentLoaded', init);
+  </script>
+</body>
+</html>

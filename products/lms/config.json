@@ -1,0 +1,13 @@
+{
+  "navItems": [
+    {
+      "title": "产品介绍",
+      "page": "/products/lms/cp.html"
+    },
+    {
+      "title": "分子机制",
+      "page": "/products/lms/fz.html"
+    }
+  ],
+  "defaultPage": "/products/lms/cp.html"
+}

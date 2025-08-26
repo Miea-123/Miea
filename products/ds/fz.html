@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>达爽®—分子机制图（ACE 抑制 / RAAS）</title>
+  <style>
+    :root{
+      --bg:#f8fafc; --fg:#0f172a; --muted:#475569; --brand1:#5b9cf6; --brand2:#7c3aed; --brand3:#14b8a6; --warn:#f59e0b; --danger:#ef4444;
+      --card:#ffffff; --ring:rgba(124,58,237,.35); --shadow:0 14px 28px rgba(2,8,23,.08);
+      --stroke:2.2; /* 线条基准粗细，可用滑块调整 */
+    }
+    html{height:100%;scroll-behavior:smooth}
+    body{margin:0;min-height:100%;background:var(--bg);color:var(--fg);
+      font-family:'Alibaba PuHuiTi','HarmonyOS Sans SC','PingFang SC','Microsoft YaHei',system-ui,-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Arial,sans-serif;
+      line-height:1.65;letter-spacing:.2px;font-size:16px;-webkit-font-smoothing:antialiased}
+    .wrap{max-width:1100px;margin:0 auto;padding:16px clamp(12px,4vw,22px) calc(110px + env(safe-area-inset-bottom))}
+    .title{display:flex;align-items:center;gap:10px;margin:8px 0 14px}
+    .title h1{margin:0;font-size:clamp(20px,5.6vw,34px)}
+    .panel{position:sticky;top:0;z-index:10;backdrop-filter:saturate(180%) blur(8px);background:rgba(255,255,255,.8);border-bottom:1px solid rgba(2,8,23,.06)}
+    .panel-inner{max-width:1100px;margin:0 auto;padding:10px clamp(12px,4vw,22px);display:grid;grid-template-columns:1fr;gap:10px}
+    .controls{display:flex;flex-wrap:wrap;gap:10px}
+    .chip{display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid rgba(2,8,23,.08);border-radius:999px;padding:8px 12px;font-weight:800;box-shadow:var(--shadow)}
+    .chip input{inline-size:18px;block-size:18px}
+    .slider{display:flex;align-items:center;gap:8px}
+    .slider input{width:160px}
+    .legend{display:flex;flex-wrap:wrap;gap:8px}
+    .tag{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:999px;font-weight:800;font-size:12px;border:1px solid rgba(2,8,23,.1)}
+    .tag.r1{background:rgba(91,156,246,.14);color:#1d4ed8}
+    .tag.r2{background:rgba(124,58,237,.12);color:#5b21b6}
+    .tag.r3{background:rgba(20,184,166,.12);color:#0f766e}
+    .tag.warn{background:rgba(245,158,11,.10);color:#8a4b00}
+
+    .card{background:var(--card);border-radius:18px;padding:12px;box-shadow:var(--shadow);border:1px solid rgba(2,8,23,.06)}
+    .note{font-size:13px;color:#64748b;margin-top:8px}
+
+    /* SVG */
+    .board{position:relative}
+    svg{width:100%;height:auto;display:block}
+    .node{fill:#fff;stroke:rgba(15,23,42,.15);stroke-width:1.2;filter:drop-shadow(0 8px 18px rgba(2,8,23,.10))}
+    .node.k{fill:#eef2ff}
+    .node.h{fill:#ecfeff}
+    .node.a{fill:#fff7ed}
+    .label{font-weight:800;fill:#0f172a}
+    .sublabel{fill:#475569;font-size:12px}
+
+    .arrow{fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:calc(var(--stroke) * 1); marker-end:url(#arrow)}
+    .raas{stroke:url(#grad-raas)}
+    .bk{stroke:url(#grad-bk)}
+    .renal{stroke:url(#grad-renal)}
+    .inhibit{stroke:var(--danger);stroke-width:calc(var(--stroke) * 1.2)}
+    .dash{stroke-dasharray:8 8}
+
+    .group{opacity:1;transition:opacity .2s ease}
+    .group.off{opacity:.12}
+
+    .legend-box{display:grid;grid-template-columns:1fr;gap:10px}
+    .export{position:fixed;right:12px;bottom:calc(64px + env(safe-area-inset-bottom));display:flex;flex-direction:column;gap:8px}
+    .btn{border:none;border-radius:12px;padding:10px 14px;font-weight:800;cursor:pointer;box-shadow:var(--shadow)}
+    .btn.primary{background:linear-gradient(90deg,var(--brand2),var(--brand1));color:#fff}
+    .btn.ghost{background:#fff;color:#5b21b6;border:1px solid rgba(124,58,237,.25)}
+
+    @media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+  </style>
+</head>
+<body>
+  <div class="panel" role="region" aria-label="显示控制">
+    <div class="panel-inner">
+      <div class="controls">
+        <label class="chip"><input type="checkbox" id="t-raas" checked aria-controls="g-raas"/> RAAS 主通路</label>
+        <label class="chip"><input type="checkbox" id="t-bk" checked aria-controls="g-bk"/> 缓激肽 / NO / PGI₂</label>
+        <label class="chip"><input type="checkbox" id="t-renal" checked aria-controls="g-renal"/> 肾小球出球小动脉</label>
+        <label class="chip"><input type="checkbox" id="t-met" checked aria-controls="g-met"/> 代谢提示（研究趋势）</label>
+        <div class="chip slider" title="线条粗细代表相对作用强度">
+          <span>线条粗细</span>
+          <input type="range" id="w" min="1.6" max="3.2" step="0.1" value="2.2" />
+        </div>
+      </div>
+      <div class="legend">
+        <span class="tag r1">RAAS 抑制 → 降压</span>
+        <span class="tag r2">缓激肽↑ → NO/PGI₂ → 内皮保护</span>
+        <span class="tag r3">肾脏出球小动脉舒张 → 蛋白尿管理</span>
+        <span class="tag warn">代谢：小样本提示 IR 改善趋势（需验证）</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="title">
+      <h1>达爽®（盐酸咪达普利）分子机制图</h1>
+    </div>
+
+    <div class="card board" aria-label="分子机制图画布">
+      <svg viewBox="0 0 1200 820" role="img" aria-labelledby="ttl desc">
+        <title id="ttl">咪达普利分子机制：ACE 抑制 / RAAS 与缓激肽通路</title>
+        <desc id="desc">展示血管紧张素系统中从血管紧张素原到血管紧张素 II 的生成被 ACE 抑制所阻断；并示意缓激肽降解受抑导致 NO/PGI2 上调、内皮保护与血管舒张；同时示意肾小球出球小动脉舒张降低肾小球内压与蛋白尿。</desc>
+
+        <!-- 渐变与箭头定义 -->
+        <defs>
+          <linearGradient id="grad-raas" x1="0" x2="1">
+            <stop offset="0%" stop-color="#5b9cf6"/><stop offset="100%" stop-color="#7c3aed"/>
+          </linearGradient>
+          <linearGradient id="grad-bk" x1="0" x2="1">
+            <stop offset="0%" stop-color="#14b8a6"/><stop offset="100%" stop-color="#5b9cf6"/>
+          </linearGradient>
+          <linearGradient id="grad-renal" x1="0" x2="1">
+            <stop offset="0%" stop-color="#7c3aed"/><stop offset="100%" stop-color="#14b8a6"/>
+          </linearGradient>
+          <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+            <path d="M 0 0 L 10 5 L 0 10 z" fill="#475569"/>
+          </marker>
+        </defs>
+
+        <!-- 分区背景标签 -->
+        <g opacity=".06">
+          <rect x="30" y="40" width="790" height="320" rx="16" fill="#5b9cf6"/>
+          <text x="40" y="70" class="label" font-size="14">肝/循环（RAAS 级联）</text>
+          <rect x="30" y="390" width="790" height="180" rx="16" fill="#14b8a6"/>
+          <text x="40" y="420" class="label" font-size="14">缓激肽 / 内皮</text>
+          <rect x="840" y="40" width="330" height="530" rx="16" fill="#7c3aed"/>
+          <text x="850" y="70" class="label" font-size="14">肾小球（器官层落点）</text>
+        </g>
+
+        <!-- RAAS 主通路 -->
+        <g id="g-raas" class="group">
+          <!-- 节点 -->
+          <g>
+            <rect class="node" x="60" y="120" width="180" height="60" rx="12"/>
+            <text x="150" y="145" class="label" text-anchor="middle">血管紧张素原</text>
+            <text x="150" y="165" class="sublabel" text-anchor="middle">(AGT, 肝)</text>
+          </g>
+          <g>
+            <rect class="node" x="290" y="120" width="120" height="60" rx="12"/>
+            <text x="350" y="145" class="label" text-anchor="middle">肾素</text>
+            <text x="350" y="165" class="sublabel" text-anchor="middle">Renin</text>
+          </g>
+          <g>
+            <rect class="node" x="460" y="120" width="150" height="60" rx="12"/>
+            <text x="535" y="145" class="label" text-anchor="middle">血管紧张素 I</text>
+            <text x="535" y="165" class="sublabel" text-anchor="middle">Ang I</text>
+          </g>
+          <g>
+            <rect class="node" x="660" y="120" width="120" height="60" rx="12"/>
+            <text x="720" y="145" class="label" text-anchor="middle">ACE</text>
+            <text x="720" y="165" class="sublabel" text-anchor="middle">激肽酶II</text>
+          </g>
+          <g>
+            <rect class="node" x="840" y="120" width="160" height="60" rx="12"/>
+            <text x="920" y="145" class="label" text-anchor="middle">血管紧张素 II</text>
+            <text x="920" y="165" class="sublabel" text-anchor="middle">Ang II</text>
+          </g>
+          <g>
+            <rect class="node" x="1040" y="120" width="110" height="60" rx="12"/>
+            <text x="1095" y="145" class="label" text-anchor="middle">AT₁ 受体</text>
+            <text x="1095" y="165" class="sublabel" text-anchor="middle">VSMC/肾上腺</text>
+          </g>
+
+          <!-- 连接箭头 -->
+          <path class="arrow raas" d="M 240 150 C 265 150 265 150 290 150"/>
+          <path class="arrow raas" d="M 410 150 C 435 150 435 150 460 150"/>
+          <path class="arrow raas" d="M 610 150 C 635 150 635 150 660 150"/>
+          <path class="arrow raas" d="M 780 150 C 810 150 810 150 840 150"/>
+          <path class="arrow raas" d="M 1000 150 C 1020 150 1020 150 1040 150"/>
+
+          <!-- AT1 下游效果（缩略） -->
+          <g>
+            <path class="arrow raas" d="M 1095 180 C 1095 220 980 240 950 260"/>
+            <text x="945" y="270" class="sublabel" text-anchor="end">血管平滑肌收缩 → 外周阻力↑ → BP↑</text>
+            <path class="arrow raas" d="M 1095 180 C 1095 240 1120 260 1120 300"/>
+            <text x="1178" y="318" class="sublabel" text-anchor="end">醛固酮↑ → Na⁺/水潴留</text>
+            <path class="arrow raas dash" d="M 1095 180 C 1095 220 1060 220 1030 240"/>
+            <text x="1026" y="252" class="sublabel" text-anchor="end">交感活性↑（应激）</text>
+          </g>
+        </g>
+
+        <!-- 咪达普利 抑制 ACE -->
+        <g>
+          <path class="inhibit" d="M 700 105 L 700 75" marker-end="url(#arrow)"/>
+          <text x="700" y="60" class="label" text-anchor="middle">咪达普利（ACEI）⊥ ACE</text>
+        </g>
+
+        <!-- 缓激肽 / 内皮通路 -->
+        <g id="g-bk" class="group">
+          <g>
+            <rect class="node h" x="540" y="410" width="120" height="56" rx="12"/>
+            <text x="600" y="435" class="label" text-anchor="middle">缓激肽</text>
+            <text x="600" y="453" class="sublabel" text-anchor="middle">Bradykinin</text>
+          </g>
+          <g>
+            <rect class="node h" x="700" y="410" width="120" height="56" rx="12"/>
+            <text x="760" y="435" class="label" text-anchor="middle">ACE 降解</text>
+            <text x="760" y="453" class="sublabel" text-anchor="middle">（被抑制）</text>
+          </g>
+          <path class="arrow bk" d="M 660 438 C 675 438 685 438 700 438"/>
+          <path class="arrow bk" d="M 760 410 C 760 380 720 360 700 340"/>
+          <text x="690" y="332" class="sublabel" text-anchor="end">ACEI → 缓激肽↑</text>
+
+          <g>
+            <rect class="node h" x="350" y="500" width="150" height="56" rx="12"/>
+            <text x="425" y="525" class="label" text-anchor="middle">内皮 eNOS/PGI₂</text>
+            <text x="425" y="543" class="sublabel" text-anchor="middle">NO↑ / 前列环素↑</text>
+          </g>
+          <path class="arrow bk" d="M 600 466 C 560 480 510 490 500 500"/>
+          <text x="505" y="488" class="sublabel">刺激</text>
+
+          <g>
+            <rect class="node h" x="160" y="590" width="170" height="56" rx="12"/>
+            <text x="245" y="615" class="label" text-anchor="middle">血管舒张</text>
+            <text x="245" y="633" class="sublabel" text-anchor="middle">外周阻力↓、微循环↑</text>
+          </g>
+          <path class="arrow bk" d="M 425 556 C 360 570 300 582 245 590"/>
+          <g>
+            <rect class="node h" x="360" y="590" width="220" height="56" rx="12"/>
+            <text x="470" y="615" class="label" text-anchor="middle">内皮保护 / 氧化应激↓</text>
+            <text x="470" y="633" class="sublabel" text-anchor="middle">抗炎、抗重构（倾向）</text>
+          </g>
+          <path class="arrow bk" d="M 425 556 C 430 575 450 585 470 590"/>
+        </g>
+
+        <!-- 肾小球通路（器官层落点） -->
+        <g id="g-renal" class="group">
+          <!-- 肾小球示意 -->
+          <ellipse cx="1005" cy="260" rx="140" ry="90" fill="#ffffff" stroke="rgba(15,23,42,.15)" stroke-width="1.2"/>
+          <text x="1005" y="215" class="label" text-anchor="middle">肾小球</text>
+          <text x="1005" y="235" class="sublabel" text-anchor="middle">efferent / afferent</text>
+
+          <!-- 入球与出球小动脉 -->
+          <path class="arrow renal" d="M 840 260 C 880 260 900 260 920 260"/>
+          <text x="860" y="250" class="sublabel">入球小动脉</text>
+          <path class="arrow renal" d="M 1090 260 C 1120 260 1150 260 1170 260"/>
+          <text x="1168" y="250" class="sublabel" text-anchor="end">出球小动脉</text>
+
+          <!-- Ang II → 出球收缩（被 ACEI 抑制） -->
+          <path class="arrow renal" d="M 920 180 C 930 200 950 220 1000 240"/>
+          <text x="915" y="178" class="sublabel">Ang II → 出球收缩</text>
+          <path class="inhibit" d="M 980 210 L 960 185" marker-end="url(#arrow)"/>
+          <text x="955" y="178" class="sublabel" text-anchor="end">ACEI 介入</text>
+
+          <!-- 结果：内压↓、蛋白尿↓ -->
+          <g>
+            <rect class="node k" x="900" y="320" width="210" height="56" rx="12"/>
+            <text x="1005" y="345" class="label" text-anchor="middle">出球舒张 → 肾小球内压↓</text>
+            <text x="1005" y="363" class="sublabel" text-anchor="middle">蛋白尿管理逻辑</text>
+          </g>
+        </g>
+
+        <!-- 代谢提示（研究趋势） -->
+        <g id="g-met" class="group">
+          <g>
+            <rect class="node a" x="60" y="700" width="300" height="56" rx="12"/>
+            <text x="210" y="725" class="label" text-anchor="middle">IR/OGTT 指标改善趋势（小样本）</text>
+            <text x="210" y="743" class="sublabel" text-anchor="middle">需更大样本研究验证</text>
+          </g>
+          <path class="arrow dash" d="M 245 646 C 245 670 245 685 245 700"/>
+          <text x="248" y="665" class="sublabel">间接关联</text>
+        </g>
+      </svg>
+      <div class="note">* 本图为学术交流示意：请以公司已审批资料为准；避免夸大或作超说明书推广。线条粗细（滑块）用于表示相对作用强弱以增强可视化，不代表定量效应。</div>
+    </div>
+
+    <div class="legend-box"></div>
+  </div>
+
+  <div class="export">
+    <button class="btn primary" id="downloadSvg">下载 SVG</button>
+    <button class="btn ghost" id="toPng">导出 PNG</button>
+  </div>
+
+  <script>
+    // 切换分组显示
+    const map = [
+      {box:'#t-raas', g:'#g-raas'},
+      {box:'#t-bk', g:'#g-bk'},
+      {box:'#t-renal', g:'#g-renal'},
+      {box:'#t-met', g:'#g-met'},
+    ];
+    map.forEach(({box,g})=>{
+      const el = document.querySelector(box); const grp = document.querySelector(g);
+      if(el && grp){ el.addEventListener('change',()=>{ grp.classList.toggle('off', !el.checked); }); }
+    });
+    // 线宽滑块
+    const w = document.getElementById('w');
+    w && w.addEventListener('input', e=>{ document.documentElement.style.setProperty('--stroke', e.target.value); });
+
+    // 下载 SVG
+    function download(filename, text){
+      const a = document.createElement('a'); a.setAttribute('href','data:image/svg+xml;charset=utf-8,' + encodeURIComponent(text)); a.setAttribute('download', filename); a.style.display='none'; document.body.appendChild(a); a.click(); a.remove();
+    }
+    document.getElementById('downloadSvg').addEventListener('click',()=>{
+      const svg = document.querySelector('svg'); if(!svg) return;
+      const clone = svg.cloneNode(true);
+      // 内联样式，为便于外部使用
+      const style = document.createElement('style');
+      style.textContent = `.label{font-weight:800;fill:#0f172a;font-family:Alibaba PuHuiTi,\"Microsoft YaHei\",Arial}`;
+      clone.prepend(style);
+      const xml = new XMLSerializer().serializeToString(clone);
+      download('Midadopril_RAAS.svg', xml);
+    });
+
+    // 导出 PNG（简单方式：使用画布绘制 SVG）
+    document.getElementById('toPng').addEventListener('click',()=>{
+      const svg = document.querySelector('svg'); if(!svg) return;
+      const xml = new XMLSerializer().serializeToString(svg);
+      const img = new Image();
+      img.onload = function(){
+        const scale = 2; // 2x 高清
+        const canvas = document.createElement('canvas');
+        canvas.width = img.width * scale; canvas.height = img.height * scale;
+        const ctx = canvas.getContext('2d');
+        ctx.scale(scale, scale); ctx.drawImage(img, 0, 0);
+        const a = document.createElement('a'); a.href = canvas.toDataURL('image/png'); a.download = 'Midadopril_RAAS.png'; a.click();
+      };
+      img.src = 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(xml);
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,386 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>乐美汀®（拉呋替丁分散片）多页面医学推广</title>
+  <style>
+    :root{
+      --bg:#0f172a;           /* slate-900 */
+      --card:#0b1226;         /* deep navy */
+      --ink:#0b1226;
+      --brand-1:#2563eb;      /* blue-600 */
+      --brand-2:#7c3aed;      /* violet-600 */
+      --brand-3:#22d3ee;      /* cyan-400 */
+      --accent:#38bdf8;       /* sky-400 */
+      --ok:#16a34a;           /* green-600 */
+      --warn:#f59e0b;         /* amber-500 */
+      --danger:#ef4444;       /* red-500 */
+      --text:#0f172a;         /* dark for light cards */
+      --muted:#64748b;        /* slate-500 */
+      --surface:#ffffff;      /* main surface */
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:"Alibaba PuHuiTi","HarmonyOS Sans SC","Noto Sans SC","Microsoft YaHei",system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      line-height:1.8;
+      background:linear-gradient(135deg,#eef2ff 0%,#f0f9ff 30%,#ecfeff 60%,#f5f3ff 100%);
+      color:#0f172a;
+    }
+    a{color:var(--brand-1);text-decoration:none}
+    .container{max-width:1100px;margin:0 auto;padding:20px 16px}
+    /* header */
+    header{
+      position:sticky;top:0;z-index:50;
+      backdrop-filter:saturate(1.2) blur(8px);
+      background:linear-gradient(90deg, rgba(37,99,235,.9), rgba(124,58,237,.9));
+      color:#fff;
+      box-shadow:0 8px 30px rgba(2,6,23,.18);
+    }
+    .brand{display:flex;align-items:center;gap:12px}
+    .brand .logo{width:36px;height:36px;border-radius:10px;background:linear-gradient(135deg,#22d3ee,#2563eb);box-shadow:0 4px 18px rgba(34,211,238,.45)}
+    nav{display:flex;gap:12px;flex-wrap:wrap}
+    .nav-link{padding:10px 12px;border-radius:12px;color:#fff;font-weight:600;opacity:.95}
+    .nav-link.active{background:linear-gradient(90deg,#22d3ee,#60a5fa);color:#0b1226}
+    .top{display:flex;align-items:center;justify-content:space-between}
+    .hamburger{display:none}
+    @media (max-width:960px){
+      nav{display:none}
+      nav.open{display:flex}
+      .hamburger{display:block;background:transparent;border:0;color:#fff;font-size:22px}
+    }
+    /* page */
+    .page{display:none;animation:.35s ease slideIn}
+    .page.active{display:block}
+    @keyframes slideIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+    /* components */
+    .hero{display:grid;gap:18px;padding:36px;border-radius:24px;background:linear-gradient(135deg,#ffffff,#ebf4ff 40%,#e6fffb 100%);box-shadow:0 20px 40px rgba(2,6,23,.06)}
+    .hero h1{font-size:clamp(24px,3vw,40px);line-height:1.25;margin:0}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:linear-gradient(90deg,#22d3ee,#60a5fa);color:#0b1226;font-weight:700}
+    .grid{display:grid;gap:16px}
+    .grid.cols-3{grid-template-columns:repeat(3,1fr)}
+    .grid.cols-2{grid-template-columns:repeat(2,1fr)}
+    @media (max-width:900px){.grid.cols-3{grid-template-columns:1fr}.grid.cols-2{grid-template-columns:1fr}}
+    .card{background:#fff;border-radius:18px;padding:18px 18px;box-shadow:0 10px 30px rgba(2,6,23,.06)}
+    .card h3{margin:.2rem 0 0.4rem;font-size:1.1rem}
+    .kpi{font-size:28px;font-weight:800}
+    .chip{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;border:1px solid #e5e7eb;background:#fff}
+    .chip .dot{width:10px;height:10px;border-radius:50%}
+    .chip.blue .dot{background:#60a5fa}
+    .chip.violet .dot{background:#a78bfa}
+    .chip.cyan .dot{background:#22d3ee}
+    .list>li{margin:.35rem 0}
+    .note{font-size:.92rem;color:var(--muted)}
+    .cta{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{appearance:none;border:0;border-radius:12px;padding:10px 14px;font-weight:700;cursor:pointer;box-shadow:0 8px 20px rgba(2,6,23,.08)}
+    .btn.primary{background:linear-gradient(90deg,#2563eb,#22d3ee);color:#fff}
+    .btn.ghost{background:#fff;color:#0b1226;border:1px solid #e5e7eb}
+    .stepper{display:flex;justify-content:space-between;gap:12px;margin-top:22px}
+    .stepper .btn{flex:1}
+    .stat{display:flex;align-items:center;gap:10px}
+    .stat .icon{font-size:20px}
+    .kbd{font-family:ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;background:#111827;color:#fff;border-radius:8px;padding:2px 6px;font-size:.8rem}
+    footer{margin-top:36px;color:#334155}
+    .footer-card{background:#f8fafc;border:1px solid #e5e7eb;border-radius:16px;padding:16px}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container top">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div style="font-weight:900;letter-spacing:.3px">乐美汀® 医学推广</div>
+          <div style="opacity:.85;font-size:.9rem">拉呋替丁分散片 · 多页面跳转</div>
+        </div>
+      </div>
+      <button class="hamburger" aria-label="打开导航" onclick="document.querySelector('nav').classList.toggle('open')">☰</button>
+      <nav id="nav">
+        <a class="nav-link" data-route="home" href="#home">首页</a>
+        <a class="nav-link" data-route="disease" href="#disease">酸相关疾病</a>
+        <a class="nav-link" data-route="mechanism" href="#mechanism">作用机制</a>
+        <a class="nav-link" data-route="evidence" href="#evidence">循证与联合</a>
+        <a class="nav-link" data-route="cv" href="#cv">抗栓人群场景</a>
+        <a class="nav-link" data-route="guideline" href="#guideline">指南与共识</a>
+        <a class="nav-link" data-route="rx" href="#rx">处方信息</a>
+        <a class="nav-link" data-route="faq" href="#faq">FAQ</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container">
+    <!-- 首页 -->
+    <section class="page" id="home">
+      <div class="hero">
+        <span class="pill">✨ 双重机制 · 守“胃”护“肠”</span>
+        <h1>乐美汀®（拉呋替丁分散片）<br/>抑酸 + 黏膜保护 = 更全面的消化道守护</h1>
+        <div class="grid cols-3">
+          <div class="card">
+            <div class="stat"><span class="icon">🌙</span><b>夜间抑酸优势</b></div>
+            <div class="note">H2RA 对夜酸分泌更敏感，24h 维持胃内 pH＞3 时长可观，夜间覆盖更佳。</div>
+          </div>
+          <div class="card">
+            <div class="stat"><span class="icon">🛡️</span><b>内源性黏膜保护</b></div>
+            <div class="note">可增厚胃表面黏液层与黏蛋白含量，并经 CSAN 途径改善肠屏障。</div>
+          </div>
+          <div class="card">
+            <div class="stat"><span class="icon">🤝</span><b>可与 PPI 合作</b></div>
+            <div class="note">在溃疡愈合质量、症状缓解与 HP 根除方案中显示良好协同与等效性证据。</div>
+          </div>
+        </div>
+        <div class="cta">
+          <a class="btn primary" href="#mechanism">查看作用机制 →</a>
+          <a class="btn ghost" href="#cv">进入抗栓人群场景 →</a>
+        </div>
+        <div class="note">仅供医学专业人士学术交流使用｜请结合当地核准说明书与指南。</div>
+      </div>
+      <div class="stepper">
+        <a class="btn ghost" href="#faq">← 上一页</a>
+        <a class="btn primary" href="#disease">下一页：酸相关疾病 →</a>
+      </div>
+    </section>
+
+    <!-- 酸相关疾病 -->
+    <section class="page" id="disease">
+      <div class="card">
+        <h2>酸相关性疾病与诊疗路径 🧭</h2>
+        <ul class="list">
+          <li>上消化道疾病与胃酸攻击密切相关：GERD、消化性溃疡、慢性胃炎、HP 感染相关疾病等。</li>
+          <li>诊疗关键：去除诱因、规范抑酸、根除 HP、黏膜保护、必要时胃动力与抗生素治疗。</li>
+          <li>常见检查：胃镜、C13/14 呼气试验、24h pH/阻抗监测、食道测压等。</li>
+        </ul>
+        <div class="grid cols-3" style="margin-top:8px">
+          <div class="chip"><span class="dot"></span>GERD</div>
+          <div class="chip"><span class="dot"></span>消化性溃疡</div>
+          <div class="chip"><span class="dot"></span>慢性胃炎 / HP(+)</div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>临床关注点</h3>
+        <div class="grid cols-3">
+          <div class="card">
+            <div class="kpi">🩸</div>
+            <div><b>长期安全</b><br><span class="note">避免过度抑酸相关风险，兼顾上下消化道保护。</span></div>
+          </div>
+          <div class="card">
+            <div class="kpi">⚡</div>
+            <div><b>起效与夜间控制</b><br><span class="note">餐后起效速度与夜间控制是患者感知关键。</span></div>
+          </div>
+          <div class="card">
+            <div class="kpi">🧪</div>
+            <div><b>联合策略</b><br><span class="note">HP 根除、NSAIDs/抗栓共治场景的联合应用。</span></div>
+          </div>
+        </div>
+      </div>
+      <div class="stepper">
+        <a class="btn ghost" href="#home">← 上一页</a>
+        <a class="btn primary" href="#mechanism">下一页：作用机制 →</a>
+      </div>
+    </section>
+
+    <!-- 作用机制 -->
+    <section class="page" id="mechanism">
+      <div class="card">
+        <h2>机制要点 🔬</h2>
+        <div class="grid cols-2">
+          <div class="card">
+            <h3>① 抑酸（H2 受体拮抗）</h3>
+            <ul class="list">
+              <li>对夜间组胺/迷走神经主导的酸分泌靶向性强，适合“夜间症状”患者。</li>
+              <li>健康成人单次 10 mg 可显著提升 3–6 小时内胃内 pH（与兰索/雷贝对照）。</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>② 黏膜保护（内源性）</h3>
+            <ul class="list">
+              <li>增厚表面黏液凝胶层（≈翻倍），表层黏蛋白↑（≈3 倍）。</li>
+              <li>经辣椒素敏感初级传入神经（CSAN）通路：↑Muc2、↑黏液、抑制细菌入侵与 iNOS。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h3>黏膜保护图谱（简版）</h3>
+        <ul class="list">
+          <li>NSAIDs→小肠损伤：出血/炎症↑ → <b>拉呋替丁</b>（CSAN）→ <b>屏障修复</b>（Muc2↑、侵袭↓、iNOS↓）。</li>
+          <li>胃表面：<b>黏液层厚度↑</b>、<b>黏蛋白↑</b> → 酸/胆盐/蛋白酶攻击缓冲。</li>
+        </ul>
+      </div>
+      <div class="stepper">
+        <a class="btn ghost" href="#disease">← 上一页</a>
+        <a class="btn primary" href="#evidence">下一页：循证与联合 →</a>
+      </div>
+    </section>
+
+    <!-- 循证与联合 -->
+    <section class="page" id="evidence">
+      <div class="card">
+        <h2>关键循证 📊</h2>
+        <div class="grid cols-2">
+          <div class="card">
+            <h3>溃疡愈合/质量</h3>
+            <ul class="list">
+              <li>与法莫替丁 12 周对照：愈合率相近；<b>扁平型瘢痕</b>发生率更高（愈合质量优）。</li>
+              <li>与 PPI 联合：4 周治愈率与症状（疼痛/反酸）改善更佳，安全性良好。</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>NSAIDs/阿司匹林损伤</h3>
+            <ul class="list">
+              <li>随机交叉试验：阿司匹林±洛索洛芬→镜下损伤评分显著降低。</li>
+              <li>小肠模型：拉呋替丁阻止溃疡形成，西咪替丁/法莫替丁/奥美拉唑无同等作用。</li>
+            </ul>
+          </div>
+        </div>
+        <div class="grid cols-2" style="margin-top:12px">
+          <div class="card">
+            <h3>HP 根除</h3>
+            <ul class="list">
+              <li>与兰索/雷贝三联方案：<b>根除率等效</b>（7–14 天）。</li>
+              <li>一线失败后救援方案：与雷贝三联等效（≈96%）。</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>起效与 24h 控制</h3>
+            <ul class="list">
+              <li>餐后 3–6 小时内 pH 提升优于兰索/雷贝；</li>
+              <li>24h pH＞3 维持率≈64%，夜间覆盖优于白天。</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="stepper">
+        <a class="btn ghost" href="#mechanism">← 上一页</a>
+        <a class="btn primary" href="#cv">下一页：抗栓人群场景 →</a>
+      </div>
+    </section>
+
+    <!-- 抗栓人群场景 -->
+    <section class="page" id="cv">
+      <div class="card">
+        <h2>抗栓治疗人群的消化道保护 ❤️‍🩹</h2>
+        <div class="grid cols-2">
+          <div class="card">
+            <h3>风险版图</h3>
+            <ul class="list">
+              <li>ACS/PCI 后出血事件中，<b>消化道出血占比最高</b>（约 49%–62%）。</li>
+              <li>PPI 与氯吡格雷共享 <span class="kbd">CYP2C19</span> 代谢，可能降低活性代谢物→血小板抑制率↘。</li>
+              <li>部分研究提示长期 PPI 与心血管/胃癌等风险相关，需要个体化权衡。</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>临床对策（示例）</h3>
+            <ul class="list">
+              <li>DAPT/抗凝合并既往上消化道事件或高危：<b>优先足量抑酸 + 黏膜保护</b>，必要时联合。</li>
+              <li>关注药物相互作用：如需长期保护且担心相互作用，可考虑 H2RA（如拉呋替丁）路径。</li>
+              <li>NSAIDs 必需者：重视小肠损伤风险，采取 <b>拉呋替丁 + 风险最小化</b> 方案。</li>
+            </ul>
+            <div class="note">以上为场景化学术要点，实施以指南/共识与医师判断为准。</div>
+          </div>
+        </div>
+      </div>
+      <div class="stepper">
+        <a class="btn ghost" href="#evidence">← 上一页</a>
+        <a class="btn primary" href="#guideline">下一页：指南与共识 →</a>
+      </div>
+    </section>
+
+    <!-- 指南与共识 -->
+    <section class="page" id="guideline">
+      <div class="card">
+        <h2>指南与共识 📚</h2>
+        <ul class="list">
+          <li>胃肠黏膜保护专家共识（国内）：强调上下消化道一体化保护思路，关注 NSAIDs 与抗栓并用风险。</li>
+          <li>低剂量阿司匹林相关损伤预防：H2RA（法莫替丁）可显著降低新发胃/十二指肠溃疡与糜烂性食管炎。</li>
+          <li>临床提示：选药需兼顾疗效、安全与相互作用，长期管理重在“足量、依从与再评估”。</li>
+        </ul>
+      </div>
+      <div class="stepper">
+        <a class="btn ghost" href="#cv">← 上一页</a>
+        <a class="btn primary" href="#rx">下一页：处方信息 →</a>
+      </div>
+    </section>
+
+    <!-- 处方信息 -->
+    <section class="page" id="rx">
+      <div class="card">
+        <h2>处方关键信息 💊</h2>
+        <div class="grid cols-2">
+          <div class="card">
+            <h3>基本信息</h3>
+            <ul class="list">
+              <li><b>商品名：</b>乐美汀®</li>
+              <li><b>通用名：</b>拉呋替丁分散片</li>
+              <li><b>适应症：</b>胃及十二指肠溃疡</li>
+              <li><b>规格：</b>5 mg；<b>用法用量：</b>成人 10 mg，bid，餐后或睡前</li>
+              <li><b>包装：</b>12 片/板×1 板/盒；<b>贮藏：</b>遮光、密封，≤20℃</li>
+              <li><b>有效期：</b>36 个月；<b>批准文号：</b>国药准字 H20080449</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>用药要点</h3>
+            <ul class="list">
+              <li>不良反应整体发生率低，遵医嘱使用，详见说明书。</li>
+              <li>必要时可与 PPI/抗 HP 方案/NSAIDs 风险管理联合，注意疗程与复评。</li>
+              <li>夜间症状、长期保护或相互作用顾虑人群可重点考虑。</li>
+            </ul>
+          </div>
+        </div>
+        <div class="cta" style="margin-top:8px">
+          <a class="btn primary" href="#faq">查看常见问题 →</a>
+          <a class="btn ghost" href="#home">返回首页</a>
+        </div>
+      </div>
+      <div class="stepper">
+        <a class="btn ghost" href="#guideline">← 上一页</a>
+        <a class="btn primary" href="#faq">下一页：FAQ →</a>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="page" id="faq">
+      <div class="card">
+        <h2>FAQ 常见问题 ❓</h2>
+        <ul class="list">
+          <li><b>Q：</b>可与 PPI 联合吗？<br><b>A：</b>特定场景（如溃疡愈合质量、症状控制、HP 根除）可考虑与 PPI 联合，请结合个体化风险评估与疗程管理。</li>
+          <li><b>Q：</b>对抗栓患者的价值是什么？<br><b>A：</b>在担心 PPI–CYP2C19 相互作用或需长期保护时，H2RA 路径具备差异化优势，同时关注既往出血史与再出血风险。</li>
+          <li><b>Q：</b>NSAIDs 合用如何做？<br><b>A：</b>尽量短程、最低有效剂量，叠加 <b>拉呋替丁黏膜保护</b>，监测小肠损伤风险并随访。</li>
+          <li><b>Q：</b>HP 根除能否用拉呋替丁替代 PPI？<br><b>A：</b>多项研究显示拉呋替丁三联根除率与兰索/雷贝等效，可按方案规范执行并评估复查。</li>
+          <li><b>Q：</b>是否适合所有 GERD？<br><b>A：</b>对夜间症状/轻中度患者更有优势；重度食管炎等仍应依指南选择强效抑酸并随访。</li>
+        </ul>
+      </div>
+      <div class="stepper">
+        <a class="btn ghost" href="#rx">← 上一页</a>
+        <a class="btn primary" href="#home">回到首页 →</a>
+      </div>
+    </section>
+
+    <footer>
+      <div class="footer-card">
+        <div>⚠️ <b>声明：</b>本页面仅供医学专业人士学术交流，不替代医师临床判断；处方前请参阅当地核准说明书。</div>
+        <div class="note">设计：蓝紫渐变｜字体优先：阿里巴巴普惠体（系统未装将自动回退）。如需品牌色/排版细调，请告知。</div>
+      </div>
+    </footer>
+  </main>
+
+  <script>
+    const links = document.querySelectorAll('.nav-link');
+    function setActive(route){
+      links.forEach(a=>a.classList.toggle('active', a.dataset.route===route));
+      document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+      const el = document.getElementById(route);
+      if(el){ el.classList.add('active'); window.scrollTo({top:0,behavior:'smooth'}); }
+    }
+    function router(){
+      const route = (location.hash||'#home').replace('#','');
+      setActive(route);
+      // 关闭移动端导航
+      document.querySelector('nav')?.classList.remove('open');
+    }
+    window.addEventListener('hashchange', router);
+    router();
+  </script>
+</body>
+</html>

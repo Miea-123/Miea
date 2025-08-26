@@ -1,0 +1,1388 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>地尔硫䓬缓释胶囊 - 心肾双护 䓬越之选</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --success-gradient: linear-gradient(135deg, #0ba360 0%, #3cba92 100%);
+            --warning-gradient: linear-gradient(135deg, #f2994a 0%, #f2c94c 100%);
+            --dark-gradient: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            --light-gradient: linear-gradient(135deg, #e0e5ec 0%, #f5f7fa 100%);
+            --shadow-soft: 0 10px 40px rgba(0, 0, 0, 0.08);
+            --shadow-hover: 0 20px 60px rgba(102, 126, 234, 0.15);
+            --shadow-card: 0 4px 20px rgba(0, 0, 0, 0.06);
+            --transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', 'Noto Sans SC', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.7;
+            color: #2d3748;
+            background: #f7fafc;
+            overflow-x: hidden;
+        }
+
+        /* 动态背景 */
+        .dynamic-bg {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: -1;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            opacity: 0.03;
+        }
+
+        .dynamic-bg::before {
+            content: '';
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background: radial-gradient(circle, rgba(102, 126, 234, 0.1) 0%, transparent 70%);
+            animation: rotate 30s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .container {
+            max-width: 1440px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 24px;
+            box-shadow: var(--shadow-soft);
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* 优化的头部设计 */
+        .header {
+            background: var(--primary-gradient);
+            color: white;
+            padding: 60px 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            top: -250px;
+            right: -250px;
+            animation: pulse 3s ease-in-out infinite;
+        }
+
+        .header::after {
+            content: '';
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, rgba(240,147,251,0.2) 0%, transparent 70%);
+            bottom: -150px;
+            left: -150px;
+            animation: pulse 3s ease-in-out infinite 1.5s;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.1); opacity: 0.3; }
+        }
+
+        .header-content {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 3.2em;
+            font-weight: 800;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #fff 0%, #f0f0f0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            letter-spacing: 3px;
+            animation: slideInDown 0.8s ease;
+        }
+
+        @keyframes slideInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .header .subtitle {
+            font-size: 1.4em;
+            font-weight: 300;
+            opacity: 0.95;
+            letter-spacing: 2px;
+            animation: slideInUp 0.8s ease 0.2s both;
+        }
+
+        @keyframes slideInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .drug-badges {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin-top: 40px;
+            animation: fadeIn 1s ease 0.4s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .badge-item {
+            background: rgba(255,255,255,0.15);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.25);
+            padding: 15px 30px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .badge-item:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+
+        .badge-item.gold {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            border: none;
+            color: #333;
+            font-weight: 600;
+            box-shadow: 0 8px 25px rgba(255,215,0,0.3);
+        }
+
+        .badge-icon {
+            font-size: 1.5em;
+        }
+
+        .badge-content {
+            text-align: left;
+        }
+
+        .badge-label {
+            font-size: 0.75em;
+            opacity: 0.9;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .badge-value {
+            font-size: 0.95em;
+            font-weight: 600;
+        }
+
+        /* 现代化导航栏 */
+        .nav-container {
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.05);
+        }
+
+        .nav-tabs {
+            display: flex;
+            padding: 0 30px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .nav-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .nav-tab {
+            position: relative;
+            padding: 20px 30px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 500;
+            color: #718096;
+            transition: var(--transition);
+            white-space: nowrap;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-tab::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: var(--primary-gradient);
+            transform: translateX(-50%);
+            transition: var(--transition);
+        }
+
+        .nav-tab:hover {
+            color: #667eea;
+        }
+
+        .nav-tab.active {
+            color: #667eea;
+            font-weight: 600;
+        }
+
+        .nav-tab.active::after {
+            width: 80%;
+        }
+
+        /* 内容区域 */
+        .content {
+            padding: 50px;
+            background: #f7fafc;
+        }
+
+        .tab-content {
+            display: none;
+            animation: contentFadeIn 0.6s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes contentFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 卡片设计 */
+        .hero-section {
+            background: white;
+            border-radius: 20px;
+            padding: 50px;
+            margin-bottom: 40px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title {
+            font-size: 2.5em;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 15px;
+        }
+
+        .section-subtitle {
+            color: #718096;
+            font-size: 1.1em;
+            font-weight: 300;
+        }
+
+        /* 特性网格 */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: 16px;
+            padding: 35px;
+            text-align: center;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            cursor: pointer;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--primary-gradient);
+            transform: scaleX(0);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .feature-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 25px;
+            background: var(--primary-gradient);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: rotateY(360deg);
+        }
+
+        .feature-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        .feature-description {
+            color: #718096;
+            line-height: 1.6;
+        }
+
+        /* 剂量表格美化 */
+        .modern-table {
+            width: 100%;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            margin: 30px 0;
+        }
+
+        .modern-table thead {
+            background: var(--dark-gradient);
+        }
+
+        .modern-table th {
+            padding: 20px;
+            color: white;
+            font-weight: 600;
+            text-align: left;
+            font-size: 0.95em;
+            letter-spacing: 0.5px;
+        }
+
+        .modern-table td {
+            padding: 18px 20px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #4a5568;
+            transition: var(--transition);
+        }
+
+        .modern-table tbody tr {
+            transition: var(--transition);
+        }
+
+        .modern-table tbody tr:hover {
+            background: #f7fafc;
+        }
+
+        .modern-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* 提示框美化 */
+        .alert-box {
+            padding: 25px 30px;
+            border-radius: 16px;
+            margin: 30px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .alert-box::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 5px;
+        }
+
+        .alert-success {
+            background: linear-gradient(135deg, #d4f4dd 0%, #e8f5e9 100%);
+            border: 1px solid #81c784;
+        }
+
+        .alert-success::before {
+            background: var(--success-gradient);
+        }
+
+        .alert-warning {
+            background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%);
+            border: 1px solid #ffb74d;
+        }
+
+        .alert-warning::before {
+            background: var(--warning-gradient);
+        }
+
+        .alert-info {
+            background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+            border: 1px solid #64b5f6;
+        }
+
+        .alert-info::before {
+            background: var(--primary-gradient);
+        }
+
+        .alert-title {
+            font-size: 1.2em;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* 数据展示卡片 */
+        .stat-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+            margin: 40px 0;
+        }
+
+        .stat-card {
+            background: white;
+            border-radius: 16px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .stat-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100px;
+            height: 100px;
+            background: var(--primary-gradient);
+            opacity: 0.1;
+            border-radius: 50%;
+            transform: translate(30px, -30px);
+        }
+
+        .stat-number {
+            font-size: 2.5em;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 10px;
+        }
+
+        .stat-label {
+            color: #718096;
+            font-size: 0.95em;
+            font-weight: 500;
+        }
+
+        .stat-change {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 5px 12px;
+            background: #d4f4dd;
+            color: #0ba360;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+        }
+
+        /* 对比表格 */
+        .comparison-table {
+            width: 100%;
+            background: white;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-card);
+            margin: 40px 0;
+        }
+
+        .comparison-table thead {
+            background: var(--primary-gradient);
+        }
+
+        .comparison-table th {
+            padding: 20px;
+            color: white;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .comparison-table td {
+            padding: 18px;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+            border-right: 1px solid #e2e8f0;
+        }
+
+        .comparison-table td:last-child {
+            border-right: none;
+        }
+
+        .comparison-table tbody tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table .highlight {
+            background: linear-gradient(135deg, #d4f4dd 0%, #e8f5e9 100%);
+            font-weight: 600;
+        }
+
+        .positive {
+            color: #0ba360;
+            font-weight: 600;
+        }
+
+        .negative {
+            color: #f5576c;
+            font-weight: 600;
+        }
+
+        /* 机制卡片 */
+        .mechanism-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .mechanism-card {
+            background: linear-gradient(135deg, #fff 0%, #f7fafc 100%);
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            padding: 30px;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mechanism-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: var(--primary-gradient);
+            border-radius: 16px;
+            opacity: 0;
+            transition: var(--transition);
+            z-index: -1;
+        }
+
+        .mechanism-card:hover::before {
+            opacity: 1;
+        }
+
+        .mechanism-card:hover {
+            border-color: transparent;
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .mechanism-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: #2d3748;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .mechanism-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .mechanism-list li {
+            padding: 12px 0;
+            padding-left: 35px;
+            position: relative;
+            color: #4a5568;
+            transition: var(--transition);
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .mechanism-list li::before {
+            content: '▸';
+            position: absolute;
+            left: 10px;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+            line-height: 1.4;
+            transition: var(--transition);
+        }
+
+        .mechanism-list li:hover {
+            color: #2d3748;
+            padding-left: 40px;
+        }
+
+        .mechanism-list li:hover::before {
+            transform: translateX(3px);
+        }
+
+        /* 特性描述中的列表样式 */
+        .feature-description {
+            color: #718096;
+            line-height: 1.8;
+            text-align: left;
+        }
+
+        .feature-description ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .feature-description li {
+            padding: 8px 0;
+            position: relative;
+            padding-left: 25px;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .feature-description li::before {
+            content: '•';
+            position: absolute;
+            left: 8px;
+            color: #667eea;
+            font-weight: bold;
+            font-size: 1.2em;
+            line-height: 1.3;
+        }
+
+        /* 提示框内的列表样式 */
+        .alert-box ul {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0 0 0;
+        }
+
+        .alert-box li {
+            padding: 10px 0;
+            position: relative;
+            padding-left: 30px;
+            line-height: 1.6;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .alert-box li::before {
+            content: '✓';
+            position: absolute;
+            left: 8px;
+            font-weight: bold;
+            font-size: 1.1em;
+            line-height: 1.5;
+        }
+
+        .alert-success li::before {
+            color: #0ba360;
+        }
+
+        .alert-warning li::before {
+            content: '⚡';
+            color: #f2994a;
+        }
+
+        .alert-info li::before {
+            content: '→';
+            color: #667eea;
+        }
+
+        /* 按钮样式 */
+        .btn {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-size: 1em;
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 35px rgba(102, 126, 234, 0.4);
+        }
+
+        /* 页脚 */
+        .footer {
+            background: var(--dark-gradient);
+            color: white;
+            padding: 50px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .footer-title {
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .footer-text {
+            opacity: 0.9;
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .footer-link {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+            transition: var(--transition);
+        }
+
+        .footer-link:hover {
+            opacity: 1;
+            transform: translateY(-2px);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2em;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .features-grid,
+            .stat-cards,
+            .mechanism-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .drug-badges {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .badge-item {
+                width: 100%;
+                max-width: 300px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dynamic-bg"></div>
+
+    <div class="container">
+        <div class="header">
+            <div class="header-content">
+                <h1>地尔硫䓬缓释胶囊</h1>
+                <div class="subtitle">心肾双护 · 䓬越之选</div>
+
+                <div class="drug-badges">
+                    <div class="badge-item">
+                        <span class="badge-icon">💊</span>
+                        <div class="badge-content">
+                            <div class="badge-label">规格</div>
+                            <div class="badge-value">90mg</div>
+                        </div>
+                    </div>
+                    <div class="badge-item">
+                        <span class="badge-icon">🏢</span>
+                        <div class="badge-content">
+                            <div class="badge-label">批准文号</div>
+                            <div class="badge-value">国药准字H19990388</div>
+                        </div>
+                    </div>
+                    <div class="badge-item gold">
+                        <span class="badge-icon">🏥</span>
+                        <div class="badge-content">
+                            <div class="badge-label">医保类别</div>
+                            <div class="badge-value">国家乙类医保</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-container">
+            <div class="nav-tabs">
+                <button class="nav-tab active" data-tab="overview">药物概览</button>
+                <button class="nav-tab" data-tab="dosage">用法用量</button>
+                <button class="nav-tab" data-tab="mechanism">作用机制</button>
+                <button class="nav-tab" data-tab="clinical">临床证据</button>
+                <button class="nav-tab" data-tab="comparison">对比分析</button>
+                <button class="nav-tab" data-tab="application">临床应用</button>
+            </div>
+        </div>
+
+        <div class="content">
+            <!-- 药物概览 -->
+            <div id="overview" class="tab-content active">
+                <div class="hero-section">
+                    <div class="section-header">
+                        <h2 class="section-title">独特的心肾保护作用</h2>
+                        <p class="section-subtitle">非二氢吡啶类钙通道阻滞剂的卓越代表</p>
+                    </div>
+
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">❤️</div>
+                            <h3 class="feature-title">心肌保护</h3>
+                            <p class="feature-description">负性肌力+负性频率双重作用，降低心肌耗氧量，改善心肌供需平衡</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🛡️</div>
+                            <h3 class="feature-title">肾脏保护</h3>
+                            <p class="feature-description">独特的降蛋白尿作用，降低30-35%，显著优于二氢吡啶类CCB</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🫀</div>
+                            <h3 class="feature-title">冠脉扩张</h3>
+                            <p class="feature-description">直接扩张冠状动脉，缓解冠脉痉挛，治疗变异性心绞痛</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">⚡</div>
+                            <h3 class="feature-title">抗心律失常</h3>
+                            <p class="feature-description">延长房室结不应期，有效控制室上性心律失常</p>
+                        </div>
+                    </div>
+
+                    <div class="stat-cards">
+                        <div class="stat-card">
+                            <div class="stat-number">75%</div>
+                            <div class="stat-label">心绞痛发作频率降低</div>
+                            <span class="stat-change">CAPE研究</span>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">30-35%</div>
+                            <div class="stat-label">蛋白尿降低幅度</div>
+                            <span class="stat-change">Meta分析</span>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">90.8%</div>
+                            <div class="stat-label">变异性心绞痛有效率</div>
+                            <span class="stat-change">日本多中心研究</span>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number"><1%</div>
+                            <div class="stat-label">严重不良事件发生率</div>
+                            <span class="stat-change">真实世界研究</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 用法用量 -->
+            <div id="dosage" class="tab-content">
+                <div class="hero-section">
+                    <div class="section-header">
+                        <h2 class="section-title">精准用药方案</h2>
+                        <p class="section-subtitle">个体化治疗，优化临床获益</p>
+                    </div>
+
+                    <table class="modern-table">
+                        <thead>
+                            <tr>
+                                <th>适应症</th>
+                                <th>起始剂量</th>
+                                <th>维持剂量</th>
+                                <th>最大剂量</th>
+                                <th>给药建议</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>原发性高血压</strong></td>
+                                <td>180mg qd</td>
+                                <td>180-240mg qd</td>
+                                <td>360mg qd</td>
+                                <td>可与或不与食物同服</td>
+                            </tr>
+                            <tr>
+                                <td><strong>变异性心绞痛</strong></td>
+                                <td>90mg qd</td>
+                                <td>180-240mg qd</td>
+                                <td>360mg qd</td>
+                                <td>睡前服用效果更佳</td>
+                            </tr>
+                            <tr>
+                                <td><strong>房颤心室率控制</strong></td>
+                                <td>180mg qd</td>
+                                <td>240-360mg qd</td>
+                                <td>480mg/日(分次)</td>
+                                <td>根据心率调整剂量</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="alert-box alert-warning">
+                        <h3 class="alert-title">⚠️ 特殊人群剂量调整</h3>
+                        <ul>
+                            <li><strong>老年患者(>65岁)：</strong>起始剂量90mg/日，根据耐受性缓慢增加</li>
+                            <li><strong>肝功能不全：</strong>轻中度减量25-50%，重度肝功能不全慎用</li>
+                            <li><strong>肾功能不全：</strong>eGFR 30-60 ml/min无需调整，eGFR<30 ml/min谨慎使用</li>
+                            <li><strong>心功能不全：</strong>LVEF<40%慎用，需密切监测血流动力学</li>
+                        </ul>
+                    </div>
+
+                    <div class="alert-box alert-success">
+                        <h3 class="alert-title">✅ 优化治疗建议</h3>
+                        <ul>
+                            <li>缓释制剂每日一次给药，提高患者依从性</li>
+                            <li>剂量调整间隔2-4周，确保达到稳态血药浓度</li>
+                            <li>联合ACEI/ARB可增强肾脏保护作用</li>
+                            <li>监测心率、血压、PR间期，个体化调整剂量</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 作用机制 -->
+            <div id="mechanism" class="tab-content">
+                <div class="hero-section">
+                    <div class="section-header">
+                        <h2 class="section-title">多重作用机制</h2>
+                        <p class="section-subtitle">全面的心肾保护作用</p>
+                    </div>
+
+                    <div class="mechanism-cards">
+                        <div class="mechanism-card">
+                            <h3 class="mechanism-title">🫀 心血管作用</h3>
+                            <ul class="mechanism-list">
+                                <li>阻断L型钙通道，减少钙离子内流</li>
+                                <li>负性肌力作用：降低心肌收缩力15-20%</li>
+                                <li>负性频率作用：减慢心率5-10次/分</li>
+                                <li>扩张冠状动脉，增加冠脉血流</li>
+                                <li>降低心肌耗氧量，改善供需平衡</li>
+                            </ul>
+                        </div>
+
+                        <div class="mechanism-card">
+                            <h3 class="mechanism-title">🛡️ 肾脏保护</h3>
+                            <ul class="mechanism-list">
+                                <li>扩张入球小动脉，增加肾血流量</li>
+                                <li>适度影响出球小动脉，降低肾小球内压</li>
+                                <li>保护足细胞，维持滤过屏障完整性</li>
+                                <li>抑制TGF-β1，减少肾脏纤维化</li>
+                                <li>降低炎症因子，减轻氧化应激</li>
+                            </ul>
+                        </div>
+
+                        <div class="mechanism-card">
+                            <h3 class="mechanism-title">⚡ 电生理作用</h3>
+                            <ul class="mechanism-list">
+                                <li>延长房室结有效不应期</li>
+                                <li>减慢房室结传导速度</li>
+                                <li>控制房颤时的快速心室率</li>
+                                <li>预防阵发性室上性心动过速</li>
+                                <li>不影响希浦系统传导</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="alert-box alert-info">
+                        <h3 class="alert-title">💡 独特优势</h3>
+                        <p>地尔硫䓬是少数具有独立降蛋白尿作用的钙通道阻滞剂，在血压控制相同的情况下，非二氢吡啶类CCB可降低蛋白尿30-35%，而二氢吡啶类CCB无此作用甚至可能增加蛋白尿。这一独特优势使地尔硫䓬成为高血压合并蛋白尿患者的优选药物。</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 临床证据 -->
+            <div id="clinical" class="tab-content">
+                <div class="hero-section">
+                    <div class="section-header">
+                        <h2 class="section-title">循证医学证据</h2>
+                        <p class="section-subtitle">大型临床研究支持</p>
+                    </div>
+
+                    <table class="modern-table">
+                        <thead>
+                            <tr>
+                                <th>研究名称</th>
+                                <th>样本量</th>
+                                <th>研究设计</th>
+                                <th>主要发现</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>NORDIL研究</strong></td>
+                                <td>10,881例</td>
+                                <td>RCT, 5年随访</td>
+                                <td>心血管事件与传统药物相当，脑卒中降低20%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>DEMAND研究</strong></td>
+                                <td>380例</td>
+                                <td>RCT, 24周</td>
+                                <td>糖尿病肾病患者蛋白尿降低32%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>日本多中心研究</strong></td>
+                                <td>286例</td>
+                                <td>前瞻性研究</td>
+                                <td>变异性心绞痛有效率90.8%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>真实世界研究</strong></td>
+                                <td>139,965例</td>
+                                <td>观察性研究</td>
+                                <td>SBP降低15.5mmHg，不良事件<1%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="stat-cards">
+                        <div class="stat-card">
+                            <div class="stat-number">RR 0.80</div>
+                            <div class="stat-label">脑卒中风险</div>
+                            <span class="stat-change">Meta分析</span>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">RR 0.68</div>
+                            <div class="stat-label">蛋白尿进展</div>
+                            <span class="stat-change">Cochrane综述</span>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">RR 0.85</div>
+                            <div class="stat-label">心血管事件</div>
+                            <span class="stat-change">系统评价</span>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-number">78%</div>
+                            <div class="stat-label">血压达标率</div>
+                            <span class="stat-change">24h动态血压</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 对比分析 -->
+            <div id="comparison" class="tab-content">
+                <div class="hero-section">
+                    <div class="section-header">
+                        <h2 class="section-title">钙通道阻滞剂对比</h2>
+                        <p class="section-subtitle">突出的差异化优势</p>
+                    </div>
+
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>特性</th>
+                                <th style="background: linear-gradient(135deg, #0ba360 0%, #3cba92 100%);">地尔硫䓬</th>
+                                <th>维拉帕米</th>
+                                <th>氨氯地平</th>
+                                <th>硝苯地平</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>药物分类</strong></td>
+                                <td class="highlight">非二氢吡啶类</td>
+                                <td>非二氢吡啶类</td>
+                                <td>二氢吡啶类</td>
+                                <td>二氢吡啶类</td>
+                            </tr>
+                            <tr>
+                                <td><strong>降蛋白尿作用</strong></td>
+                                <td class="highlight positive">↓ 30-35%</td>
+                                <td class="positive">↓ 25-30%</td>
+                                <td class="negative">无/可能增加</td>
+                                <td class="negative">无作用</td>
+                            </tr>
+                            <tr>
+                                <td><strong>负性肌力</strong></td>
+                                <td class="highlight">中度(++)</td>
+                                <td>明显(+++)</td>
+                                <td>轻微(+)</td>
+                                <td>无(-)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>抗心律失常</strong></td>
+                                <td class="highlight positive">有效</td>
+                                <td class="positive">有效</td>
+                                <td>无</td>
+                                <td>无</td>
+                            </tr>
+                            <tr>
+                                <td><strong>外周水肿</strong></td>
+                                <td class="highlight positive"><5%</td>
+                                <td class="positive"><5%</td>
+                                <td class="negative">10-15%</td>
+                                <td class="negative">8-10%</td>
+                            </tr>
+                            <tr>
+                                <td><strong>便秘发生率</strong></td>
+                                <td class="highlight positive">5%</td>
+                                <td class="negative">15-20%</td>
+                                <td><2%</td>
+                                <td><2%</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="alert-box alert-info">
+                        <h3 class="alert-title">🏆 地尔硫䓬的独特地位</h3>
+                        <p>在所有钙通道阻滞剂中，地尔硫䓬具有最平衡的心血管和肾脏保护作用：</p>
+                        <ul>
+                            <li>独特的降蛋白尿作用，适合肾病患者</li>
+                            <li>适度的负性肌力和负性频率作用，安全性好</li>
+                            <li>有效的抗心律失常作用</li>
+                            <li>较低的不良反应发生率</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 临床应用 -->
+            <div id="application" class="tab-content">
+                <div class="hero-section">
+                    <div class="section-header">
+                        <h2 class="section-title">临床应用指导</h2>
+                        <p class="section-subtitle">精准医疗，个体化治疗</p>
+                    </div>
+
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">👥</div>
+                            <h3 class="feature-title">首选人群</h3>
+                            <div class="feature-description">
+                                <ul>
+                                    <li>高血压合并蛋白尿</li>
+                                    <li>糖尿病肾病</li>
+                                    <li>慢性肾脏病(CKD 1-3期)</li>
+                                    <li>稳定性/变异性心绞痛</li>
+                                    <li>房颤心室率控制</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-icon">🤝</div>
+                            <h3 class="feature-title">联合用药</h3>
+                            <div class="feature-description">
+                                <ul>
+                                    <li>与ACEI/ARB联用：协同肾保护</li>
+                                    <li>与利尿剂联用：增强降压</li>
+                                    <li>与他汀联用：全面心血管保护</li>
+                                    <li>慎与β受体阻滞剂联用</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-icon">📊</div>
+                            <h3 class="feature-title">监测指标</h3>
+                            <div class="feature-description">
+                                <ul>
+                                    <li>血压、心率</li>
+                                    <li>心电图(PR间期)</li>
+                                    <li>肾功能、电解质</li>
+                                    <li>24小时尿蛋白定量</li>
+                                    <li>肝功能(定期复查)</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="feature-card">
+                            <div class="feature-icon">⚠️</div>
+                            <h3 class="feature-title">禁忌症</h3>
+                            <div class="feature-description">
+                                <ul>
+                                    <li>病态窦房结综合征</li>
+                                    <li>II-III度房室传导阻滞</li>
+                                    <li>严重心功能不全(NYHA IV)</li>
+                                    <li>急性心梗伴肺水肿</li>
+                                    <li>严重低血压(SBP<90mmHg)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert-box alert-success">
+                        <h3 class="alert-title">🎯 治疗目标</h3>
+                        <ul>
+                            <li><strong>血压控制：</strong>一般患者<140/90 mmHg，糖尿病/CKD患者<130/80 mmHg</li>
+                            <li><strong>蛋白尿：</strong>较基线降低≥30%，理想目标<1g/24h</li>
+                            <li><strong>心率：</strong>房颤患者静息心率60-80次/分</li>
+                            <li><strong>肾功能：</strong>延缓eGFR下降速度>50%</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer">
+            <div class="footer-content">
+                <h3 class="footer-title">📋 重要声明</h3>
+                <p class="footer-text">
+                    本资料仅供医学专业人士参考使用，不作为临床诊疗的唯一依据。<br>
+                    用药请遵医嘱，详细信息请参阅药品说明书。
+                </p>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">药品说明书</a>
+                    <a href="#" class="footer-link">临床指南</a>
+                    <a href="#" class="footer-link">医学支持</a>
+                    <a href="#" class="footer-link">联系我们</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // DOM加载完成后执行
+        document.addEventListener('DOMContentLoaded', function() {
+            const tabButtons = document.querySelectorAll('.nav-tab');
+            const tabContents = document.querySelectorAll('.tab-content');
+
+            // 切换标签函数
+            function switchTab(tabName) {
+                // 隐藏所有内容
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                });
+
+                // 移除所有按钮激活状态
+                tabButtons.forEach(button => {
+                    button.classList.remove('active');
+                });
+
+                // 显示选中内容
+                const activeContent = document.getElementById(tabName);
+                if (activeContent) {
+                    activeContent.classList.add('active');
+                }
+
+                // 激活对应按钮
+                tabButtons.forEach(button => {
+                    if (button.getAttribute('data-tab') === tabName) {
+                        button.classList.add('active');
+                    }
+                });
+            }
+
+            // 为标签按钮添加点击事件
+            tabButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+                    switchTab(tabName);
+                });
+            });
+
+            // 添加滚动效果
+            let lastScrollTop = 0;
+            const navContainer = document.querySelector('.nav-container');
+
+            window.addEventListener('scroll', function() {
+                let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+
+                if (scrollTop > 100) {
+                    navContainer.style.boxShadow = '0 4px 30px rgba(0,0,0,0.1)';
+                } else {
+                    navContainer.style.boxShadow = '0 2px 20px rgba(0,0,0,0.05)';
+                }
+
+                lastScrollTop = scrollTop;
+            });
+
+            // 添加平滑滚动
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+{
+  "navItems": [
+    {
+      "title": "产品介绍",
+      "page": "/products/lmt/cp.html"
+    },
+    {
+      "title": "分子机制",
+      "page": "/products/lmt/fz.html"
+    }
+  ],
+  "defaultPage": "/products/lmt/cp.html"
+}

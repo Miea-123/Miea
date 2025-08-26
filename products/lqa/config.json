@@ -1,0 +1,13 @@
+{
+  "navItems": [
+    {
+      "title": "产品介绍",
+      "page": "/products/lqa/cp.html"
+    },
+    {
+      "title": "分子机制",
+      "page": "/products/lqa/fz.html"
+    }
+  ],
+  "defaultPage": "/products/lqa/cp.html"
+}

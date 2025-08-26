@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>卡谷氨酸 - 分子机制3D可视化</title>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap');
+    *{margin:0;padding:0;box-sizing:border-box}
+    html{scroll-behavior:smooth}
+    body{font-family:'Poppins','Microsoft YaHei',sans-serif;background:#0f0f23;color:#fff;overflow-x:hidden;position:relative}
+
+    /* ===== Sticky Top Nav ===== */
+    .topnav{position:sticky;top:0;z-index:20;background:rgba(10,10,26,.6);backdrop-filter:saturate(140%) blur(14px);border-bottom:1px solid rgba(255,255,255,.08)}
+    .topnav-inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;padding:10px 16px}
+    .brand{display:flex;gap:10px;align-items:center;font-weight:800;letter-spacing:1px}
+    .brand-dot{width:8px;height:8px;border-radius:50%;background:linear-gradient(135deg,#00ffff,#ff00ff);box-shadow:0 0 14px rgba(0,255,255,.7)}
+    .nav-links{display:flex;gap:12px;flex-wrap:wrap}
+    .nav-links a{display:inline-block;padding:8px 12px;border-radius:999px;font-size:13px;text-decoration:none;color:#eaeaea;border:1px solid rgba(255,255,255,.12);transition:all .25s}
+    .nav-links a:hover,.nav-links a:focus{outline:none;border-color:rgba(0,255,255,.6);box-shadow:0 0 18px rgba(0,255,255,.25)}
+
+    /* ===== Canvas BG ===== */
+    #canvas-bg{position:fixed;top:0;left:0;width:100%;height:100%;z-index:1;opacity:.55}
+
+    /* ===== Layout helpers (tightened spacing) ===== */
+    .main-container{position:relative;z-index:10}
+    section{scroll-margin-top:72px}
+    .pad-hero{min-height:92vh;display:flex;flex-direction:column;justify-content:center;align-items:center;background:radial-gradient(ellipse at center,rgba(102,126,234,.28) 0%,transparent 70%);padding:56px 16px 72px}
+    .section{padding:72px 16px}
+    .section-narrow{padding:64px 16px}
+    .section-header{max-width:960px;margin:0 auto 40px;text-align:center}
+    .cap{color:rgba(255,255,255,.6);font-size:16px}
+
+    /* ===== Hero ===== */
+    .hero-title{font-size:clamp(40px,7vw,84px);font-weight:900;text-align:center;line-height:1.08;margin:8px 0 10px;background:linear-gradient(135deg,#00ffff,#ff00ff,#00ff7f);-webkit-background-clip:text;-webkit-text-fill-color:transparent;animation:gradientShift 5s ease infinite;filter:drop-shadow(0 0 36px rgba(0,255,255,.45))}
+    .hero-subtitle{font-size:18px;color:rgba(255,255,255,.82);text-align:center;margin-bottom:28px;letter-spacing:1.5px}
+    @keyframes gradientShift{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
+
+    /* 3D Molecule */
+    .molecule-3d{width:min(400px,70vw);height:min(400px,70vw);margin:0 auto 24px;position:relative;transform-style:preserve-3d;animation:rotate3d 20s linear infinite}
+    @keyframes rotate3d{0%{transform:rotateX(0) rotateY(0) rotateZ(0)}100%{transform:rotateX(360deg) rotateY(360deg) rotateZ(360deg)}}
+    .atom{position:absolute;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:16px;box-shadow:0 0 36px currentColor}
+    .atom-n{background:radial-gradient(circle,#00ffff,#0099cc);color:#00ffff;top:50px;left:calc(50% - 30px)}
+    .atom-c{background:radial-gradient(circle,#ff00ff,#9900cc);color:#ff00ff;top:140px;left:calc(50% - 90px)}
+    .atom-o{background:radial-gradient(circle,#00ff7f,#00cc66);color:#00ff7f;top:140px;left:calc(50% + 30px)}
+    .atom-h{background:radial-gradient(circle,#ffffff,#cfcfcf);color:#ffffff;width:38px;height:38px;font-size:13px}
+    .atom-h1{top:230px;left:calc(50% - 40px)}
+    .atom-h2{top:95px;left:calc(50% + 65px)}
+    .atom-h3{top:190px;left:calc(50% - 140px)}
+    .bond{position:absolute;background:linear-gradient(90deg,transparent,rgba(255,255,255,.86),transparent);height:3px;transform-origin:left center;animation:bondPulse 2.2s ease-in-out infinite}
+    @keyframes bondPulse{0%,100%{opacity:.5}50%{opacity:1}}
+
+    /* KPI bar (tightened) */
+    .kpi-bar{position:relative;display:flex;gap:24px;background:rgba(0,0,0,.5);backdrop-filter:blur(18px);padding:12px 18px;border-radius:16px;border:1px solid rgba(255,255,255,.09);margin-top:8px}
+    .kpi-item{text-align:center;min-width:96px}
+    .kpi-number{font-size:26px;font-weight:800;background:linear-gradient(135deg,#00ffff,#ff00ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .kpi-label{font-size:11px;color:rgba(255,255,255,.64);text-transform:uppercase;letter-spacing:.8px;margin-top:3px}
+
+    /* Timeline */
+    .mechanism-section{background:linear-gradient(180deg,#0f0f23 0%,#1a1a3e 100%)}
+    .timeline-container{max-width:1100px;margin:0 auto;position:relative}
+    .timeline-line{position:absolute;left:50%;top:0;bottom:0;width:3px;background:linear-gradient(180deg,#00ffff,#ff00ff,#00ff7f);transform:translateX(-50%)}
+    .timeline-item{display:flex;margin-bottom:64px;position:relative;opacity:0;animation:fadeInUp .8s ease forwards}
+    .timeline-item:nth-child(even){flex-direction:row-reverse}
+    @keyframes fadeInUp{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:translateY(0)}}
+    .timeline-content{flex:1;padding:0 24px}
+    .timeline-card{background:rgba(255,255,255,.05);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.08);border-radius:16px;padding:28px;position:relative;overflow:hidden;cursor:pointer;transition:all .45s cubic-bezier(.23,1,.32,1)}
+    .timeline-card::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:radial-gradient(circle,rgba(0,255,255,.18) 0%,transparent 70%);opacity:0;transition:opacity .45s;animation:rotateGlow 10s linear infinite}
+    .timeline-card:hover::before{opacity:1}
+    .timeline-card:hover{transform:translateY(-2px);border-color:rgba(0,255,255,.45);box-shadow:0 0 44px rgba(0,255,255,.22)}
+    .timeline-node{position:absolute;left:50%;transform:translateX(-50%);width:48px;height:48px;background:radial-gradient(circle,#00ffff,#0099cc);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:800;box-shadow:0 0 28px rgba(0,255,255,.7);z-index:2}
+    .card-icon{font-size:44px;margin-bottom:10px;filter:drop-shadow(0 0 16px currentColor)}
+    .card-title{font-size:22px;font-weight:700;margin-bottom:10px;background:linear-gradient(135deg,#00ffff,#ff00ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+    .card-description{color:rgba(255,255,255,.82);line-height:1.7;margin-bottom:10px}
+    .card-details{background:rgba(0,0,0,.28);border-radius:10px;padding:12px;margin-top:12px;max-height:0;overflow:hidden;transition:max-height .45s ease}
+    .timeline-card.expanded .card-details{max-height:260px}
+
+    /* Data cards (tightened) */
+    .data-grid{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:22px}
+    .data-card{background:linear-gradient(135deg,rgba(0,255,255,.1),rgba(255,0,255,.1));backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.18);border-radius:16px;padding:22px;position:relative;transition:all .25s}
+    .data-card:hover{transform:translateY(-6px);box-shadow:0 16px 34px rgba(0,255,255,.28)}
+    .chart-container{height:180px;position:relative;margin-bottom:12px}
+    .circular-progress{width:130px;height:130px;margin:0 auto;position:relative}
+    .progress-ring{transform:rotate(-90deg)}
+    .progress-ring-bg{stroke:rgba(255,255,255,.1);stroke-width:12;fill:none}
+    .progress-ring-fill{stroke:url(#gradient);stroke-width:12;fill:none;stroke-linecap:round;stroke-dasharray:408;stroke-dashoffset:408;animation:fillProgress 1.8s ease forwards}
+    @keyframes fillProgress{to{stroke-dashoffset:0}}
+    .progress-text{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:26px;font-weight:800}
+
+    /* Safety */
+    .safety-section{background:linear-gradient(135deg,#1a1a3e,#0f0f23);text-align:center}
+    .safety-shield{width:260px;height:300px;margin:0 auto 22px;position:relative;animation:float 6s ease-in-out infinite}
+    @keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+    .shield-shape{width:100%;height:100%;background:linear-gradient(135deg,rgba(0,255,127,.26),rgba(0,255,255,.26));clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%);backdrop-filter:blur(18px);border:2px solid rgba(0,255,255,.45);display:flex;align-items:center;justify-content:center;font-size:56px;box-shadow:0 0 44px rgba(0,255,255,.45)}
+    .safety-points{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px;max-width:1100px;margin:0 auto}
+    .safety-point{background:rgba(255,255,255,.05);backdrop-filter:blur(16px);border:1px solid rgba(0,255,127,.28);border-radius:12px;padding:18px;transition:all .25s}
+    .safety-point:hover{transform:translateY(-4px);border-color:rgba(0,255,127,.58);box-shadow:0 0 26px rgba(0,255,127,.26)}
+
+    /* Comparison */
+    .comparison-matrix{max-width:1100px;margin:0 auto;overflow-x:auto}
+    .matrix-table{width:100%;border-collapse:separate;border-spacing:8px}
+    .matrix-table th,.matrix-table td{padding:16px;text-align:center;background:rgba(255,255,255,.05);backdrop-filter:blur(16px);border:1px solid rgba(255,255,255,.1);transition:all .25s}
+    .matrix-table th{background:linear-gradient(135deg,rgba(0,255,255,.2),rgba(255,0,255,.2));font-weight:700;font-size:15px}
+    .matrix-table td:first-child{font-weight:600;background:rgba(0,255,255,.1)}
+    .matrix-table td.highlight{background:linear-gradient(135deg,rgba(0,255,127,.3),rgba(0,255,255,.3));border-color:rgba(0,255,127,.5);font-weight:600}
+    .matrix-table tr:hover td{background:rgba(255,255,255,.1)}
+
+    /* CTA */
+    .footer-cta{text-align:center;background:radial-gradient(ellipse at center,rgba(255,0,255,.28) 0%,transparent 70%);padding:64px 16px}
+    .cta-button{display:inline-block;padding:16px 42px;background:linear-gradient(135deg,#00ffff,#ff00ff);color:#000;font-size:18px;font-weight:700;text-decoration:none;border-radius:999px;transition:all .25s;box-shadow:0 0 32px rgba(255,0,255,.45)}
+    .cta-button:hover{transform:translateY(-2px);box-shadow:0 0 50px rgba(255,0,255,.72)}
+
+    /* Responsive tweaks */
+    @media (max-width:768px){
+      .nav-links{gap:8px}
+      .hero-title{font-size:42px}
+      .molecule-3d{width:74vw;height:74vw}
+      .timeline-line{display:none}
+      .timeline-item{flex-direction:column!important}
+      .timeline-node{position:static;margin:12px auto}
+      .kpi-bar{flex-direction:row;flex-wrap:wrap;justify-content:center}
+    }
+  @media (max-width:1024px){.safety-points{grid-template-columns:repeat(2,minmax(0,1fr));}}
+@media (max-width:600px){.safety-points{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+  <!-- BG -->
+  <canvas id="canvas-bg" aria-hidden="true"></canvas>
+
+  <!-- NAV -->
+  <nav class="topnav" role="navigation" aria-label="页面导航">
+    <div class="topnav-inner">
+      <div class="brand"><span class="brand-dot"></span>卡谷氨酸 · 交互</div>
+      <div class="nav-links">
+        <a href="#hero" title="回到顶部">顶部</a>
+        <a href="#mechanism" title="分子机制">机制</a>
+        <a href="#data" title="临床数据">数据</a>
+        <a href="#safety" title="安全性">安全</a>
+        <a href="#comparison" title="方案对比">对比</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="main-container">
+    <!-- Hero -->
+    <section id="hero" class="pad-hero" aria-labelledby="hero-title">
+      <div class="molecule-3d" aria-hidden="true">
+        <div class="atom atom-n">N</div>
+        <div class="atom atom-c">C</div>
+        <div class="atom atom-o">O</div>
+        <div class="atom atom-h atom-h1">H</div>
+        <div class="atom atom-h atom-h2">H</div>
+        <div class="atom atom-h atom-h3">H</div>
+        <div class="bond" style="width:100px;top:100px;left:calc(50% - 65px);transform:rotate(45deg)"></div>
+        <div class="bond" style="width:100px;top:100px;left:calc(50%);transform:rotate(-45deg)"></div>
+        <div class="bond" style="width:78px;top:146px;left:calc(50% - 10px);transform:rotate(90deg)"></div>
+      </div>
+      <h1 id="hero-title" class="hero-title">卡谷氨酸</h1>
+      <p class="hero-subtitle">CARGLUMIC ACID · CPS-1 ACTIVATOR</p>
+      <div class="kpi-bar" role="list">
+        <div class="kpi-item" role="listitem">
+          <div class="kpi-number" data-value="24">0</div>
+          <div class="kpi-label">小时见效</div>
+        </div>
+        <div class="kpi-item" role="listitem">
+          <div class="kpi-number" data-value="51">0</div>
+          <div class="kpi-label">%减少急诊</div>
+        </div>
+        <div class="kpi-item" role="listitem">
+          <div class="kpi-number" data-value="700">0</div>
+          <div class="kpi-label">中国患者</div>
+        </div>
+        <div class="kpi-item" role="listitem">
+          <div class="kpi-number" data-value="54">0</div>
+          <div class="kpi-label">国家获批</div>
+        </div>
+        <div class="kpi-item" role="listitem">
+          <div class="kpi-number" data-value="20">0</div>
+          <div class="kpi-label">年临床经验</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Mechanism -->
+    <section id="mechanism" class="section mechanism-section" aria-labelledby="m-title">
+      <div class="section-header">
+        <h2 id="m-title" class="hero-subtitle" style="font-size:32px;background:linear-gradient(135deg,#00ffff,#ff00ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800">分子作用机制</h2>
+        <p class="cap">从摄入到降氨的完整路径</p>
+      </div>
+      <div class="timeline-container">
+        <div class="timeline-line" aria-hidden="true"></div>
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-card" onclick="toggleCard(this)" tabindex="0">
+              <div class="card-icon">💊</div>
+              <h3 class="card-title">药物摄入</h3>
+              <p class="card-description">卡谷氨酸作为NAG的稳定结构类似物，通过口服或鼻饲快速吸收进入体内</p>
+              <div class="card-details">
+                <p>• 生物利用度: 接近100%</p>
+                <p>• 达峰时间: 3小时</p>
+                <p>• 半衰期: 5.6小时</p>
+                <p>• 急性期剂量: 100-250mg/kg/天</p>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-node">1</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-card" onclick="toggleCard(this)" tabindex="0">
+              <div class="card-icon">⚡</div>
+              <h3 class="card-title">CPS-1激活</h3>
+              <p class="card-description">特异性结合CPS-1的变构位点，诱导酶构象改变，恢复其催化活性</p>
+              <div class="card-details">
+                <p>• 靶点: 氨基甲酰磷酸合成酶-1</p>
+                <p>• 作用: 变构激活</p>
+                <p>• 特异性: 仅激活CPS-1</p>
+                <p>• 效力: EC50 = 12 μM</p>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-node">2</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-card" onclick="toggleCard(this)" tabindex="0">
+              <div class="card-icon">♻️</div>
+              <h3 class="card-title">尿素循环</h3>
+              <p class="card-description">启动完整的尿素循环，将有毒的氨高效转化为无毒的尿素排出体外</p>
+              <div class="card-details">
+                <p>• NH₃ + CO₂ → 氨基甲酰磷酸</p>
+                <p>• 氨基甲酰磷酸 → 瓜氨酸</p>
+                <p>• 瓜氨酸 → 精氨酸</p>
+                <p>• 精氨酸 → 尿素 + 鸟氨酸</p>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-node">3</div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-content">
+            <div class="timeline-card" onclick="toggleCard(this)" tabindex="0">
+              <div class="card-icon">✨</div>
+              <h3 class="card-title">临床获益</h3>
+              <p class="card-description">快速降低血氨水平，避免氨毒性脑病，保护神经系统功能</p>
+              <div class="card-details">
+                <p>• 24小时血氨下降>50%</p>
+                <p>• 28.9小时恢复正常</p>
+                <p>• 减少急诊就诊51%</p>
+                <p>• 避免血液透析</p>
+              </div>
+            </div>
+          </div>
+          <div class="timeline-node">4</div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Data -->
+    <section id="data" class="section-narrow" aria-labelledby="d-title">
+      <div class="section-header">
+        <h2 id="d-title" class="hero-subtitle" style="font-size:32px;background:linear-gradient(135deg,#00ffff,#ff00ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800">临床数据可视化</h2>
+      </div>
+      <div class="data-grid">
+        <div class="data-card">
+          <div class="chart-container">
+            <div class="circular-progress">
+              <svg width="130" height="130" class="progress-ring" aria-hidden="true">
+                <defs>
+                  <linearGradient id="gradient"><stop offset="0%" stop-color="#00ffff"/><stop offset="100%" stop-color="#ff00ff"/></linearGradient>
+                </defs>
+                <circle cx="65" cy="65" r="58" class="progress-ring-bg"/>
+                <circle cx="65" cy="65" r="58" class="progress-ring-fill" style="stroke-dashoffset:204"/>
+              </svg>
+              <div class="progress-text">51%</div>
+            </div>
+          </div>
+          <h3 style="font-size:18px;margin-bottom:6px">急诊减少率</h3>
+          <p class="cap">显著降低医疗资源消耗</p>
+        </div>
+        <div class="data-card">
+          <div class="chart-container">
+            <div class="circular-progress">
+              <svg width="130" height="130" class="progress-ring" aria-hidden="true">
+                <circle cx="65" cy="65" r="58" class="progress-ring-bg"/>
+                <circle cx="65" cy="65" r="58" class="progress-ring-fill" style="stroke-dashoffset:102"/>
+              </svg>
+              <div class="progress-text">75%</div>
+            </div>
+          </div>
+          <h3 style="font-size:18px;margin-bottom:6px">24h降氨率</h3>
+          <p class="cap">快速控制高氨血症</p>
+        </div>
+        <div class="data-card">
+          <div class="chart-container">
+            <div class="circular-progress">
+              <svg width="130" height="130" class="progress-ring" aria-hidden="true">
+                <circle cx="65" cy="65" r="58" class="progress-ring-bg"/>
+                <circle cx="65" cy="65" r="58" class="progress-ring-fill" style="stroke-dashoffset:40"/>
+              </svg>
+              <div class="progress-text">90%</div>
+            </div>
+          </div>
+          <h3 style="font-size:18px;margin-bottom:6px">神经保护率</h3>
+          <p class="cap">避免不可逆脑损伤</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Safety -->
+    <section id="safety" class="section safety-section" aria-labelledby="s-title">
+      <div class="section-header">
+        <h2 id="s-title" class="hero-subtitle" style="font-size:32px;background:linear-gradient(135deg,#00ffff,#ff00ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800">安全性保障</h2>
+      </div>
+      <div class="safety-shield"><div class="shield-shape">🛡️</div></div>
+      <div class="safety-points">
+        <div class="safety-point"><h4 style="color:#00ff7f;margin-bottom:6px">✓ FDA/EMA认证</h4><p class="cap">获得国际权威药监机构批准</p></div>
+        <div class="safety-point"><h4 style="color:#00ff7f;margin-bottom:6px">✓ 20年验证</h4><p class="cap">全球超过20年临床应用经验</p></div>
+        <div class="safety-point"><h4 style="color:#00ff7f;margin-bottom:6px">✓ 全年龄适用</h4><p class="cap">新生儿至成人均可安全使用</p></div>
+        <div class="safety-point"><h4 style="color:#00ff7f;margin-bottom:6px">✓ 无肝肾毒性</h4><p class="cap">不经肝脏代谢，肾脏安全</p></div>
+      </div>
+    </section>
+
+    <!-- Comparison -->
+    <section id="comparison" class="section" aria-labelledby="c-title">
+      <div class="section-header">
+        <h2 id="c-title" class="hero-subtitle" style="font-size:32px;background:linear-gradient(135deg,#00ffff,#ff00ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800">治疗方案对比</h2>
+      </div>
+      <div class="comparison-matrix">
+        <table class="matrix-table" role="table" aria-label="治疗方案对比矩阵">
+          <thead>
+            <tr>
+              <th>评估维度</th>
+              <th style="color:#00ff7f">卡谷氨酸</th>
+              <th>精氨酸</th>
+              <th>苯丁酸钠</th>
+              <th>血液透析</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>作用机制</td><td class="highlight">CPS-1激活</td><td>底物补充</td><td>替代途径</td><td>物理清除</td></tr>
+            <tr><td>起效时间</td><td class="highlight">24-48h</td><td>48-72h</td><td>48-72h</td><td>即刻</td></tr>
+            <tr><td>给药方式</td><td class="highlight">口服</td><td>静脉</td><td>静脉</td><td>侵入性</td></tr>
+            <tr><td>安全性</td><td class="highlight">优秀</td><td>良好</td><td>中等</td><td>风险高</td></tr>
+            <tr><td>证据等级</td><td class="highlight">A级</td><td>B级</td><td>B级</td><td>C级</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- CTA -->
+    <section id="cta" class="footer-cta" aria-labelledby="cta-title">
+      <h2 id="cta-title" style="font-size:30px;margin-bottom:12px">革命性的罕见病治疗方案</h2>
+      <p class="cap" style="margin-bottom:22px">全球首个特异性CPS-1激活剂 · 4种罕见病特效治疗</p>
+      <a href="#mechanism" class="cta-button">了解更多</a>
+    </section>
+  </div>
+
+  <script>
+    // ===== 3D Background Animation (unchanged, minor perf guard) =====
+    const canvas = document.getElementById('canvas-bg');
+    const ctx = canvas.getContext('2d');
+    function resizeCanvas(){canvas.width=window.innerWidth;canvas.height=window.innerHeight}
+    resizeCanvas();
+    const particles=[];const particleCount=90; // slight reduction for perf
+    class Particle{constructor(){this.reset(true)} reset(randomizeXY=false){this.z=Math.random()*1000;this.size=Math.random()*2;this.speedX=(Math.random()-.5)*.5;this.speedY=(Math.random()-.5)*.5;this.speedZ=Math.random()*1;this.color=`hsl(${Math.random()*60+180},100%,50%)`;if(randomizeXY){this.x=Math.random()*canvas.width;this.y=Math.random()*canvas.height}else{this.x=canvas.width*Math.random();this.y=canvas.height*Math.random()}} update(){this.x+=this.speedX;this.y+=this.speedY;this.z-=this.speedZ;if(this.z<=0){this.reset()} if(this.x<0||this.x>canvas.width) this.speedX*=-1; if(this.y<0||this.y>canvas.height) this.speedY*=-1} draw(){const scale=1000/(1000+this.z);const x=(this.x-canvas.width/2)*scale+canvas.width/2;const y=(this.y-canvas.height/2)*scale+canvas.height/2;const size=this.size*scale;ctx.beginPath();ctx.arc(x,y,size,0,Math.PI*2);ctx.fillStyle=this.color;ctx.fill();for(let j=0;j<particles.length;j++){const p=particles[j];const dx=x-p.x;const dy=y-p.y;const dist=Math.hypot(dx,dy);if(dist<100){ctx.beginPath();ctx.moveTo(x,y);ctx.lineTo(p.x,p.y);ctx.strokeStyle=`rgba(0,255,255,${0.2*(1-dist/100)})`;ctx.stroke()}}}}
+    for(let i=0;i<particleCount;i++){particles.push(new Particle())}
+    let raf;function animate(){ctx.fillStyle='rgba(15,15,35,0.1)';ctx.fillRect(0,0,canvas.width,canvas.height);for(const p of particles){p.update();p.draw()} raf=requestAnimationFrame(animate)};animate();
+    window.addEventListener('resize',()=>{cancelAnimationFrame(raf);resizeCanvas();animate()});
+
+    // ===== Interactions =====
+    function toggleCard(card){card.classList.toggle('expanded')}
+
+    // KPI count-up only once when in view
+    function animateValue(el,start,end,duration){const range=end-start;const steps=Math.ceil(duration/16);let cur=start;let i=0;const timer=setInterval(()=>{i++;cur=start+range*(i/steps);if(i>=steps){cur=end;clearInterval(timer)} el.textContent=Math.floor(cur)},16)}
+    const io=new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting){if(e.target.classList.contains('kpi-number')){const v=parseInt(e.target.dataset.value,10);animateValue(e.target,0,v,1200);io.unobserve(e.target)} if(e.target.classList.contains('progress-ring-fill')){e.target.style.animation='fillProgress 1.4s ease forwards';io.unobserve(e.target)}}})},{threshold:.15,rootMargin:'0px 0px -80px 0px'})
+    document.querySelectorAll('.kpi-number,.progress-ring-fill').forEach(el=>io.observe(el))
+
+    // Keyboard access for expandable cards
+    document.querySelectorAll('.timeline-card').forEach(card=>{
+      card.addEventListener('keydown',(e)=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();toggleCard(card)}})
+      card.addEventListener('mouseenter',()=>{card.style.transform='translateY(-2px)'})
+      card.addEventListener('mouseleave',()=>{if(!card.classList.contains('expanded')) card.style.transform=''})
+    })
+
+    // Smooth-scroll fix for in-page anchors in older browsers
+    document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const id=a.getAttribute('href');if(id.length>1){const t=document.querySelector(id);if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}}})})
+  </script>
+</body>
+</html>

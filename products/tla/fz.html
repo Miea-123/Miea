@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>替格列汀作用机制 - 多层级展示（含速度滑块）</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Noto Sans CJK SC', sans-serif; background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); min-height: 100vh; padding: 20px; }
+        .main-container { max-width: 1400px; margin: 0 auto; background: #fff; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,.1); padding: 40px; }
+        .header { text-align: center; margin-bottom: 40px; }
+        .header h1 { font-size: 36px; margin-bottom: 10px; background: linear-gradient(135deg, #667eea, #764ba2); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .header p { color: #718096; font-size: 18px; }
+        .mechanism-wrapper { background: linear-gradient(135deg, #fafbff 0%, #f0f4ff 100%); border-radius: 20px; padding: 40px 20px; margin-bottom: 30px; }
+        .level-container { display: flex; flex-direction: column; gap: 60px; position: relative; max-width: 1200px; margin: 0 auto; }
+        .level-row { display: flex; justify-content: center; align-items: center; position: relative; min-height: 140px; }
+        .level-label { position: absolute; left: 0; width: 120px; padding: 10px; background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; border-radius: 10px; text-align: center; font-weight: 600; font-size: 14px; box-shadow: 0 4px 15px rgba(102,126,234,.3); }
+        .cards-wrapper { display: flex; gap: 30px; margin-left: 150px; flex-wrap: wrap; justify-content: center; align-items: center; }
+        .card { background: #fff; border-radius: 15px; padding: 20px; box-shadow: 0 4px 20px rgba(0,0,0,.08); position: relative; transition: all .3s ease; cursor: pointer; border: 2px solid transparent; min-width: 200px; max-width: 250px; outline: none; }
+        .card:hover, .card:focus { transform: translateY(-5px) scale(1.02); box-shadow: 0 8px 30px rgba(0,0,0,.15); border-color: #667eea; }
+        .molecular-card { background: linear-gradient(135deg, #ffffff 0%, #e6f2ff 100%); }
+        .cellular-card  { background: linear-gradient(135deg, #ffffff 0%, #fef0ff 100%); }
+        .tissue-card    { background: linear-gradient(135deg, #ffffff 0%, #fffaed 100%); }
+        .organ-card     { background: linear-gradient(135deg, #ffffff 0%, #f0fffc 100%); }
+        .card-header { display: flex; align-items: center; margin-bottom: 15px; border-bottom: 1px solid rgba(0,0,0,.05); padding-bottom: 10px; }
+        .card-icon { width: 35px; height: 35px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-right: 10px; color: #fff; }
+        .molecular-icon { background: linear-gradient(135deg, #3b82f6, #1e40af); }
+        .cellular-icon  { background: linear-gradient(135deg, #ec4899, #be185d); }
+        .tissue-icon    { background: linear-gradient(135deg, #f59e0b, #d97706); }
+        .organ-icon     { background: linear-gradient(135deg, #10b981, #047857); }
+        .card-title { font-size: 16px; font-weight: 600; color: #1a202c; }
+        .card-content { font-size: 13px; color: #4a5568; line-height: 1.6; }
+        .highlight { display: inline-block; background: rgba(102,126,234,.1); color: #667eea; padding: 2px 6px; border-radius: 4px; font-weight: 600; margin: 2px 0; }
+        .connector { position: absolute; left: 50%; transform: translateX(-50%); width: 2px; height: 60px; background: linear-gradient(180deg, transparent, #667eea, transparent); z-index: 0; }
+        .connector::after { content: ''; position: absolute; bottom: -8px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 6px solid transparent; border-right: 6px solid transparent; border-top: 10px solid #667eea; }
+        .level-row:nth-child(1) .connector, .level-row:nth-child(2) .connector, .level-row:nth-child(3) .connector { top: 140px; }
+        .info-panel { background: #fff; border-radius: 15px; padding: 25px; margin-top: 30px; box-shadow: 0 4px 20px rgba(0,0,0,.08); display: none; animation: slideUp .3s ease; }
+        .info-panel.active { display: block; }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .info-title { font-size: 20px; font-weight: 600; color: #2d3748; margin-bottom: 15px; padding-bottom: 10px; border-bottom: 2px solid #667eea; }
+        .info-content { font-size: 15px; color: #4a5568; line-height: 1.8; }
+        .legend { display: flex; justify-content: center; gap: 40px; margin: 30px 0; padding: 20px; background: #f7fafc; border-radius: 10px; }
+        .legend-item { display: flex; align-items: center; gap: 10px; }
+        .legend-box { width: 30px; height: 30px; border-radius: 6px; }
+        .controls { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin-top: 30px; align-items: center; }
+        .btn { padding: 12px 24px; border: none; border-radius: 10px; font-size: 15px; font-weight: 600; cursor: pointer; transition: all .3s ease; display: inline-flex; align-items: center; gap: 8px; }
+        .btn-primary { background: linear-gradient(135deg, #667eea, #764ba2); color: #fff; }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(102,126,234,.4); }
+        .btn-secondary { background: #e2e8f0; color: #4a5568; }
+        .btn-secondary:hover { background: #cbd5e0; }
+        @keyframes pulse { 0%,100%{ transform: scale(1); } 50%{ transform: scale(1.05);} }
+        .card.active { animation: pulse 2s infinite; border-color: #667eea; box-shadow: 0 0 30px rgba(102,126,234,.3); }
+        .speed-wrap { display:flex; align-items:center; gap:10px; padding:6px 12px; background:#f7fafc; border-radius:10px; }
+        .speed-val { min-width: 48px; text-align:right; font-variant-numeric: tabular-nums; color:#2d3748; }
+        @media (max-width: 768px) { .level-label { position: relative; left: auto; width: 100%; margin-bottom: 20px; } .cards-wrapper { margin-left: 0; flex-direction: column; } .card { width: 100%; max-width: 100%; } .connector { display: none; } }
+    </style>
+</head>
+<body>
+    <div class="main-container">
+        <div class="header">
+            <h1>替格列汀（泰里安®）作用机制</h1>
+            <p>从分子到器官系统的级联作用路径</p>
+        </div>
+
+        <div class="mechanism-wrapper">
+            <div class="level-container">
+                <!-- 分子层级 -->
+                <div class="level-row">
+                    <div class="level-label">分子层级</div>
+                    <div class="cards-wrapper">
+                        <div class="card molecular-card" data-info="molecular" tabindex="0" role="button" aria-label="替格列汀 分子作用">
+                            <div class="card-header">
+                                <div class="card-icon molecular-icon">🧬</div>
+                                <div class="card-title">替格列汀</div>
+                            </div>
+                            <div class="card-content">
+                                <strong>DPP-4选择性抑制</strong><br>
+                                IC₅₀: <span class="highlight">1.8 nM</span><br>
+                                选择性: &gt;10,000倍<br>
+                                半衰期: 21-24小时
+                            </div>
+                        </div>
+
+                        <div class="card molecular-card" data-info="enzyme" tabindex="0" role="button" aria-label="DPP-4 酶">
+                            <div class="card-header">
+                                <div class="card-icon molecular-icon">⚡</div>
+                                <div class="card-title">DPP-4酶</div>
+                            </div>
+                            <div class="card-content">
+                                <strong>酶活性抑制</strong><br>
+                                抑制率: <span class="highlight">&gt;80%</span><br>
+                                持续时间: 24小时<br>
+                                可逆性结合
+                            </div>
+                        </div>
+
+                        <div class="card molecular-card" data-info="incretin" tabindex="0" role="button" aria-label="肠促胰素">
+                            <div class="card-header">
+                                <div class="card-icon molecular-icon">🔬</div>
+                                <div class="card-title">肠促胰素</div>
+                            </div>
+                            <div class="card-content">
+                                <strong>GLP-1 &amp; GIP保护</strong><br>
+                                GLP-1↑: <span class="highlight">2-3倍</span><br>
+                                GIP↑: <span class="highlight">1.5-2倍</span><br>
+                                活性形式延长
+                            </div>
+                        </div>
+                    </div>
+                    <div class="connector"></div>
+                </div>
+
+                <!-- 细胞层级 -->
+                <div class="level-row">
+                    <div class="level-label">细胞层级</div>
+                    <div class="cards-wrapper">
+                        <div class="card cellular-card" data-info="beta" tabindex="0" role="button" aria-label="β细胞">
+                            <div class="card-header">
+                                <div class="card-icon cellular-icon">🔵</div>
+                                <div class="card-title">β细胞</div>
+                            </div>
+                            <div class="card-content">
+                                <strong>胰岛素分泌增强</strong><br>
+                                HOMA-β: <span class="highlight">+28.3%</span><br>
+                                葡萄糖依赖性<br>
+                                细胞保护作用
+                            </div>
+                        </div>
+
+                        <div class="card cellular-card" data-info="alpha" tabindex="0" role="button" aria-label="α细胞">
+                            <div class="card-header">
+                                <div class="card-icon cellular-icon">🔴</div>
+                                <div class="card-title">α细胞</div>
+                            </div>
+                            <div class="card-content">
+                                <strong>胰高血糖素抑制</strong><br>
+                                分泌↓: <span class="highlight">-35%</span><br>
+                                餐后抑制增强<br>
+                                糖异生减少
+                            </div>
+                        </div>
+
+                        <div class="card cellular-card" data-info="lcell" tabindex="0" role="button" aria-label="L细胞">
+                            <div class="card-header">
+                                <div class="card-icon cellular-icon">🟢</div>
+                                <div class="card-title">L细胞</div>
+                            </div>
+                            <div class="card-content">
+                                <strong>肠道内分泌</strong><br>
+                                GLP-1分泌保护<br>
+                                肠-胰岛轴增强<br>
+                                餐后调节优化
+                            </div>
+                        </div>
+                    </div>
+                    <div class="connector"></div>
+                </div>
+
+                <!-- 组织层级 -->
+                <div class="level-row">
+                    <div class="level-label">组织层级</div>
+                    <div class="cards-wrapper">
+                        <div class="card tissue-card" data-info="pancreas" tabindex="0" role="button" aria-label="胰腺">
+                            <div class="card-header">
+                                <div class="card-icon tissue-icon">🥞</div>
+                                <div class="card-title">胰腺</div>
+                            </div>
+                            <div class="card-content">
+                                <strong>胰岛功能改善</strong><br>
+                                β/α细胞平衡<br>
+                                炎症反应↓<br>
+                                纤维化风险↓
+                            </div>
+                        </div>
+
+                        <div class="card tissue-card" data-info="liver" tabindex="0" role="button" aria-label="肝脏">
+                            <div class="card-header">
+                                <div class="card-icon tissue-icon">🫘</div>
+                                <div class="card-title">肝脏</div>
+                            </div>
+                            <div class="card-content">
+                                <strong>糖代谢优化</strong><br>
+                                肝糖输出: <span class="highlight">-20%</span><br>
+                                胰岛素敏感性↑<br>
+                                脂肪堆积↓
+                            </div>
+                        </div>
+
+                        <div class="card tissue-card" data-info="adipose" tabindex="0" role="button" aria-label="脂肪组织">
+                            <div class="card-header">
+                                <div class="card-icon tissue-icon">🟡</div>
+                                <div class="card-title">脂肪组织</div>
+                            </div>
+                            <div class="card-content">
+                                <strong>代谢平衡</strong><br>
+                                体重影响: <span class="highlight">中性</span><br>
+                                脂肪因子改善<br>
+                                炎症标志物↓
+                            </div>
+                        </div>
+                    </div>
+                    <div class="connector"></div>
+                </div>
+
+                <!-- 器官系统层级 -->
+                <div class="level-row">
+                    <div class="level-label">器官系统</div>
+                    <div class="cards-wrapper">
+                        <div class="card organ-card" data-info="glucose" tabindex="0" role="button" aria-label="血糖系统">
+                            <div class="card-header">
+                                <div class="card-icon organ-icon">🩸</div>
+                                <div class="card-title">血糖系统</div>
+                            </div>
+                            <div class="card-content">
+                                <strong>综合血糖控制</strong><br>
+                                HbA1c: <span class="highlight">-0.79%</span><br>
+                                FPG: <span class="highlight">-19 mg/dL</span><br>
+                                达标率: 41.7%<br>
+                                低血糖: &lt;1%
+                            </div>
+                        </div>
+
+                        <div class="card organ-card" data-info="cardiovascular" tabindex="0" role="button" aria-label="心血管">
+                            <div class="card-header">
+                                <div class="card-icon organ-icon">❤️</div>
+                                <div class="card-title">心血管</div>
+                            </div>
+                            <div class="card-content">
+                                <strong>心血管影响</strong><br>
+                                血压: <span class="highlight">中性</span><br>
+                                内皮功能改善<br>
+                                炎症因子↓<br>
+                                MACE评估中
+                            </div>
+                        </div>
+
+                        <div class="card organ-card" data-info="metabolic" tabindex="0" role="button" aria-label="代谢系统">
+                            <div class="card-header">
+                                <div class="card-icon organ-icon">⚡</div>
+                                <div class="card-title">代谢系统</div>
+                            </div>
+                            <div class="card-content">
+                                <strong>代谢综合改善</strong><br>
+                                体重: <span class="highlight">±0.2 kg</span><br>
+                                血脂谱优化<br>
+                                胰岛素抵抗↓<br>
+                                能量平衡改善
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 信息展示面板 -->
+        <div class="info-panel" id="infoPanel">
+            <div class="info-title" id="infoTitle">详细机制说明</div>
+            <div class="info-content" id="infoContent">点击上方卡片查看各层级详细作用机制</div>
+        </div>
+
+        <!-- 图例 -->
+        <div class="legend">
+            <div class="legend-item">
+                <div class="legend-box molecular-icon"></div>
+                <span>分子层级</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box cellular-icon"></div>
+                <span>细胞层级</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box tissue-icon"></div>
+                <span>组织层级</span>
+            </div>
+            <div class="legend-item">
+                <div class="legend-box organ-icon"></div>
+                <span>器官系统</span>
+            </div>
+        </div>
+
+        <!-- 控制按钮 + 速度滑块 -->
+        <div class="controls">
+            <button class="btn btn-primary" id="playBtn"><span>▶</span> 播放动画</button>
+            <button class="btn btn-secondary" id="resetBtn"><span>↻</span> 重置视图</button>
+            <button class="btn btn-secondary" id="showAllBtn"><span>📋</span> 显示全部</button>
+            <div class="speed-wrap" aria-label="播放速度调节">
+                <span style="color:#4a5568;">速度</span>
+                <input type="range" id="speedRange" min="200" max="3000" step="100" value="800" />
+                <span class="speed-val"><span id="speedLabel">800</span> ms</span>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 详细信息数据库
+        const infoDatabase = {
+            molecular: { title: '替格列汀分子作用', content: '替格列汀是新一代高选择性DPP-4抑制剂，分子式C₂₂H₃₀N₄O₄S。通过特异性结合DPP-4酶活性位点，IC₅₀值仅1.8 nM，选择性超过其他DPP家族成员10,000倍。其独特的噻唑烷环结构赋予了21-24小时的长半衰期，支持每日一次给药。' },
+            enzyme: { title: 'DPP-4酶抑制机制', content: 'DPP-4（二肽基肽酶-4）是一种丝氨酸蛋白酶，正常情况下快速降解GLP-1和GIP。替格列汀通过可逆性竞争性抑制，使DPP-4活性降低>80%，效果持续24小时，从而保护内源性肠促胰素免于降解。' },
+            incretin: { title: '肠促胰素效应增强', content: '通过抑制DPP-4，活性GLP-1水平提高2-3倍，GIP水平提高1.5-2倍。这些肠促胰素半衰期从1-2分钟延长至数小时，以葡萄糖依赖性方式调节胰岛功能，避免低血糖风险。' },
+            beta: { title: 'β细胞功能改善', content: 'GLP-1通过与β细胞表面受体结合，激活cAMP-PKA和PI3K通路，促进胰岛素基因转录、合成和分泌。同时减少β细胞凋亡，改善细胞功能。临床研究显示HOMA-β指数提升28.3%，表明β细胞功能显著改善。' },
+            alpha: { title: 'α细胞功能调节', content: 'GLP-1和GIP直接抑制α细胞分泌胰高血糖素，特别是在高血糖状态下作用更明显。胰高血糖素分泌减少约35%，降低肝糖输出，改善空腹和餐后血糖。这种抑制是葡萄糖依赖性的，低血糖时不会过度抑制。' },
+            lcell: { title: '肠道L细胞作用', content: '肠道L细胞和K细胞分别分泌GLP-1和GIP。替格列汀通过保护这些激素免于降解，增强肠-胰岛轴功能。餐后肠促胰素效应从占胰岛素分泌的50-70%提高至80%以上。' },
+            pancreas: { title: '胰腺组织整体改善', content: '胰岛功能全面改善：β细胞量增加，α细胞过度分泌抑制，δ细胞功能优化。减少胰腺炎症反应和氧化应激，降低纤维化风险。长期使用可能延缓β细胞功能衰退进程。' },
+            liver: { title: '肝脏糖脂代谢', content: '通过减少胰高血糖素作用和改善胰岛素敏感性，肝糖输出(HGP)降低约20%。抑制糖异生关键酶(PEPCK、G6Pase)表达。同时可能减少肝脏脂肪堆积，对NAFLD有潜在益处。' },
+            adipose: { title: '脂肪组织代谢', content: '对脂肪组织影响温和，不促进脂肪堆积。可能通过改善脂肪因子(脂联素↑、瘦素稳定)分泌，减少TNF-α、IL-6等炎症因子，间接改善全身胰岛素敏感性。体重变化仅±0.2 kg。' },
+            glucose: { title: '血糖控制效果', content: '多途径协同作用实现全面血糖控制：HbA1c降低0.79%，空腹血糖降低19 mg/dL，餐后2小时血糖降低38 mg/dL。血糖变异性减少，时间在范围内(TIR)增加。41.7%患者达到HbA1c<7%目标。单药治疗低血糖发生率<1%。' },
+            cardiovascular: { title: '心血管系统影响', content: '对血压和心率无明显影响。可能通过改善内皮功能(NO↑、ET-1↓)、减少炎症(CRP↓、IL-6↓)、改善血脂谱提供心血管保护。需注意大剂量(160mg)可能延长QT间期。大型心血管结局研究正在进行。' },
+            metabolic: { title: '代谢综合改善', content: '实现血糖控制同时避免常见副作用：体重中性(±0.2 kg)、低血糖风险极低(<1%)、胃肠道耐受性良好。轻度改善血脂(TG↓、HDL-C↑)。通过改善胰岛素抵抗，优化整体能量代谢。' }
+        };
+
+        // 动画速度（ms）
+        let animationSpeed = 800;
+
+        // 显示详细信息（不依赖全局 event）
+        function showInfo(key, el) {
+            const panel = document.getElementById('infoPanel');
+            const title = document.getElementById('infoTitle');
+            const content = document.getElementById('infoContent');
+            if (!infoDatabase[key]) return;
+            title.textContent = infoDatabase[key].title;
+            content.innerHTML = infoDatabase[key].content;
+            panel.classList.add('active');
+            document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+            if (el) el.classList.add('active');
+        }
+
+        function animateSequence() {
+            const cards = Array.from(document.querySelectorAll('.card'));
+            if (!cards.length) return;
+            cards.forEach(c => c.classList.remove('active'));
+            document.getElementById('infoPanel').classList.remove('active');
+            let i = 0;
+            const timer = setInterval(() => {
+                if (i > 0) cards[i-1].classList.remove('active');
+                if (i < cards.length) {
+                    const card = cards[i];
+                    card.classList.add('active');
+                    const key = card.dataset.info;
+                    if (key && infoDatabase[key]) {
+                        document.getElementById('infoTitle').textContent = infoDatabase[key].title;
+                        document.getElementById('infoContent').innerHTML = infoDatabase[key].content;
+                        document.getElementById('infoPanel').classList.add('active');
+                    }
+                    i++;
+                } else {
+                    cards[cards.length - 1].classList.remove('active');
+                    clearInterval(timer);
+                    setTimeout(() => document.getElementById('infoPanel').classList.remove('active'), 800);
+                }
+            }, animationSpeed);
+        }
+
+        function resetAll() {
+            document.querySelectorAll('.card').forEach(c => c.classList.remove('active'));
+            document.getElementById('infoPanel').classList.remove('active');
+        }
+
+        function showAllInfo() {
+            const panel = document.getElementById('infoPanel');
+            const title = document.getElementById('infoTitle');
+            const content = document.getElementById('infoContent');
+            title.textContent = '替格列汀完整作用机制';
+            let html = '';
+            Object.keys(infoDatabase).forEach(k => {
+                html += `<h3 style="color:#667eea;margin-top:20px;">${infoDatabase[k].title}</h3>`;
+                html += `<p style="margin-bottom:15px;">${infoDatabase[k].content}</p>`;
+            });
+            content.innerHTML = html;
+            panel.classList.add('active');
+            document.querySelectorAll('.card').forEach(c => c.classList.add('active'));
+        }
+
+        // 触摸滑动
+        let touchStartX = 0, touchEndX = 0, currentInfoIndex = -1;
+        const infoKeys = Object.keys(infoDatabase);
+        function showNextInfo(){ currentInfoIndex = (currentInfoIndex + 1) % infoKeys.length; const key = infoKeys[currentInfoIndex]; const card = document.querySelector(`[data-info="${key}"]`); if (card) showInfo(key, card); }
+        function showPrevInfo(){ currentInfoIndex = (currentInfoIndex <= 0 ? infoKeys.length - 1 : currentInfoIndex - 1); const key = infoKeys[currentInfoIndex]; const card = document.querySelector(`[data-info="${key}"]`); if (card) showInfo(key, card); }
+        function handleSwipe(){ if (touchEndX < touchStartX - 50) showNextInfo(); if (touchEndX > touchStartX + 50) showPrevInfo(); }
+
+        // 绑定事件
+        document.addEventListener('DOMContentLoaded', () => {
+            document.querySelectorAll('.card').forEach(card => {
+                card.addEventListener('click', () => showInfo(card.dataset.info, card));
+                card.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showInfo(card.dataset.info, card); } });
+            });
+            document.getElementById('playBtn').addEventListener('click', animateSequence);
+            document.getElementById('resetBtn').addEventListener('click', resetAll);
+            document.getElementById('showAllBtn').addEventListener('click', showAllInfo);
+
+            // 速度滑块
+            const speedRange = document.getElementById('speedRange');
+            const speedLabel = document.getElementById('speedLabel');
+            const saved = localStorage.getItem('tenelia_speed_ms');
+            if (saved) {
+                const v = parseInt(saved, 10);
+                if (!isNaN(v)) { animationSpeed = v; speedRange.value = v; speedLabel.textContent = v; }
+            }
+            speedRange.addEventListener('input', (e) => {
+                animationSpeed = parseInt(e.target.value, 10);
+                speedLabel.textContent = animationSpeed;
+                localStorage.setItem('tenelia_speed_ms', String(animationSpeed));
+            });
+
+            // 欢迎动画
+            setTimeout(animateSequence, 500);
+        });
+
+        // 键盘快捷键
+        document.addEventListener('keydown', (e) => {
+            if (e.key === ' ') { e.preventDefault(); animateSequence(); }
+            if (e.key === 'Escape') resetAll();
+            if (e.key === 'a' || e.key === 'A') showAllInfo();
+        });
+        document.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; });
+        document.addEventListener('touchend',   (e) => { touchEndX   = e.changedTouches[0].screenX; handleSwipe(); });
+    </script>
+</body>
+</html>

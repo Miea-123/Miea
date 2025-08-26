@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>氨己烯酸口服溶液用散｜多页面版（蓝绿色配色）</title>
+  <meta name="description" content="氨己烯酸（Vigabatrin）多页面路由版：产品概览、疗效证据、用法用量、配置步骤、安全监测、参考文献。空灵而温柔的蓝绿色配色，移动端友好。">
+  <style>
+    :root{
+      /* 蓝绿色品牌色系｜空灵而温柔 */
+      --brand:#14B8A6;/* 主色 */
+      --brand-600:#0F766E;/* 深主色 */
+      --accent:#7AD7CF;/* 强调 */
+      --ink:#101623;/* 正文颜色更柔和 */
+      --muted:#5b6672;
+      --bg:#F6FBFA;/* 轻盈背景 */
+      --card:#ffffff;
+      --line:#E6F3F1;
+      --ok:#0E918C;
+      --warn:#f57f17;
+      --danger:#c62828;
+      --shadow:0 10px 25px rgba(20,184,166,.08);
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:"Alibaba PuHuiTi","Alibaba PuHuiTi 2.0","PingFang SC","Microsoft YaHei",system-ui,-apple-system,sans-serif;line-height:1.7;-webkit-font-smoothing:antialiased;}
+    a{color:var(--brand);text-decoration:none}
+    a:hover{text-decoration:underline}
+
+    .container{max-width:1100px;margin:0 auto;padding:24px}
+
+    /* 顶部 Hero */
+    header.hero{position:relative;background:linear-gradient(135deg,#F7FFFE,#EFFFFA 55%,#DFFAF5);color:#083c3a}
+    .hero-inner{max-width:1100px;margin:0 auto;padding:54px 24px 70px}
+    .eyebrow{letter-spacing:.12em;text-transform:uppercase;opacity:1;font-size:.8rem;color:#0F766E}
+    h1{margin:.25rem 0 0;font-weight:700;line-height:1.15;color:#083c3a}
+    .subtitle{margin:12px 0 0;font-size:1.06rem;opacity:.98;color:#0F766E}
+    .badges{margin-top:14px;display:flex;gap:8px;flex-wrap:wrap}
+    .badge{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.7);border:1px solid #d1faf4;backdrop-filter:blur(4px);font-size:.86rem;color:#0b3a37}
+
+    /* 顶部导航（多页面跳转） */
+    .topbar{position:sticky;top:0;z-index:60;background:#fff;border-bottom:1px solid var(--line);box-shadow:0 6px 16px rgba(16,22,35,.06)}
+    .topbar-inner{max-width:1100px;margin:0 auto;display:flex;gap:10px;align-items:center;padding:10px 16px}
+    .brandmark{display:flex;align-items:center;gap:10px;font-weight:800;color:#0b3a37}
+    .brandmark .dot{width:10px;height:10px;border-radius:50%;background:linear-gradient(90deg,#7AD7CF,#14B8A6)}
+    nav.nav{display:flex;gap:6px;flex:1 1 auto;align-items:center}
+    nav.nav a{padding:8px 12px;border-radius:999px;color:#263238;font-weight:700;white-space:nowrap}
+    nav.nav a:hover{background:#ecfdfc}
+    nav.nav a.active{background:linear-gradient(90deg,#E6FFFB,#E0FFFD);border:1px solid #ccfbf1}
+    .cta{display:flex;gap:8px;margin-left:auto}
+    .btn{display:inline-flex;align-items:center;gap:8px;padding:10px 14px;border-radius:12px;border:1px solid var(--line);background:#fff;box-shadow:var(--shadow);font-weight:800}
+    .btn:hover{transform:translateY(-1px);box-shadow:0 12px 28px rgba(21,23,61,.08)}
+
+    /* 移动端汉堡 */
+    .burger{display:none;border:1px solid var(--line);padding:8px 10px;border-radius:10px;background:#fff}
+    .burger span{display:block;width:18px;height:2px;background:#334155;margin:4px 0;border-radius:2px}
+    @media(max-width:860px){
+      nav.nav{display:none}
+      nav.nav.open{display:flex;flex-wrap:wrap}
+      .burger{display:inline-block}
+    }
+
+    /* 基础结构 */
+    section{padding:36px 0}
+    h2{font-size:1.58rem;margin:0 0 16px}
+    .kicker{color:var(--muted);font-size:.92rem;margin-bottom:10px}
+    .grid{display:grid;gap:18px}
+    @media(min-width:880px){.grid.cols-2{grid-template-columns:1fr 1fr}.grid.cols-3{grid-template-columns:repeat(3,1fr)}}
+    .card{background:var(--card);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:18px}
+    .card h3{margin:.2rem 0 0;font-size:1.12rem}
+    .muted{color:var(--muted)}
+    .list{margin:10px 0 0;padding-left:18px}
+    .list li{margin:6px 0}
+    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:#ecfdfc;color:#0F766E;border:1px solid #d1faf4;font-weight:800;font-size:.86rem}
+    .tag{display:inline-flex;align-items:center;gap:6px;padding:4px 8px;border-radius:10px;background:#f0fdfb;border:1px solid #ccfbf1;font-size:.8rem;margin-right:6px}
+
+    /* 步骤 */
+    .steps{counter-reset:step}
+    .step{display:flex;gap:14px;padding:14px 12px;border:1px dashed var(--line);border-radius:14px;background:#fff}
+    .step+.step{margin-top:10px}
+    .step .num{flex:0 0 34px;height:34px;border-radius:50%;background:var(--brand);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:900}
+    .step .num:before{counter-increment:step;content:counter(step)}
+
+    /* 提示 */
+    .callout{padding:14px;border-left:6px solid var(--warn);background:#fff8e1;border:1px solid #ffe0b2;border-radius:12px}
+    .callout.ok{border-left-color:var(--brand);background:#ecfdfc;border-color:#d1faf4}
+    .callout.danger{border-left-color:var(--danger);background:#ffebee;border-color:#ffcdd2}
+
+    details{border:1px solid var(--line);border-radius:14px;background:#fff;box-shadow:var(--shadow)}
+    details>summary{cursor:pointer;padding:12px 14px;font-weight:800}
+    details>.content{padding:0 14px 14px}
+
+    /* 底部 */
+    footer{padding:38px 0;color:#556;border-top:1px solid var(--line)}
+    .footgrid{display:grid;gap:12px}
+    @media(min-width:860px){.footgrid{grid-template-columns:2fr 1fr}}
+
+    /* 小工具 */
+    .mono{font-family:ui-monospace,Menlo,Consolas,monospace}
+    .small{font-size:.92rem}
+    .center{display:flex;align-items:center;justify-content:center}
+    .right{display:flex;justify-content:flex-end}
+    .divider{height:1px;background:var(--line);margin:16px 0}
+    .svgwrap{background:#fff;border:1px solid var(--line);border-radius:14px;padding:10px;box-shadow:var(--shadow)}
+
+    /* 页面过渡 */
+    #view{opacity:0;transform:translateY(8px);transition:opacity .25s ease,transform .25s ease}
+    #view.enter{opacity:1;transform:none}
+  </style>
+</head>
+<body>
+  <!-- Hero -->
+  <header class="hero">
+    <div class="hero-inner">
+      <div class="eyebrow">希心呵护 · 爱达未来</div>
+      <h1>氨己烯酸口服溶液用散（Vigabatrin）</h1>
+      <p class="subtitle">🍼 婴儿痉挛症（IESS）/ West 综合征一线｜🧠 TSC 相关癫痫优选｜🔬 选择性不可逆 GABA‑T 抑制剂｜🌿 温和、可及、便于照护</p>
+      <div class="badges">
+        <span class="badge">📘 适应症：IESS/IS、难治性局灶性癫痫（随指南/说明书）</span>
+        <span class="badge">⚙️ 机制：提升突触 GABA 水平，抑制异常放电</span>
+        <span class="badge">🎯 证据：起效快、缓解率高、TSC 人群疗效确切</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- 顶部导航（多页面路由） -->
+  <div class="topbar" aria-label="站点导航">
+    <div class="topbar-inner">
+      <div class="brandmark" onclick="location.hash='#/overview'" style="cursor:pointer">
+        <div class="dot" aria-hidden="true"></div>
+        <span>安希达｜Vigabatrin</span>
+      </div>
+      <button class="burger" aria-label="展开导航" onclick="document.querySelector('nav.nav').classList.toggle('open')">
+        <span></span><span></span><span></span>
+      </button>
+      <nav class="nav">
+        <a data-route="#/overview">概览</a>
+        <a data-route="#/evidence">疗效证据</a>
+        <a data-route="#/dosing">用法用量</a>
+        <a data-route="#/prep">配置与给药</a>
+        <a data-route="#/safety">风险与监测</a>
+        <a data-route="#/refs">参考文献</a>
+      </nav>
+      <div class="cta">
+        <button class="btn" onclick="window.print()">🖨️ 打印/保存 PDF</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- 视图容器（多页面内容插入点） -->
+  <main id="view" class="container" role="main" aria-live="polite"></main>
+
+  <!-- 页脚（所有页面共用） -->
+  <footer>
+    <div class="container footgrid">
+      <div>
+        <strong>用药提示</strong>
+        <p class="small muted">本页面为医学与药学信息汇总，供专业人士参考，不替代医师个体化诊疗建议。</p>
+      </div>
+      <div class="right">
+        <span class="muted small">© 2025 远大 · 医学部</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ========== 多页面模板 ==========
+       说明：每个 <template> 代表一张“页面”。
+       路由使用 #/path 形式（示例：#/overview）。
+       可按需要继续拆分与扩展为独立 html 文件。 -->
+
+  <!-- 概览页 -->
+  <template id="tpl-overview">
+    <section>
+      <div class="kicker">Overview</div>
+      <h2>产品概览</h2>
+      <p class="muted small">🌿 以温和而有力的方式提升突触 GABA，尽早终止痉挛与高峰失律，便于家庭照护与持续随访。</p>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>适应症与人群</h3>
+          <ul class="list">
+            <li>👶 <b>婴儿痉挛症（IESS/IS）</b>：年龄依赖性、难治性癫痫脑病；一经确诊宜尽快治疗。</li>
+            <li>🧬 <b>结节性硬化（TSC）相关痉挛</b>：指南与研究支持将氨己烯酸作为首选方案之一。</li>
+            <li>🧩 <b>难治性局灶性癫痫</b>：作为联合治疗选项（按说明书/指南选择）。</li>
+          </ul>
+          <p class="muted small">注：用药请以获批说明书与最新共识/指南为准，并结合患儿个体化评估。</p>
+        </div>
+        <div class="card">
+          <h3>作用机制（GABA-T 抑制 🧪）</h3>
+          <p class="muted">选择性、不可逆抑制 <span class="mono">γ-aminobutyric acid transaminase</span>（GABA-T），提升 GABA 水平以抑制异常神经放电。</p>
+          <div class="svgwrap" aria-hidden="true">
+            <!-- 简洁机制示意（非比例） -->
+            <svg viewBox="0 0 680 170" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <marker id="arrow" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+                  <path d="M0,0 L0,6 L6,3 z" fill="#455a64"/>
+                </marker>
+                <linearGradient id="g1" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0%" stop-color="#d4f8f3"/>
+                  <stop offset="100%" stop-color="#b9efe7"/>
+                </linearGradient>
+              </defs>
+              <rect x="10" y="20" width="190" height="60" rx="12" fill="#fff" stroke="#cfd8dc"/>
+              <text x="105" y="56" text-anchor="middle" font-weight="700">GABA ↑</text>
+
+              <line x1="200" y1="50" x2="340" y2="50" stroke="#455a64" stroke-width="2" marker-end="url(#arrow)"/>
+              <rect x="340" y="20" width="160" height="60" rx="12" fill="url(#g1)" stroke="#8bded4"/>
+              <text x="420" y="46" text-anchor="middle" font-weight="700" fill="#0F766E">GABA-T</text>
+              <text x="420" y="64" text-anchor="middle" fill="#0F766E">被氨己烯酸抑制</text>
+
+              <line x1="500" y1="50" x2="650" y2="50" stroke="#b0bec5" stroke-width="2" marker-end="url(#arrow)"/>
+              <rect x="10" y="100" width="320" height="60" rx="12" fill="#fff" stroke="#cfd8dc"/>
+              <text x="170" y="136" text-anchor="middle" font-weight="700">抑制异常放电 → 控痉</text>
+            </svg>
+          </div>
+          <div class="divider"></div>
+          <span class="tag">🔒 选择性</span>
+          <span class="tag">🧠 中枢作用</span>
+          <span class="tag">⏱️ 起效快</span>
+        </div>
+      </div>
+    </section>
+  </template>
+
+  <!-- 疗效证据页 -->
+  <template id="tpl-evidence">
+    <section>
+      <div class="kicker">Clinical Evidence</div>
+      <h2>疗效与临床要点</h2>
+      <p class="muted small">⏳ 早治早益：在关键发育窗口内尽快控痉，有助于神经发育回归正轨；同时兼顾依从性与家庭照护体验。</p>
+      <div class="grid cols-3">
+        <div class="card">
+          <p class="pill">起效速度 ⏱️</p>
+          <h3>多数患儿可在 2 周内控痉</h3>
+          <p class="muted small">随访队列提示：治疗后约 <b>14 天</b> 内多数学龄前患儿痉挛停止，提示早期控痉潜力。</p>
+        </div>
+        <div class="card">
+          <p class="pill">单药有效率 🎯</p>
+          <h3>单药总有效率约 67%</h3>
+          <p class="muted small">单中心回顾显示：氨己烯酸单药治疗 IS 的<b>总有效率≈67%</b>，脑电图改善率≈83%，复发率≈6.5%。</p>
+        </div>
+        <div class="card">
+          <p class="pill">与 ACTH 比较 ⚖️</p>
+          <h3>疗效相当，复发率更低（部分研究）</h3>
+          <p class="muted small">发展中国家人群资料提示与 ACTH 疗效相当，且复发率更低，具有现实可及性优势。</p>
+        </div>
+        <div class="card">
+          <p class="pill">特殊人群 🧬</p>
+          <h3>TSC 相关婴儿痉挛：显著获益</h3>
+          <p class="muted small">随机研究在 TSC 相关痉挛中显示优效信号，部分研究报告<b>接近 100%</b> 的缓解率。</p>
+        </div>
+        <div class="card">
+          <p class="pill">总体优势 ✅</p>
+          <ul class="list small">
+            <li>机制明确，靶向提升 GABA；</li>
+            <li>起效快，便于<b>尽早终止高峰失律</b>；</li>
+            <li>口服配置灵活，便于照护；</li>
+            <li>在 TSC 人群中证据尤为扎实。</li>
+          </ul>
+        </div>
+        <div class="card">
+          <p class="pill">证据分级 📚</p>
+          <ul class="list small">
+            <li><b>强证据</b>：指南/随机研究支持 TSC 相关痉挛；</li>
+            <li><b>中等证据</b>：多中心/一致性观察研究；</li>
+            <li><b>限定证据</b>：小样本、机制或探索性研究。</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </template>
+
+  <!-- 用法用量页 -->
+  <template id="tpl-dosing">
+    <section>
+      <div class="kicker">Dosing</div>
+      <h2>用法用量（示例，遵医嘱与说明书）</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>说明书推荐（滴定思路）</h3>
+          <ul class="list">
+            <li>起始：<b>50 mg/kg/日</b>（分次）；</li>
+            <li>滴定：每次<b>25–50 mg/kg/日</b> 递增；</li>
+            <li>维持：依据临床与 EEG 反应个体化调整。</li>
+          </ul>
+          <p class="muted small">注：各国/各版说明书可能存在差异，请以当前可及版本为准。</p>
+        </div>
+        <div class="card">
+          <h3>文献中的快速起效方案（供参考）</h3>
+          <ul class="list">
+            <li>TSC 相关痉挛研究中曾采用：<b>150 mg/kg/日</b>；</li>
+            <li>IS 临床实践：依据控痉与耐受性动态优化。</li>
+          </ul>
+          <p class="muted small">仅为研究报道摘录，实际用药请遵循本地指南/说明书与专科医师决策。</p>
+        </div>
+      </div>
+      <details style="margin-top:12px">
+        <summary>💡 小贴士：用药目标与复评</summary>
+        <div class="content">
+          <ul class="list">
+            <li>目标：<b>快速终止痉挛发作与高峰节律紊乱</b>，改善发育结局。</li>
+            <li>复评：短期（如 2 周、4 周）评估临床与 EEG；必要时联合/调整治疗。</li>
+          </ul>
+        </div>
+      </details>
+    </section>
+  </template>
+
+  <!-- 配置与给药页 -->
+  <template id="tpl-prep">
+    <section>
+      <div class="kicker">Preparation & Administration</div>
+      <h2>口服溶液用散：配置步骤（示例）</h2>
+      <div class="callout ok small">✅ 目的：规范配置，确保剂量准确、口感与服用顺畅，便于家庭照护。</div>
+      <div class="grid cols-2" style="margin-top:12px">
+        <div class="steps">
+          <div class="step"><div class="num"></div><div><b>准备</b>：洁净容器、注射器/量杯、温开水；核对患儿体重与<b>当日剂量</b>。</div></div>
+          <div class="step"><div class="num"></div><div><b>溶解</b>：按医嘱将小袋用散置入容器，加入<b>适量温开水</b>充分搅拌。</div></div>
+          <div class="step"><div class="num"></div><div><b>定容/分次</b>：根据处方体积定容，必要时按次分装，贴好标签。</div></div>
+          <div class="step"><div class="num"></div><div><b>喂服</b>：婴幼儿可用针筒口服；进食不佳时与少量奶/辅食混合（遵医嘱）。</div></div>
+        </div>
+        <div class="steps">
+          <div class="step"><div class="num"></div><div><b>残留</b>：容器与喂药器具用温水冲净，避免残留影响下次剂量。</div></div>
+          <div class="step"><div class="num"></div><div><b>保存</b>：按医护建议存放（避光/低温等）；超过建议时限请弃用。</div></div>
+          <div class="step"><div class="num"></div><div><b>记录</b>：标注首次用药时间、剂量调整与不良反应，便于复诊交流。</div></div>
+          <div class="step"><div class="num"></div><div><b>随访</b>：按计划复查 EEG/发作日记，评估控痉与发育。</div></div>
+        </div>
+      </div>
+    </section>
+  </template>
+
+  <!-- 安全性与监测页 -->
+  <template id="tpl-safety">
+    <section>
+      <div class="kicker">Safety</div>
+      <h2>风险与监测：视网膜毒性 & 风险–获益</h2>
+      <div class="grid cols-2">
+        <div class="card">
+          <h3>👁️ 视野缺损风险</h3>
+          <ul class="list small">
+            <li>儿童总体发生率<b>较低</b>，与<b>累计用量/用时</b>相关；</li>
+            <li><b>&lt;6 个月</b>的相对短疗程：未见显著增加风险的证据；</li>
+            <li>观察性队列：治疗 6/12 个月后视网膜损伤约<b>5.3%/13.3%</b>；</li>
+          </ul>
+          <div class="callout small" style="border-left-color:var(--accent);background:#ecfdfc;border-color:#d1faf4">📌 建议：规范基线与随访<b>ERG/视功能</b>评估；必要时权衡剂量与疗程。</div>
+        </div>
+        <div class="card">
+          <h3>⚖️ 风险—获益评估</h3>
+          <p class="small">Cochrane 等证据：<b>不治疗</b>的风险（持续痉挛/高峰失律导致的不良神经发育结局）远<b>高于</b>规范治疗后可能出现的视功能不良事件风险。</p>
+          <div class="callout ok small">✅ 目标：尽快终止痉挛与 EEG 高峰失律，改善长期预后；同时按照规范开展视功能监测。</div>
+          <details style="margin-top:10px">
+            <summary>监测建议（示例）</summary>
+            <div class="content">
+              <ul class="list small">
+                <li>基线：ERG/行为视功能评估（条件允许时）；</li>
+                <li>疗程内：依据年龄与合作度选择客观评估方式；</li>
+                <li>家属教育：警惕视物异常、对光反应改变等线索，及时反馈。</li>
+              </ul>
+            </div>
+          </details>
+        </div>
+      </div>
+    </section>
+  </template>
+
+  <!-- 参考文献页 -->
+  <template id="tpl-refs">
+    <section>
+      <div class="kicker">References</div>
+      <h2>参考文献（节选）</h2>
+      <div class="card small">
+        <ul class="list">
+          <li>Zuberi SM, Wirrell E, Yozawitz E, et al. ILAE classification and definition of epilepsy syndromes with onset in neonates and infants. <i>Epilepsia</i>. 2022.</li>
+          <li>O'Callaghan FJK, et al. ICISS: hormonal therapy vs hormonal + vigabatrin in infantile spasms. <i>Lancet Neurol</i>. 2016.</li>
+          <li>Djuric M, et al. Long-term outcome in children with infantile spasms treated with vigabatrin (n=180). <i>Epilepsia</i>. 2014.</li>
+          <li>Nam JY, et al. Vigabatrin monotherapy effectiveness in IS. <i>J Pediatr Pharmacol</i>. 2018.</li>
+          <li>Ibrahim S, et al. Vigabatrin vs ACTH: developing country perspective. <i>BMC Pediatr</i>. 2010.</li>
+          <li>Chiron C, et al. Vigabatrin vs hydrocortisone in TSC-related spasms. <i>Epilepsy Res</i>. 1997.</li>
+          <li>Westall CA, et al. Vigabatrin retinal toxicity in children with IS. <i>Neurology</i>. 2014.</li>
+          <li>Maguire MJ, et al. Visual field loss following vigabatrin therapy: systematic review. <i>Epilepsia</i>. 2010.</li>
+          <li>Willmore LJ, et al. Vigabatrin: 2008 update. <i>Epilepsia</i>. 2009.</li>
+          <li>中国抗癫痫协会. 临床诊疗指南—癫痫分册（修订版）. 人民卫生出版社. 2015.</li>
+        </ul>
+        <div class="divider"></div>
+        <p class="muted">以上文献与要点来源于公司材料汇编与公开文献摘录，具体适应症/用法请以最新获批说明书与本地指南为准。</p>
+      </div>
+    </section>
+  </template>
+
+  <!-- ========== 轻量路由脚本 ==========
+       说明：hash 路由（#/path），按需切换模板到 #view。
+       支持：激活导航高亮、页面标题与描述更新、过渡动画。 -->
+  <script>
+    const routes = {
+      '/overview': { tpl: 'tpl-overview', title: '概览｜安希达（氨己烯酸）', desc: '氨己烯酸（Vigabatrin）产品概览：适应症、人群与作用机制。' },
+      '/evidence': { tpl: 'tpl-evidence', title: '疗效证据｜安希达', desc: '氨己烯酸疗效与临床要点：起效速度、有效率、TSC 人群证据等。' },
+      '/dosing': { tpl: 'tpl-dosing', title: '用法用量｜安希达', desc: '氨己烯酸用法用量示例：起始剂量、滴定与复评建议。' },
+      '/prep': { tpl: 'tpl-prep', title: '配置与给药｜安希达', desc: '氨己烯酸口服溶液用散配置与给药步骤，家庭照护友好。' },
+      '/safety': { tpl: 'tpl-safety', title: '风险与监测｜安希达', desc: '视网膜毒性风险与监测建议，风险—获益评估要点。' },
+      '/refs': { tpl: 'tpl-refs', title: '参考文献｜安希达', desc: '氨己烯酸相关核心参考文献（节选）。' },
+    };
+
+    const view = document.getElementById('view');
+    const navLinks = [...document.querySelectorAll('nav.nav a')];
+
+    // 绑定导航点击（多页面跳转）
+    navLinks.forEach(a=>{
+      a.addEventListener('click', (e)=>{
+        e.preventDefault();
+        const to = a.getAttribute('data-route');
+        if(to) location.hash = to;
+        if(window.innerWidth<=860){
+          document.querySelector('nav.nav').classList.remove('open');
+        }
+      });
+    });
+
+    function render(path){
+      const route = routes[path] || routes['/overview'];
+      const tpl = document.getElementById(route.tpl);
+      if(!tpl) return;
+      // 过渡进入
+      view.classList.remove('enter');
+      // 微小延迟确保动画生效
+      setTimeout(()=>{
+        view.innerHTML = tpl.innerHTML;
+        requestAnimationFrame(()=>view.classList.add('enter'));
+      }, 10);
+
+      // 激活导航
+      navLinks.forEach(a=>{
+        const r = a.getAttribute('data-route');
+        if(r === '#'+path) a.classList.add('active'); else a.classList.remove('active');
+      });
+
+      // 标题与描述
+      document.title = route.title + '｜多页面版';
+      const meta = document.querySelector('meta[name="description"]');
+      if(meta) meta.setAttribute('content', route.desc);
+      // 回到顶部
+      window.scrollTo({top:0,behavior:'smooth'});
+    }
+
+    function getPath(){
+      const h = location.hash || '#/overview';
+      const m = h.match(/^#\/(.+)$/);
+      return m ? ('/'+m[1]) : '/overview';
+    }
+
+    addEventListener('hashchange', ()=>render(getPath()));
+    // 首次加载
+    render(getPath());
+  </script>
+</body>
+</html>

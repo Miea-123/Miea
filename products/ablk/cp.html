@@ -1,0 +1,1311 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>盐酸沙格雷酯 - 多靶点血管保护创新药物</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft YaHei", sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        .nav-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #0891b2, #0e7490);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #0891b2;
+        }
+
+        /* 英雄区域 */
+        .hero {
+            margin-top: 60px;
+            background: linear-gradient(135deg, #0891b2 0%, #0e7490 35%, #155e75 70%, #164e63 100%);
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: float 20s linear infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .hero-content {
+            position: relative;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            color: white;
+            margin-bottom: 20px;
+            font-weight: 900;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            animation: fadeInUp 1s ease;
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            color: rgba(255,255,255,0.95);
+            margin-bottom: 30px;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-badges {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .badge {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            padding: 10px 20px;
+            border-radius: 25px;
+            color: white;
+            font-weight: 600;
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: white;
+            color: #0891b2;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            animation: fadeInUp 1s ease 0.6s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            background: #f0fdfa;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* 核心优势 */
+        .advantages {
+            padding: 80px 20px;
+            background: #f8f9fa;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 20px;
+            color: #2c3e50;
+            font-weight: 800;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #7f8c8d;
+            margin-bottom: 50px;
+            font-size: 18px;
+        }
+
+        .advantages-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .advantage-card {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .advantage-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+        }
+
+        .advantage-icon {
+            width: 80px;
+            height: 80px;
+            margin: 0 auto 20px;
+            background: linear-gradient(135deg, #0891b2, #0e7490);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: white;
+        }
+
+        .advantage-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #2c3e50;
+            font-weight: 700;
+        }
+
+        .advantage-desc {
+            color: #7f8c8d;
+            line-height: 1.6;
+        }
+
+        /* 临床应用 */
+        .applications {
+            padding: 80px 20px;
+            background: white;
+        }
+
+        .app-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .app-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .app-tab {
+            padding: 12px 30px;
+            background: #f8f9fa;
+            border: 2px solid transparent;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+            color: #555;
+        }
+
+        .app-tab.active {
+            background: linear-gradient(135deg, #0891b2, #0e7490);
+            color: white;
+            border-color: transparent;
+        }
+
+        .app-tab:hover:not(.active) {
+            border-color: #0891b2;
+            color: #0891b2;
+        }
+
+        .app-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .app-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .app-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .app-info h3 {
+            font-size: 28px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .app-info p {
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .app-stats {
+            display: flex;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 36px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #0891b2, #0e7490);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .stat-label {
+            color: #7f8c8d;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        .app-image {
+            background: linear-gradient(135deg, #f5f7fa, #e9ecef);
+            border-radius: 15px;
+            padding: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 400px;
+        }
+
+        /* 机制说明 */
+        .mechanism {
+            padding: 80px 20px;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+        }
+
+        .mechanism-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .mechanism-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .mechanism-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .mechanism-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .mechanism-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .mechanism-number {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #0891b2, #0e7490);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .mechanism-title {
+            font-size: 20px;
+            color: #2c3e50;
+            font-weight: 700;
+        }
+
+        .mechanism-desc {
+            color: #555;
+            line-height: 1.8;
+        }
+
+        .mechanism-tags {
+            display: flex;
+            gap: 10px;
+            margin-top: 15px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background: #f0f2f5;
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 12px;
+            color: #555;
+            font-weight: 600;
+        }
+
+        /* 证据支持 */
+        .evidence {
+            padding: 80px 20px;
+            background: white;
+        }
+
+        .evidence-cards {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .evidence-card {
+            background: linear-gradient(135deg, #0891b2, #0e7490);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .evidence-card:hover {
+            transform: scale(1.05);
+        }
+
+        .evidence-card:nth-child(2) {
+            background: linear-gradient(135deg, #0d9488, #059669);
+        }
+
+        .evidence-card:nth-child(3) {
+            background: linear-gradient(135deg, #0e7490, #155e75);
+        }
+
+        .evidence-card:nth-child(4) {
+            background: linear-gradient(135deg, #164e63, #083344);
+        }
+
+        .evidence-number {
+            font-size: 48px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .evidence-label {
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+
+        .evidence-desc {
+            font-size: 14px;
+            opacity: 0.95;
+            line-height: 1.6;
+        }
+
+        /* 使用指南 */
+        .guidelines {
+            padding: 80px 20px;
+            background: #f8f9fa;
+        }
+
+        .guidelines-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .guideline-item {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            transition: all 0.3s ease;
+        }
+
+        .guideline-item:hover {
+            box-shadow: 0 5px 20px rgba(0,0,0,0.15);
+        }
+
+        .guideline-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .guideline-title {
+            font-size: 20px;
+            color: #2c3e50;
+            font-weight: 700;
+        }
+
+        .guideline-arrow {
+            font-size: 24px;
+            color: #0891b2;
+            transition: transform 0.3s ease;
+        }
+
+        .guideline-content {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e9ecef;
+            color: #555;
+            line-height: 1.8;
+            display: none;
+        }
+
+        .guideline-content.active {
+            display: block;
+        }
+
+        .guideline-item.active .guideline-arrow {
+            transform: rotate(180deg);
+        }
+
+        /* CTA区域 */
+        .cta-section {
+            padding: 100px 20px;
+            background: linear-gradient(135deg, #0891b2, #0e7490, #155e75);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="rgba(255,255,255,0.1)" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>');
+            background-size: cover;
+            opacity: 0.3;
+        }
+
+        .cta-content {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .cta-title {
+            font-size: 42px;
+            color: white;
+            margin-bottom: 20px;
+            font-weight: 800;
+        }
+
+        .cta-desc {
+            font-size: 20px;
+            color: rgba(255,255,255,0.95);
+            margin-bottom: 40px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-primary {
+            background: white;
+            color: #0891b2;
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.3);
+            background: #f0fdfa;
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: white;
+            padding: 15px 40px;
+            border: 2px solid white;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-secondary:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-3px);
+        }
+
+        /* 页脚 */
+        footer {
+            background: #2c3e50;
+            color: white;
+            padding: 40px 20px;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-disclaimer {
+            color: rgba(255,255,255,0.6);
+            font-size: 14px;
+            line-height: 1.6;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .hero-subtitle {
+                font-size: 18px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .app-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .app-stats {
+                justify-content: space-around;
+            }
+
+            .mechanism-cards {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">安步乐克®</div>
+            <ul class="nav-links">
+                <li><a href="#advantages">核心优势</a></li>
+                <li><a href="#applications">临床应用</a></li>
+                <li><a href="#mechanism">作用机制</a></li>
+                <li><a href="#evidence">循证医学</a></li>
+                <li><a href="#guidelines">使用指南</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 英雄区域 -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>盐酸沙格雷酯</h1>
+            <p class="hero-subtitle">新一代选择性5-HT₂A受体拮抗剂</p>
+            <div class="hero-badges">
+                <span class="badge">100倍受体选择性</span>
+                <span class="badge">多靶点协同作用</span>
+                <span class="badge">全方位血管保护</span>
+                <span class="badge">双重抗炎抗纤维化</span>
+            </div>
+            <a href="#applications" class="cta-button">了解临床应用</a>
+        </div>
+    </section>
+
+    <!-- 核心优势 -->
+    <section id="advantages" class="advantages">
+        <h2 class="section-title">四大核心优势</h2>
+        <p class="section-subtitle">基于分子机制的多维度治疗价值</p>
+        <div class="advantages-grid">
+            <div class="advantage-card">
+                <div class="advantage-icon">🎯</div>
+                <h3 class="advantage-title">精准靶向作用</h3>
+                <p class="advantage-desc">
+                    高度选择性拮抗5-HT₂A受体，Ki值8.98nM，
+                    对其他受体亲和力极低，避免非特异性副作用
+                </p>
+            </div>
+            <div class="advantage-card">
+                <div class="advantage-icon">🔄</div>
+                <h3 class="advantage-title">多通路协同</h3>
+                <p class="advantage-desc">
+                    同时调控TGF-β/Smad、PI3K/Akt、NF-κB等
+                    多条信号通路，实现抗炎、抗纤维化双重功效
+                </p>
+            </div>
+            <div class="advantage-card">
+                <div class="advantage-icon">🛡️</div>
+                <h3 class="advantage-title">器官全面保护</h3>
+                <p class="advantage-desc">
+                    心、脑、肾、肺等多器官保护作用，
+                    延缓纤维化进程，改善微循环，保护血管功能
+                </p>
+            </div>
+            <div class="advantage-card">
+                <div class="advantage-icon">📊</div>
+                <h3 class="advantage-title">循证医学支持</h3>
+                <p class="advantage-desc">
+                    大量RCT研究证实，降低心血管事件25-40%，
+                    减少蛋白尿30-50%，卒中复发率降低20-35%
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 临床应用 -->
+    <section id="applications" class="applications">
+        <div class="app-container">
+            <h2 class="section-title">重点临床应用领域</h2>
+            <p class="section-subtitle">覆盖心脑肾等多个科室的循证治疗方案</p>
+
+            <div class="app-tabs">
+                <div class="app-tab active" onclick="switchTab('cardio')">心血管科</div>
+                <div class="app-tab" onclick="switchTab('neuro')">神经内科</div>
+                <div class="app-tab" onclick="switchTab('nephro')">肾内科</div>
+                <div class="app-tab" onclick="switchTab('endo')">内分泌科</div>
+                <div class="app-tab" onclick="switchTab('respiro')">呼吸科</div>
+            </div>
+
+            <div id="cardio" class="app-content active">
+                <div class="app-grid">
+                    <div class="app-info">
+                        <h3>心血管全方位保护</h3>
+                        <p>
+                            <strong>适应症：</strong>冠心病二级预防、心肌肥厚、心力衰竭、
+                            外周血管疾病
+                        </p>
+                        <p>
+                            <strong>作用机制：</strong>抑制血小板聚集，改善内皮功能，
+                            阻断心肌肥厚信号通路，减少心肌纤维化
+                        </p>
+                        <p>
+                            <strong>临床证据：</strong>多项RCT研究证实，显著降低MACE事件，
+                            改善心功能指标，特别适合阿司匹林抵抗或不耐受患者
+                        </p>
+                        <div class="app-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">25-40%</div>
+                                <div class="stat-label">降低心血管事件</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">15%</div>
+                                <div class="stat-label">减少心脏重量</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">30%</div>
+                                <div class="stat-label">改善心功能</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app-image">
+                        <div style="text-align: center;">
+                            <div style="font-size: 100px;">❤️</div>
+                            <p style="margin-top: 20px; color: #0891b2; font-weight: bold;">
+                                心脏保护专家
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="neuro" class="app-content">
+                <div class="app-grid">
+                    <div class="app-info">
+                        <h3>神经系统综合防护</h3>
+                        <p>
+                            <strong>适应症：</strong>缺血性卒中二级预防、糖尿病周围神经病变、
+                            血管性认知障碍
+                        </p>
+                        <p>
+                            <strong>作用机制：</strong>改善脑微循环，保护血脑屏障，
+                            促进神经功能恢复，减少神经炎症
+                        </p>
+                        <p>
+                            <strong>临床证据：</strong>卒中二级预防效果不劣于阿司匹林，
+                            出血风险更低，显著改善周围神经病变症状
+                        </p>
+                        <div class="app-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">20-35%</div>
+                                <div class="stat-label">降低卒中复发</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">60-80%</div>
+                                <div class="stat-label">缓解神经症状</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">40%</div>
+                                <div class="stat-label">改善认知功能</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app-image">
+                        <div style="text-align: center;">
+                            <div style="font-size: 100px;">🧠</div>
+                            <p style="margin-top: 20px; color: #0891b2; font-weight: bold;">
+                                神经保护先锋
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="nephro" class="app-content">
+                <div class="app-grid">
+                    <div class="app-info">
+                        <h3>肾脏功能全程守护</h3>
+                        <p>
+                            <strong>适应症：</strong>糖尿病肾病、慢性肾脏病(CKD)、
+                            肾纤维化、蛋白尿
+                        </p>
+                        <p>
+                            <strong>作用机制：</strong>抑制TGF-β/Smad通路，减少肾纤维化，
+                            改善肾小球微循环，降低蛋白尿
+                        </p>
+                        <p>
+                            <strong>临床证据：</strong>显著降低尿蛋白排泄，延缓eGFR下降，
+                            推迟透析时间6-12个月
+                        </p>
+                        <div class="app-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">30-50%</div>
+                                <div class="stat-label">降低蛋白尿</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">40%</div>
+                                <div class="stat-label">延缓CKD进展</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">6-12月</div>
+                                <div class="stat-label">推迟透析时间</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app-image">
+                        <div style="text-align: center;">
+                            <div style="font-size: 100px;">💧</div>
+                            <p style="margin-top: 20px; color: #0891b2; font-weight: bold;">
+                                肾脏保护卫士
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="endo" class="app-content">
+                <div class="app-grid">
+                    <div class="app-info">
+                        <h3>糖尿病并发症防控</h3>
+                        <p>
+                            <strong>适应症：</strong>糖尿病心肌病、糖尿病肾病、
+                            糖尿病周围神经病变、糖尿病足
+                        </p>
+                        <p>
+                            <strong>作用机制：</strong>改善胰岛素敏感性，保护胰岛β细胞，
+                            减少糖基化终产物，改善微循环
+                        </p>
+                        <p>
+                            <strong>临床证据：</strong>降低HbA1c 0.3-0.8%，
+                            显著减少微血管并发症，改善神经传导速度
+                        </p>
+                        <div class="app-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">0.3-0.8%</div>
+                                <div class="stat-label">降低HbA1c</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">35%</div>
+                                <div class="stat-label">减少并发症</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">50%</div>
+                                <div class="stat-label">改善微循环</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app-image">
+                        <div style="text-align: center;">
+                            <div style="font-size: 100px;">🍯</div>
+                            <p style="margin-top: 20px; color: #0891b2; font-weight: bold;">
+                                糖尿病管理专家
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="respiro" class="app-content">
+                <div class="app-grid">
+                    <div class="app-info">
+                        <h3>呼吸系统疾病治疗</h3>
+                        <p>
+                            <strong>适应症：</strong>肺动脉高压、肺纤维化、
+                            慢性阻塞性肺病、支气管哮喘辅助治疗
+                        </p>
+                        <p>
+                            <strong>作用机制：</strong>降低肺血管阻力，抑制肺纤维化进程，
+                            减少支气管痉挛，改善肺循环
+                        </p>
+                        <p>
+                            <strong>临床证据：</strong>降低肺动脉压15-25%，
+                            延缓肺纤维化进展，改善运动耐量
+                        </p>
+                        <div class="app-stats">
+                            <div class="stat-item">
+                                <div class="stat-number">15-25%</div>
+                                <div class="stat-label">降低肺动脉压</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">30%</div>
+                                <div class="stat-label">改善肺功能</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-number">40%</div>
+                                <div class="stat-label">提高运动耐量</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="app-image">
+                        <div style="text-align: center;">
+                            <div style="font-size: 100px;">🫁</div>
+                            <p style="margin-top: 20px; color: #0891b2; font-weight: bold;">
+                                肺脏保护专家
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 作用机制 -->
+    <section id="mechanism" class="mechanism">
+        <div class="mechanism-content">
+            <h2 class="section-title">多靶点协同作用机制</h2>
+            <p class="section-subtitle">从分子水平到临床效果的完整证据链</p>
+
+            <div class="mechanism-cards">
+                <div class="mechanism-card">
+                    <div class="mechanism-header">
+                        <div class="mechanism-number">1</div>
+                        <div class="mechanism-title">受体水平精准拮抗</div>
+                    </div>
+                    <p class="mechanism-desc">
+                        高选择性拮抗5-HT₂A受体（Ki=8.98nM），100倍选择性优势，
+                        避免对其他5-HT受体亚型的影响，减少副作用
+                    </p>
+                    <div class="mechanism-tags">
+                        <span class="tag">5-HT₂A受体</span>
+                        <span class="tag">高选择性</span>
+                        <span class="tag">Ki=8.98nM</span>
+                    </div>
+                </div>
+
+                <div class="mechanism-card">
+                    <div class="mechanism-header">
+                        <div class="mechanism-number">2</div>
+                        <div class="mechanism-title">信号通路多重调控</div>
+                    </div>
+                    <p class="mechanism-desc">
+                        阻断TGF-β/Smad纤维化通路，激活PI3K/Akt-eNOS血管保护通路，
+                        抑制NF-κB炎症信号，实现抗炎抗纤维化双重功效
+                    </p>
+                    <div class="mechanism-tags">
+                        <span class="tag">TGF-β/Smad</span>
+                        <span class="tag">PI3K/Akt</span>
+                        <span class="tag">NF-κB</span>
+                    </div>
+                </div>
+
+                <div class="mechanism-card">
+                    <div class="mechanism-header">
+                        <div class="mechanism-number">3</div>
+                        <div class="mechanism-title">细胞功能全面改善</div>
+                    </div>
+                    <p class="mechanism-desc">
+                        抑制血小板聚集，改善内皮功能，减少平滑肌增殖，
+                        抑制成纤维细胞活化，保护各器官实质细胞
+                    </p>
+                    <div class="mechanism-tags">
+                        <span class="tag">抗血小板</span>
+                        <span class="tag">内皮保护</span>
+                        <span class="tag">抗增殖</span>
+                    </div>
+                </div>
+
+                <div class="mechanism-card">
+                    <div class="mechanism-header">
+                        <div class="mechanism-number">4</div>
+                        <div class="mechanism-title">组织器官综合保护</div>
+                    </div>
+                    <p class="mechanism-desc">
+                        改善微循环灌注，减少纤维化进程，降低氧化应激，
+                        保护血管功能，延缓器官功能衰退
+                    </p>
+                    <div class="mechanism-tags">
+                        <span class="tag">微循环改善</span>
+                        <span class="tag">抗纤维化</span>
+                        <span class="tag">器官保护</span>
+                    </div>
+                </div>
+
+                <div class="mechanism-card">
+                    <div class="mechanism-header">
+                        <div class="mechanism-number">5</div>
+                        <div class="mechanism-title">代谢调节优化</div>
+                    </div>
+                    <p class="mechanism-desc">
+                        改善糖脂代谢，增强胰岛素敏感性，减少AGEs形成，
+                        调节能量代谢，保护线粒体功能
+                    </p>
+                    <div class="mechanism-tags">
+                        <span class="tag">糖代谢</span>
+                        <span class="tag">脂代谢</span>
+                        <span class="tag">线粒体保护</span>
+                    </div>
+                </div>
+
+                <div class="mechanism-card">
+                    <div class="mechanism-header">
+                        <div class="mechanism-number">6</div>
+                        <div class="mechanism-title">临床综合获益</div>
+                    </div>
+                    <p class="mechanism-desc">
+                        降低心脑血管事件，延缓肾功能恶化，改善神经功能，
+                        提高生活质量，减少住院率和死亡率
+                    </p>
+                    <div class="mechanism-tags">
+                        <span class="tag">降低事件</span>
+                        <span class="tag">改善预后</span>
+                        <span class="tag">生活质量</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 循证医学证据 -->
+    <section id="evidence" class="evidence">
+        <h2 class="section-title">强大的循证医学支持</h2>
+        <p class="section-subtitle">基于大规模临床研究的确凿证据</p>
+
+        <div class="evidence-cards">
+            <div class="evidence-card">
+                <div class="evidence-number">15,000+</div>
+                <div class="evidence-label">临床研究患者</div>
+                <div class="evidence-desc">
+                    覆盖心脑肾等多个系统疾病，
+                    包括多项大型RCT研究
+                </div>
+            </div>
+            <div class="evidence-card" style="background: linear-gradient(135deg, #f39c12, #e67e22);">
+                <div class="evidence-number">200+</div>
+                <div class="evidence-label">发表论文</div>
+                <div class="evidence-desc">
+                    国际权威期刊发表，
+                    涵盖基础研究到临床应用
+                </div>
+            </div>
+            <div class="evidence-card" style="background: linear-gradient(135deg, #27ae60, #2ecc71);">
+                <div class="evidence-number">30年</div>
+                <div class="evidence-label">临床应用历史</div>
+                <div class="evidence-desc">
+                    日本、韩国等国家长期使用，
+                    安全性得到充分验证
+                </div>
+            </div>
+            <div class="evidence-card" style="background: linear-gradient(135deg, #e74c3c, #c0392b);">
+                <div class="evidence-number">A级</div>
+                <div class="evidence-label">证据等级</div>
+                <div class="evidence-desc">
+                    多项适应症获得指南推荐，
+                    循证医学证据充分
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 使用指南 -->
+    <section id="guidelines" class="guidelines">
+        <div class="guidelines-content">
+            <h2 class="section-title">临床使用指南</h2>
+            <p class="section-subtitle">规范化用药方案与注意事项</p>
+
+            <div class="guideline-item">
+                <div class="guideline-header" onclick="toggleGuideline(this)">
+                    <h3 class="guideline-title">💊 推荐剂量与用法</h3>
+                    <span class="guideline-arrow">⌄</span>
+                </div>
+                <div class="guideline-content">
+                    <p><strong>标准剂量：</strong>100mg，每日3次，饭后服用</p>
+                    <p><strong>剂量调整：</strong>肾功能不全患者需适当减量，肝功能不全患者慎用</p>
+                    <p><strong>疗程：</strong>根据疾病类型和严重程度，一般需要长期服用</p>
+                    <p><strong>特殊人群：</strong>老年患者无需调整剂量，儿童用药安全性尚未确立</p>
+                </div>
+            </div>
+
+            <div class="guideline-item">
+                <div class="guideline-header" onclick="toggleGuideline(this)">
+                    <h3 class="guideline-title">🎯 优选适应人群</h3>
+                    <span class="guideline-arrow">⌄</span>
+                </div>
+                <div class="guideline-content">
+                    <p><strong>首选人群：</strong></p>
+                    <ul style="margin-left: 20px; line-height: 2;">
+                        <li>糖尿病合并微血管并发症患者</li>
+                        <li>慢性肾脏病伴蛋白尿患者</li>
+                        <li>阿司匹林抵抗或不耐受的心脑血管病患者</li>
+                        <li>需要抗血小板治疗但出血风险高的患者</li>
+                        <li>多器官纤维化风险或进展期患者</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="guideline-item">
+                <div class="guideline-header" onclick="toggleGuideline(this)">
+                    <h3 class="guideline-title">⚡ 联合用药方案</h3>
+                    <span class="guideline-arrow">⌄</span>
+                </div>
+                <div class="guideline-content">
+                    <p><strong>推荐联用：</strong></p>
+                    <ul style="margin-left: 20px; line-height: 2;">
+                        <li>与ACEI/ARB联用：增强肾脏保护作用</li>
+                        <li>与他汀类联用：协同心血管保护</li>
+                        <li>与降糖药联用：改善糖尿病并发症</li>
+                        <li>与抗凝药联用：需监测凝血功能</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>注意事项：</strong>避免与其他5-HT受体拮抗剂同时使用</p>
+                </div>
+            </div>
+
+            <div class="guideline-item">
+                <div class="guideline-header" onclick="toggleGuideline(this)">
+                    <h3 class="guideline-title">📋 监测指标</h3>
+                    <span class="guideline-arrow">⌄</span>
+                </div>
+                <div class="guideline-content">
+                    <p><strong>基线检查：</strong>血常规、肝肾功能、凝血功能、尿常规</p>
+                    <p><strong>定期监测：</strong></p>
+                    <ul style="margin-left: 20px; line-height: 2;">
+                        <li>血小板计数：每月1次（前3个月），后每3个月1次</li>
+                        <li>肝肾功能：每3个月1次</li>
+                        <li>尿蛋白定量：肾病患者每月1次</li>
+                        <li>心功能评估：心脏病患者每3-6个月1次</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="guideline-item">
+                <div class="guideline-header" onclick="toggleGuideline(this)">
+                    <h3 class="guideline-title">⚠️ 注意事项与禁忌</h3>
+                    <span class="guideline-arrow">⌄</span>
+                </div>
+                <div class="guideline-content">
+                    <p><strong>禁忌症：</strong></p>
+                    <ul style="margin-left: 20px; line-height: 2;">
+                        <li>对本品过敏者</li>
+                        <li>严重出血或出血倾向者</li>
+                        <li>妊娠及哺乳期妇女</li>
+                    </ul>
+                    <p style="margin-top: 15px;"><strong>慎用情况：</strong></p>
+                    <ul style="margin-left: 20px; line-height: 2;">
+                        <li>严重肝功能不全</li>
+                        <li>血小板减少症</li>
+                        <li>近期手术或创伤</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA区域 -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2 class="cta-title">开启精准治疗新篇章</h2>
+            <p class="cta-desc">
+                选择沙格雷酯，为患者提供全方位的血管保护和器官功能改善
+            </p>
+            <div class="cta-buttons">
+                <a href="#" class="cta-primary">申请学术资料</a>
+                <a href="#" class="cta-secondary">预约学术交流</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 页脚 -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#">产品信息</a>
+                <a href="#">临床研究</a>
+                <a href="#">学术支持</a>
+                <a href="#">联系我们</a>
+                <a href="#">法律声明</a>
+            </div>
+            <div class="footer-disclaimer">
+                <p>* 本品须在医师指导下使用，详见产品说明书</p>
+                <p>* 本网站仅供医疗卫生专业人士参考</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 切换临床应用标签
+        function switchTab(tabName) {
+            // 隐藏所有内容
+            const contents = document.querySelectorAll('.app-content');
+            contents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            // 移除所有标签的active类
+            const tabs = document.querySelectorAll('.app-tab');
+            tabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // 显示选中的内容
+            document.getElementById(tabName).classList.add('active');
+
+            // 添加active类到点击的标签
+            event.target.classList.add('active');
+        }
+
+        // 切换使用指南展开/收起
+        function toggleGuideline(element) {
+            const parent = element.parentElement;
+            const content = parent.querySelector('.guideline-content');
+
+            parent.classList.toggle('active');
+            content.classList.toggle('active');
+        }
+
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            if (window.scrollY > 100) {
+                navbar.style.boxShadow = '0 5px 20px rgba(0,0,0,0.1)';
+            } else {
+                navbar.style.boxShadow = '0 2px 10px rgba(0,0,0,0.1)';
+            }
+        });
+    </script>
+</body>
+</html>

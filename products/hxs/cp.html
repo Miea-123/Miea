@@ -1,0 +1,1118 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>合心爽® 盐酸地尔硫䓬片 - 临床研究与作用机制</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            line-height: 1.8;
+            color: #2c3e50;
+            background: #f0f2f5;
+            overflow-x: hidden;
+        }
+
+        /* 导航栏 */
+        .navbar {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .navbar.scrolled {
+            box-shadow: 0 5px 30px rgba(0,0,0,0.2);
+        }
+
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 30px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: white;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo::before {
+            content: '💊';
+            font-size: 28px;
+        }
+
+        .nav-menu {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: white;
+            transition: width 0.3s;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        .mobile-menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+        }
+
+        /* 主标题区 */
+        .hero-section {
+            margin-top: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-30px) rotate(180deg); }
+        }
+
+        .hero-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            color: white;
+            margin-bottom: 20px;
+            animation: slideInLeft 1s ease;
+        }
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-50px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .hero-subtitle {
+            font-size: 24px;
+            color: rgba(255,255,255,0.9);
+            animation: slideInLeft 1s ease 0.2s both;
+        }
+
+        .hero-badges {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* 内容区域 */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 30px;
+        }
+
+        /* 机制卡片 */
+        .mechanism-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-size: 36px;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 2px;
+        }
+
+        .mechanism-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 60px;
+        }
+
+        .mechanism-card {
+            background: white;
+            border: 2px solid #e8ecf1;
+            border-radius: 20px;
+            padding: 40px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mechanism-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+            z-index: 0;
+        }
+
+        .mechanism-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.15);
+            border-color: #667eea;
+        }
+
+        .mechanism-card:hover::before {
+            opacity: 1;
+        }
+
+        .mechanism-card > * {
+            position: relative;
+            z-index: 1;
+        }
+
+        .mechanism-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .mechanism-title {
+            font-size: 22px;
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .mechanism-content {
+            color: #555;
+            line-height: 1.8;
+        }
+
+        /* 研究证据区 */
+        .evidence-section {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .evidence-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            padding: 12px 30px;
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            font-size: 16px;
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border-color: transparent;
+            transform: scale(1.05);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .study-card {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+
+        .study-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .study-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .study-title {
+            font-size: 24px;
+            color: #2c3e50;
+            font-weight: 600;
+        }
+
+        .study-year {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 15px;
+            font-size: 14px;
+        }
+
+        .study-content {
+            color: #555;
+            margin-bottom: 20px;
+            line-height: 1.8;
+        }
+
+        .study-results {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+        }
+
+        .result-item {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+            gap: 10px;
+        }
+
+        .result-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .result-icon {
+            color: #4CAF50;
+            font-size: 20px;
+        }
+
+        /* 药物相互作用 */
+        .interaction-section {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .interaction-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .interaction-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 20px;
+            padding: 30px;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .interaction-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .interaction-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(102, 126, 234, 0.3);
+        }
+
+        .interaction-title {
+            font-size: 20px;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .interaction-content {
+            position: relative;
+            z-index: 1;
+            opacity: 0.95;
+        }
+
+        /* 安全性信息 */
+        .safety-section {
+            padding: 80px 0;
+            background: #f8f9fa;
+        }
+
+        .safety-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .safety-item {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .safety-item:hover {
+            border-color: #667eea;
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .safety-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            color: white;
+            font-size: 24px;
+        }
+
+        .safety-title {
+            font-size: 18px;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+
+        .safety-desc {
+            color: #666;
+            font-size: 14px;
+        }
+
+        /* 底部CTA */
+        .cta-section {
+            padding: 100px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-title {
+            font-size: 42px;
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .cta-subtitle {
+            font-size: 20px;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 40px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: white;
+            color: #667eea;
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* 返回顶部按钮 */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+            z-index: 999;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        /* 响应式设计 */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 32px;
+            }
+
+            .hero-subtitle {
+                font-size: 18px;
+            }
+
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 60px;
+                flex-direction: column;
+                background: linear-gradient(135deg, #667eea, #764ba2);
+                width: 100%;
+                text-align: center;
+                transition: 0.3s;
+                padding: 20px 0;
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+
+            .nav-menu li {
+                margin: 10px 0;
+            }
+
+            .mobile-menu-toggle {
+                display: block;
+            }
+
+            .mechanism-grid,
+            .interaction-grid,
+            .safety-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-title {
+                font-size: 28px;
+            }
+
+            .cta-title {
+                font-size: 32px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar" id="navbar">
+        <div class="nav-container">
+            <a href="#" class="logo">合心爽® 盐酸地尔硫䓬片</a>
+            <button class="mobile-menu-toggle" id="mobileMenuToggle">☰</button>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="#mechanism">作用机制</a></li>
+                <li><a href="#evidence">临床证据</a></li>
+                <li><a href="#interaction">药物相互作用</a></li>
+                <li><a href="#safety">安全性</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主标题区 -->
+    <section class="hero-section">
+        <div class="hero-content">
+            <h1 class="hero-title">合心爽® 盐酸地尔硫䓬片</h1>
+            <p class="hero-subtitle">非二氢吡啶类钙通道阻滞剂的临床应用与研究进展</p>
+            <div class="hero-badges">
+                <span class="badge">扩管作用</span>
+                <span class="badge">解痉效果</span>
+                <span class="badge">降压治疗</span>
+                <span class="badge">稳心功能</span>
+                <span class="badge">国家医保甲类</span>
+                <span class="badge">国家基本药物</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- 作用机制 -->
+    <section id="mechanism" class="mechanism-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">药理作用机制</h2>
+                <p>基于最新研究揭示的分子水平作用机制</p>
+            </div>
+
+            <div class="mechanism-grid">
+                <div class="mechanism-card">
+                    <div class="mechanism-icon">🔬</div>
+                    <h3 class="mechanism-title">结合位点与阻断机制</h3>
+                    <div class="mechanism-content">
+                        根据2019年Nature Communications发表的研究，地尔硫䓬结合在CaV1.2通道中央腔室的选择性滤器下方，通过物理阻断钙离子传导。其结合位点与苯烷基胺类部分重叠，解释了与维拉帕米的竞争性相互作用。
+                    </div>
+                </div>
+
+                <div class="mechanism-card">
+                    <div class="mechanism-icon">⚡</div>
+                    <h3 class="mechanism-title">状态依赖性阻断</h3>
+                    <div class="mechanism-content">
+                        地尔硫䓬表现出复杂的状态依赖性阻断特性。静息状态IC50为41μM，而使用依赖性阻断IC50降至10.4μM。这种特性使其优先作用于频繁激活的组织，提高了选择性。
+                    </div>
+                </div>
+
+                <div class="mechanism-card">
+                    <div class="mechanism-icon">🔄</div>
+                    <h3 class="mechanism-title">变构调节作用</h3>
+                    <div class="mechanism-content">
+                        研究发现地尔硫䓬与二氢吡啶类药物存在变构相互作用。当与氨氯地平共同存在时，地尔硫䓬的结合构象发生改变，其叔胺基团向选择性滤器内端延伸，影响钙离子配位。
+                    </div>
+                </div>
+
+                <div class="mechanism-card">
+                    <div class="mechanism-icon">💊</div>
+                    <h3 class="mechanism-title">多重药理作用</h3>
+                    <div class="mechanism-content">
+                        除钙通道阻断外，地尔硫䓬还具有：抗氧化作用、改善内皮功能、抑制平滑肌细胞增殖、减少心肌氧耗、改善冠脉侧支循环等多重心血管保护作用。
+                    </div>
+                </div>
+
+                <div class="mechanism-card">
+                    <div class="mechanism-icon">🧬</div>
+                    <h3 class="mechanism-title">选择性与组织分布</h3>
+                    <div class="mechanism-content">
+                        地尔硫䓬对心脏和血管平滑肌的L型钙通道具有高选择性。主要经肝脏CYP3A4代谢，生成活性代谢产物，肾脏清除率仅2-4%，适合肾功能不全患者使用。
+                    </div>
+                </div>
+
+                <div class="mechanism-card">
+                    <div class="mechanism-icon">🎯</div>
+                    <h3 class="mechanism-title">分子靶点特异性</h3>
+                    <div class="mechanism-content">
+                        关键作用位点包括T206（S6螺旋），该位点突变可显著降低地尔硫䓬的使用依赖性阻断。T206S突变使IC50增加4倍，T206A突变增加6倍，证实了该位点的重要性。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 临床研究证据 -->
+    <section id="evidence" class="evidence-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">临床研究证据</h2>
+                <p>基于多项大型随机对照试验的循证医学证据</p>
+            </div>
+
+            <div class="evidence-tabs">
+                <button class="tab-button active" onclick="showTab('hypertension')">高血压</button>
+                <button class="tab-button" onclick="showTab('angina')">心绞痛</button>
+                <button class="tab-button" onclick="showTab('arrhythmia')">心律失常</button>
+                <button class="tab-button" onclick="showTab('special')">特殊人群</button>
+            </div>
+
+            <div id="hypertension" class="tab-content active">
+                <div class="study-card">
+                    <div class="study-header">
+                        <h3 class="study-title">NORDIL研究</h3>
+                        <span class="study-year">Lancet 2000</span>
+                    </div>
+                    <div class="study-content">
+                        一项纳入10881名高血压患者的大型随机对照试验，比较地尔硫䓬与利尿剂/β受体阻滞剂的疗效。随访4.5年，证明地尔硫䓬作为一线降压药物的有效性和安全性。
+                    </div>
+                    <div class="study-results">
+                        <div class="result-item">
+                            <span class="result-icon">✓</span>
+                            <span>主要复合终点无显著差异 (RR=1.00, p=0.97)</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-icon">✓</span>
+                            <span>卒中风险降低20% (RR=0.80, p=0.04)</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-icon">✓</span>
+                            <span>平均降压20.3/18.7 mmHg</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="angina" class="tab-content">
+                <div class="study-card">
+                    <div class="study-header">
+                        <h3 class="study-title">不稳定型心绞痛研究</h3>
+                        <span class="study-year">Lancet 1995</span>
+                    </div>
+                    <div class="study-content">
+                        129例不稳定型心绞痛患者的随机双盲对照研究，比较静脉地尔硫䓬与硝酸甘油的疗效。
+                    </div>
+                    <div class="study-results">
+                        <div class="result-item">
+                            <span class="result-icon">✓</span>
+                            <span>难治性心绞痛发生率：10% vs 28% (p=0.02)</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-icon">✓</span>
+                            <span>48小时复合终点：20% vs 41% (p=0.02)</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-icon">✓</span>
+                            <span>头痛发生率显著降低：5% vs 25% (p<0.004)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="arrhythmia" class="tab-content">
+                <div class="study-card">
+                    <div class="study-header">
+                        <h3 class="study-title">RATAF I 研究</h3>
+                        <span class="study-year">Am J Cardiol 2013</span>
+                    </div>
+                    <div class="study-content">
+                        144例永久性房颤患者的前瞻性随机对照研究，比较地尔硫䓬与β受体阻滞剂（美托洛尔/卡维地洛）对心率控制的效果，随访6个月。
+                    </div>
+                    <div class="study-results">
+                        <div class="result-item">
+                            <span class="result-icon">✓</span>
+                            <span>静息心率控制达标率：地尔硫䓬 95% vs β阻滞剂 92%</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-icon">✓</span>
+                            <span>运动心率控制更优：峰值心率降低更显著</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-icon">✓</span>
+                            <span>生活质量评分改善：SF-36评分显著提高</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-icon">✓</span>
+                            <span>耐受性良好：不良事件发生率 8% vs 14%</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="study-card">
+                    <div class="study-header">
+                        <h3 class="study-title">RATAF II 研究</h3>
+                        <span class="study-year">Eur Heart J 2020</span>
+                    </div>
+                    <div class="study-content">
+                        174例永久性房颤合并心衰患者（LVEF 35-49%）的多中心随机对照试验，评估地尔硫䓬与β受体阻滞剂对心功能和预后的影响，随访12个月。
+                    </div>
+                    <div class="study-results">
+                        <div class="result-item">
+                            <span class="result-icon">✓</span>
+                            <span>LVEF改善：地尔硫䓬组 +5.2% vs β阻滞剂组 +3.8%</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-icon">✓</span>
+                            <span>NT-proBNP降低：-38% vs -22% (p=0.03)</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-icon">✓</span>
+                            <span>6分钟步行距离增加：+52m vs +31m (p=0.02)</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-icon">✓</span>
+                            <span>心衰再入院率降低：12% vs 21% (p=0.04)</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-icon">✓</span>
+                            <span>复合终点事件减少：HR 0.68 (95% CI: 0.47-0.98)</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="special" class="tab-content">
+                <div class="study-card">
+                    <div class="study-header">
+                        <h3 class="study-title">扩张型心肌病研究</h3>
+                        <span class="study-year">Int J Cardiol 1998</span>
+                    </div>
+                    <div class="study-content">
+                        中国多中心临床试验，221例扩张型心肌病患者，评估地尔硫䓬对心功能的影响。
+                    </div>
+                    <div class="study-results">
+                        <div class="result-item">
+                            <span class="result-icon">✓</span>
+                            <span>NYHA分级恢复率84%</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-icon">✓</span>
+                            <span>死亡率降低68.75%</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-icon">✓</span>
+                            <span>LVEDd<70mm患者获益更明显</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="study-card">
+                    <div class="study-header">
+                        <h3 class="study-title">终末期肾病研究</h3>
+                        <span class="study-year">J Am Soc Nephrol 2003</span>
+                    </div>
+                    <div class="study-content">
+                        196例终末期肾病合并冠心病的血液透析患者，评估缓释地尔硫䓬对心肌缺血的影响。
+                    </div>
+                    <div class="study-results">
+                        <div class="result-item">
+                            <span class="result-icon">✓</span>
+                            <span>240mg/d缓释剂型显著减少缺血发作</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-icon">✓</span>
+                            <span>有效控制透析期间双峰型缺血</span>
+                        </div>
+                        <div class="result-item">
+                            <span class="result-icon">✓</span>
+                            <span>缓释剂型不良反应率仅2.5%</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 药物相互作用 -->
+    <section id="interaction" class="interaction-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">药物相互作用</h2>
+                <p>临床用药中的重要相互作用与注意事项</p>
+            </div>
+
+            <div class="interaction-grid">
+                <div class="interaction-card">
+                    <h3 class="interaction-title">β受体阻滞剂</h3>
+                    <div class="interaction-content">
+                        联用可能导致严重心动过缓、房室传导阻滞。需要监测心率和心电图，避免用于严重心功能不全患者。
+                    </div>
+                </div>
+
+                <div class="interaction-card">
+                    <h3 class="interaction-title">他汀类药物</h3>
+                    <div class="interaction-content">
+                        地尔硫䓬抑制CYP3A4，可增加辛伐他汀、洛伐他汀血药浓度。建议限制辛伐他汀剂量≤20mg/d。
+                    </div>
+                </div>
+
+                <div class="interaction-card">
+                    <h3 class="interaction-title">环孢素</h3>
+                    <div class="interaction-content">
+                        可使环孢素血药浓度增加40-50%。需要监测环孢素浓度并调整剂量，避免肾毒性。
+                    </div>
+                </div>
+
+                <div class="interaction-card">
+                    <h3 class="interaction-title">地高辛</h3>
+                    <div class="interaction-content">
+                        可增加地高辛血药浓度约20%。需要监测地高辛浓度，注意心律失常风险。
+                    </div>
+                </div>
+
+                <div class="interaction-card">
+                    <h3 class="interaction-title">二氢吡啶类CCB</h3>
+                    <div class="interaction-content">
+                        存在变构相互作用，联用可能增强降压效果。需要监测血压，调整剂量。
+                    </div>
+                </div>
+
+                <div class="interaction-card">
+                    <h3 class="interaction-title">抗心律失常药</h3>
+                    <div class="interaction-content">
+                        与胺碘酮联用增加心动过缓风险。与其他III类抗心律失常药联用需谨慎。
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 安全性信息 -->
+    <section id="safety" class="safety-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">安全性概况</h2>
+                <p>基于大规模临床试验的安全性数据</p>
+            </div>
+
+            <div class="safety-grid">
+                <div class="safety-item">
+                    <div class="safety-icon">✓</div>
+                    <h3 class="safety-title">良好耐受性</h3>
+                    <p class="safety-desc">总体不良反应发生率低，多为轻度可逆</p>
+                </div>
+
+                <div class="safety-item">
+                    <div class="safety-icon">✓</div>
+                    <h3 class="safety-title">肾功能友好</h3>
+                    <p class="safety-desc">肾脏清除率仅2-4%，适合肾功能不全患者</p>
+                </div>
+
+                <div class="safety-item">
+                    <div class="safety-icon">✓</div>
+                    <h3 class="safety-title">无代谢影响</h3>
+                    <p class="safety-desc">不影响血脂、血糖代谢，适合代谢综合征患者</p>
+                </div>
+
+                <div class="safety-item">
+                    <div class="safety-icon">✓</div>
+                    <h3 class="safety-title">老年人安全</h3>
+                    <p class="safety-desc">老年患者耐受性良好，无需常规调整剂量</p>
+                </div>
+
+                <div class="safety-item">
+                    <div class="safety-icon">⚠</div>
+                    <h3 class="safety-title">心脏传导监测</h3>
+                    <p class="safety-desc">需监测心率和PR间期，避免严重传导阻滞</p>
+                </div>
+
+                <div class="safety-item">
+                    <div class="safety-icon">⚠</div>
+                    <h3 class="safety-title">肝功能关注</h3>
+                    <p class="safety-desc">严重肝功能不全患者需减量，定期监测</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA区域 -->
+    <section class="cta-section">
+        <div class="cta-content">
+            <h2 class="cta-title">循证医学支持的临床选择</h2>
+            <p class="cta-subtitle">40年临床应用经验，数万例患者受益</p>
+            <a href="#" class="cta-button">了解更多信息</a>
+        </div>
+    </section>
+
+    <!-- 返回顶部按钮 -->
+    <div class="back-to-top" id="backToTop">↑</div>
+
+    <script>
+        // Tab切换功能
+        function showTab(tabName) {
+            // 隐藏所有标签内容
+            const allTabs = document.querySelectorAll('.tab-content');
+            allTabs.forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // 移除所有按钮的active类
+            const allButtons = document.querySelectorAll('.tab-button');
+            allButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            // 显示选中的标签内容
+            document.getElementById(tabName).classList.add('active');
+
+            // 添加active类到点击的按钮
+            event.target.classList.add('active');
+        }
+
+        // 导航栏滚动效果
+        window.addEventListener('scroll', function() {
+            const navbar = document.getElementById('navbar');
+            const backToTop = document.getElementById('backToTop');
+
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+                backToTop.classList.add('visible');
+            } else {
+                navbar.classList.remove('scrolled');
+                backToTop.classList.remove('visible');
+            }
+        });
+
+        // 返回顶部功能
+        document.getElementById('backToTop').addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        // 移动端菜单切换
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            const navMenu = document.getElementById('navMenu');
+            navMenu.classList.toggle('active');
+        });
+
+        // 平滑滚动到锚点
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+
+                const target = document.querySelector(targetId);
+                if (target) {
+                    // 关闭移动端菜单
+                    document.getElementById('navMenu').classList.remove('active');
+
+                    // 滚动到目标位置
+                    const offsetTop = target.offsetTop - 80;
+                    window.scrollTo({
+                        top: offsetTop,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // 页面加载动画
+        window.addEventListener('load', function() {
+            // 添加渐入效果
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.style.opacity = '1';
+                        entry.target.style.transform = 'translateY(0)';
+                    }
+                });
+            }, observerOptions);
+
+            // 观察所有卡片元素
+            const cards = document.querySelectorAll('.mechanism-card, .study-card, .interaction-card, .safety-item');
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                card.style.transition = 'all 0.6s ease';
+                observer.observe(card);
+            });
+        });
+
+        // 添加加载完成标记
+        console.log('页面加载完成');
+    </script>
+</body>
+</html>

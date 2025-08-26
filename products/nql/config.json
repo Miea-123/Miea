@@ -1,0 +1,13 @@
+{
+  "navItems": [
+    {
+      "title": "产品介绍",
+      "page": "/products/nql/cp.html"
+    },
+    {
+      "title": "分子机制",
+      "page": "/products/nql/fz.html"
+    }
+  ],
+  "defaultPage": "/products/nql/cp.html"
+}

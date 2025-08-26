@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>沙格雷酯—器官特异性通路交互系统</title>
+  <style>
+    /* === Light theme (default) === */
+    :root{
+      --bg:#f7f9ff; --card:#ffffff; --ink:#0f172a; --muted:#475569;
+      --accent-1:#cc3b5a; --accent-2:#6b5cff; --accent-3:#06b6d4; --accent-4:#f59e0b;
+      --ok:#16a34a; --down:#dc2626; --chip:#eef2ff; --line:#e5e7eb;
+      --shadow:0 10px 24px rgba(2,6,23,.08), 0 2px 8px rgba(2,6,23,.05);
+    }
+    /* === Dark theme overrides === */
+    [data-theme="dark"]{
+      --bg:#0b1220; --card:#121a2b; --ink:#e6ebff; --muted:#aab3c9;
+      --accent-1:#ff6a88; --accent-2:#a88bff; --accent-3:#54ffe3; --accent-4:#ffd166;
+      --ok:#7ef0a1; --down:#ff8a7a; --chip:#1a2336; --line:#24324b;
+      --shadow:0 26px 60px rgba(0,0,0,.35), 0 10px 24px rgba(0,0,0,.35);
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0; background:
+        radial-gradient(1200px 600px at 85% -10%, rgba(107,92,255,.06), transparent),
+        radial-gradient(1100px 700px at -10% 120%, rgba(6,182,212,.06), transparent),
+        var(--bg);
+      color:var(--ink);
+      font-family: system-ui, -apple-system, sans-serif;
+      line-height:1.65; font-size:16px;
+    }
+    
+    .wrap{max-width:1400px; margin:24px auto 80px; padding:20px}
+    
+    header{
+      position:sticky; top:0; z-index:20; 
+      backdrop-filter:saturate(130%) blur(8px);
+      background:linear-gradient(90deg, rgba(255,255,255,.85), rgba(255,255,255,.55)); 
+      border-bottom:1px solid var(--line)
+    }
+    [data-theme="dark"] header{
+      background:linear-gradient(90deg,#0b1220cc,#0b122000); 
+      border-bottom:1px solid #ffffff14
+    }
+
+    .head-inner{
+      max-width:1400px; margin:0 auto; padding:14px 20px; 
+      display:flex; align-items:center; gap:14px
+    }
+    .logo{
+      width:44px; height:44px; border-radius:12px; 
+      background:conic-gradient(from 140deg, var(--accent-1), var(--accent-2), var(--accent-3)); 
+      display:grid; place-items:center; box-shadow: var(--shadow); 
+      font-weight:800; color:#fff
+    }
+    h1{font-size:clamp(20px,3.2vw,34px); margin:0}
+    .sub{color:var(--muted); font-size:clamp(12px,1.6vw,14px)}
+
+    .theme-toggle{
+      margin-left:auto; padding:8px 12px; border-radius:10px; 
+      border:1px solid var(--line); background:#fff; color:#0f172a; 
+      cursor:pointer; box-shadow: var(--shadow)
+    }
+    [data-theme="dark"] .theme-toggle{
+      background:#141f36; color:#e6ebff; border:1px solid #ffffff1a
+    }
+
+    /* 主容器布局 */
+    .main-container{
+      display: flex;
+      flex-direction: column;
+      gap: 30px;
+      margin-top: 20px;
+    }
+
+    /* Tabs for pathways */
+    .tabs{display:flex; gap:10px; flex-wrap:wrap; margin:18px 0}
+    .tab-btn{
+      cursor:pointer; padding:10px 14px; border-radius:12px; 
+      border:1px solid var(--line); background:#fff; color:var(--ink); 
+      box-shadow: var(--shadow); transition: all 0.3s
+    }
+    .tab-btn[data-active="true"]{
+      outline:2px solid rgba(107,92,255,.3); 
+      background: linear-gradient(135deg, rgba(107,92,255,.05), rgba(6,182,212,.05))
+    }
+    .tab-btn .dot{
+      display:inline-block; width:8px; height:8px; 
+      border-radius:50%; margin-right:8px
+    }
+    [data-theme="dark"] .tab-btn{
+      border:1px solid #ffffff18; 
+      background:linear-gradient(180deg,#141f36,#121b2e); color:#d7e2ff
+    }
+    [data-theme="dark"] .tab-btn[data-active="true"]{
+      background:linear-gradient(135deg,#1a2442,#1e2b4a)
+    }
+
+    .panel{display:none;}
+    .panel[data-active="true"]{display:block}
+
+    /* 分子通路区域 */
+    .pathway-section{
+      background: white;
+      border-radius: 20px;
+      padding: 25px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+    [data-theme="dark"] .pathway-section{
+      background: #121a2b;
+      border: 1px solid #ffffff14;
+    }
+
+    .section-title{
+      font-size: 22px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: var(--ink);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* Pipeline styles */
+    .pipeline{position:relative; display:grid; gap:14px; margin:18px 0 10px}
+    .step{
+      position:relative; padding:14px 16px 14px 58px; 
+      background:#f8faff; border:1px solid var(--line); 
+      border-radius:14px; box-shadow: var(--shadow)
+    }
+    [data-theme="dark"] .step{
+      background:linear-gradient(180deg,#141f36,#121b2e); 
+      border:1px solid #ffffff14
+    }
+    .step:before{
+      content:""; position:absolute; left:26px; top:16px; 
+      width:12px; height:12px; border-radius:999px; 
+      background:linear-gradient(180deg,#fff,#c9d4ff); 
+      border:1px solid var(--line)
+    }
+    .step:after{
+      content:""; position:absolute; left:32px; top:30px; 
+      width:2px; height:calc(100% + 12px); background:var(--line)
+    }
+    .step:last-child:after{display:none}
+    .kicker{font-size:12px; letter-spacing:.12em; text-transform:uppercase; color:#64748b}
+    [data-theme="dark"] .kicker{color:#93a2c7}
+    .title{font-size:18px; font-weight:700; margin:4px 0 6px}
+    .body{color:#334155}
+    [data-theme="dark"] .body{color:#cbd6f5}
+
+    /* 器官选择区域 */
+    .organ-selector{
+      background: linear-gradient(135deg, #f0f9ff 0%, #ffffff 100%);
+      border-radius: 20px;
+      padding: 25px;
+      border: 1px solid var(--line);
+    }
+    [data-theme="dark"] .organ-selector{
+      background: linear-gradient(135deg, #0f1828 0%, #121b2e 100%);
+      border: 1px solid #ffffff14;
+    }
+
+    .organ-grid{
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 15px;
+      margin-top: 15px;
+    }
+
+    .organ-btn{
+      background: white;
+      border: 2px solid var(--line);
+      border-radius: 16px;
+      padding: 20px 15px;
+      cursor: pointer;
+      transition: all 0.3s;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .organ-btn:hover{
+      transform: translateY(-3px);
+      box-shadow: 0 12px 24px rgba(0,0,0,.15);
+      border-color: var(--accent-2);
+    }
+    .organ-btn.active{
+      background: linear-gradient(135deg, rgba(107,92,255,.1), rgba(6,182,212,.1));
+      border-color: var(--accent-2);
+      box-shadow: 0 8px 20px rgba(107,92,255,.2);
+    }
+    [data-theme="dark"] .organ-btn{
+      background: #1a2336;
+      border-color: #ffffff14;
+    }
+    [data-theme="dark"] .organ-btn.active{
+      background: linear-gradient(135deg, rgba(168,139,255,.15), rgba(84,255,227,.15));
+    }
+
+    .organ-icon{
+      font-size: 36px;
+      margin-bottom: 8px;
+    }
+    .organ-name{
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--ink);
+    }
+
+    /* 器官特异性通路展示 */
+    .organ-pathway{
+      background: linear-gradient(135deg, #fef3c7 0%, #ffffff 100%);
+      border-radius: 20px;
+      padding: 25px;
+      border: 1px solid #fbbf24;
+      margin-top: 20px;
+      display: none;
+    }
+    .organ-pathway.active{
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+    [data-theme="dark"] .organ-pathway{
+      background: linear-gradient(135deg, #1f1a0f 0%, #1a1611 100%);
+      border: 1px solid #92400e;
+    }
+
+    @keyframes fadeIn{
+      from{opacity:0; transform:translateY(10px)}
+      to{opacity:1; transform:translateY(0)}
+    }
+
+    /* 通路级别 */
+    .pathway-level{
+      margin: 20px 0;
+      padding: 20px;
+      background: white;
+      border-radius: 12px;
+      border-left: 4px solid var(--accent-2);
+    }
+    [data-theme="dark"] .pathway-level{
+      background: #1a1611;
+    }
+
+    .level-header{
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 15px;
+      color: var(--accent-2);
+    }
+
+    .level-content{
+      display: grid;
+      gap: 12px;
+    }
+
+    .pathway-item{
+      padding: 12px;
+      background: #f8fafc;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    [data-theme="dark"] .pathway-item{
+      background: #0f1726;
+      border: 1px solid #ffffff14;
+    }
+
+    /* Chips */
+    .chips{display:flex; flex-wrap:wrap; gap:10px; margin-bottom: 15px}
+    .chip{
+      padding:6px 10px; border-radius:999px; 
+      background:var(--chip); border:1px solid var(--line); 
+      color:var(--ink); font-size:13px; 
+      display:inline-flex; gap:8px; align-items:center
+    }
+    [data-theme="dark"] .chip{
+      border:1px solid #ffffff14; color:#cfe0ff
+    }
+    .chip .dot{width:8px;height:8px;border-radius:50%}
+
+    /* 连接箭头 */
+    .flow-arrow{
+      text-align: center;
+      font-size: 24px;
+      color: var(--accent-2);
+      margin: 15px 0;
+      opacity: 0.6;
+    }
+
+    /* 提示文字 */
+    .hint{
+      text-align: center;
+      color: var(--muted);
+      font-size: 14px;
+      margin: 15px 0;
+      padding: 10px;
+      background: var(--chip);
+      border-radius: 8px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="head-inner">
+      <div class="logo">🧬</div>
+      <div>
+        <h1>沙格雷酯—器官特异性通路交互系统</h1>
+        <div class="sub">✨ 点击器官查看完整通路 | 从分子机制到临床应用的动态映射</div>
+      </div>
+      <button class="theme-toggle" id="themeToggle">🌞 明亮</button>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="main-container">
+      <!-- 上部：分子通路选择 -->
+      <div class="pathway-section">
+        <div class="section-title">
+          <span>🔬</span>
+          <span>经典分子通路</span>
+        </div>
+        
+        <!-- Tabs -->
+        <nav class="tabs">
+          <button class="tab-btn" data-tab="inflam" data-active="true">
+            <span class="dot" style="background:var(--accent-2)"></span>🔥 抗炎通路
+          </button>
+          <button class="tab-btn" data-tab="fib">
+            <span class="dot" style="background:var(--accent-4)"></span>🧵 抗纤维化通路
+          </button>
+          <button class="tab-btn" data-tab="ox">
+            <span class="dot" style="background:var(--accent-3)"></span>⚡️ 抗氧化/内皮通路
+          </button>
+        </nav>
+
+        <!-- 抗炎通路 -->
+        <section class="panel" id="panel-inflam" data-active="true">
+          <div class="chips">
+            <div class="chip"><span class="dot" style="background:var(--accent-2)"></span>NF-κB/MAPK 抑制</div>
+            <div class="chip"><span class="dot" style="background:var(--accent-4)"></span>促炎因子级联阻断</div>
+            <div class="chip"><span class="dot" style="background:#38bdf8"></span>内皮活化抑制</div>
+          </div>
+          <div class="pipeline">
+            <div class="step">
+              <div class="kicker">① 触发因素</div>
+              <div class="title">5-HT↑、高糖/AGEs、ROS</div>
+              <div class="body">炎症级联反应的上游激活</div>
+            </div>
+            <div class="step">
+              <div class="kicker">② 靶点拮抗</div>
+              <div class="title">5-HT₂A 受体（✂ 沙格雷酯）</div>
+              <div class="body">选择性阻断，切断信号传导</div>
+            </div>
+            <div class="step">
+              <div class="kicker">③ 信号分子</div>
+              <div class="title">PLCβ → Ca²⁺/PKC → ERK/p38/JNK</div>
+              <div class="body">第二信使系统级联抑制</div>
+            </div>
+            <div class="step">
+              <div class="kicker">④ 转录因子</div>
+              <div class="title">NF-κB/AP-1 活性↓</div>
+              <div class="body">炎症基因转录抑制</div>
+            </div>
+            <div class="step">
+              <div class="kicker">⑤ 效应分子</div>
+              <div class="title">TNF-α/IL-6/MCP-1↓、ICAM-1/VCAM-1↓</div>
+              <div class="body">炎症介质和粘附分子表达降低</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 抗纤维化通路 -->
+        <section class="panel" id="panel-fib">
+          <div class="chips">
+            <div class="chip"><span class="dot" style="background:var(--accent-4)"></span>TGF-β/Smad 抑制</div>
+            <div class="chip"><span class="dot" style="background:#38bdf8"></span>ECM 重塑调节</div>
+            <div class="chip"><span class="dot" style="background:#22c55e"></span>EMT 抑制</div>
+          </div>
+          <div class="pipeline">
+            <div class="step">
+              <div class="kicker">① 触发因素</div>
+              <div class="title">TGF-β/PDGF、机械应激</div>
+              <div class="body">纤维化信号激活</div>
+            </div>
+            <div class="step">
+              <div class="kicker">② 靶点拮抗</div>
+              <div class="title">5-HT₂A 受体（✂ 沙格雷酯）</div>
+              <div class="body">阻断纤维化协同信号</div>
+            </div>
+            <div class="step">
+              <div class="kicker">③ 信号通路</div>
+              <div class="title">TGF-βR → Smad2/3 磷酸化↓</div>
+              <div class="body">纤维化信号传导减弱</div>
+            </div>
+            <div class="step">
+              <div class="kicker">④ 转录调控</div>
+              <div class="title">Smad4 核转位↓、STAT3↓</div>
+              <div class="body">纤维化基因转录抑制</div>
+            </div>
+            <div class="step">
+              <div class="kicker">⑤ 效应分子</div>
+              <div class="title">Collagen I/III↓、α-SMA↓、MMP/TIMP平衡</div>
+              <div class="body">ECM沉积减少，组织重塑改善</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 抗氧化/内皮通路 -->
+        <section class="panel" id="panel-ox">
+          <div class="chips">
+            <div class="chip"><span class="dot" style="background:var(--accent-3)"></span>AMPK/Sirt1 激活</div>
+            <div class="chip"><span class="dot" style="background:#6b5cff"></span>Nrf2/ARE 上调</div>
+            <div class="chip"><span class="dot" style="background:var(--ok)"></span>eNOS/NO 增强</div>
+          </div>
+          <div class="pipeline">
+            <div class="step">
+              <div class="kicker">① 氧化应激</div>
+              <div class="title">ROS↑、缺血缺氧、剪切应力</div>
+              <div class="body">氧化还原失衡</div>
+            </div>
+            <div class="step">
+              <div class="kicker">② 靶点拮抗</div>
+              <div class="title">5-HT₂A 受体（✂ 沙格雷酯）</div>
+              <div class="body">减少NOX激活，降低ROS生成</div>
+            </div>
+            <div class="step">
+              <div class="kicker">③ 保护通路</div>
+              <div class="title">AMPK → Sirt1 → PGC-1α</div>
+              <div class="body">代谢保护和线粒体功能改善</div>
+            </div>
+            <div class="step">
+              <div class="kicker">④ 抗氧化防御</div>
+              <div class="title">Nrf2 → HO-1/NQO1/SOD2↑</div>
+              <div class="body">抗氧化酶系统增强</div>
+            </div>
+            <div class="step">
+              <div class="kicker">⑤ 内皮功能</div>
+              <div class="title">PI3K/Akt → eNOS → NO↑</div>
+              <div class="body">血管舒张，微循环改善</div>
+            </div>
+          </div>
+        </section>
+      </div>
+
+      <!-- 下部：器官选择和特异性通路 -->
+      <div class="organ-selector">
+        <div class="section-title">
+          <span>🏥</span>
+          <span>器官特异性通路</span>
+        </div>
+        
+        <div class="hint">👆 点击下方器官，查看该器官的完整作用通路</div>
+        
+        <div class="organ-grid">
+          <button class="organ-btn" data-organ="heart">
+            <div class="organ-icon">🫀</div>
+            <div class="organ-name">心血管系统</div>
+          </button>
+          <button class="organ-btn" data-organ="brain">
+            <div class="organ-icon">🧠</div>
+            <div class="organ-name">神经系统</div>
+          </button>
+          <button class="organ-btn" data-organ="kidney">
+            <div class="organ-icon">🫘</div>
+            <div class="organ-name">肾脏系统</div>
+          </button>
+          <button class="organ-btn" data-organ="eye">
+            <div class="organ-icon">👁️</div>
+            <div class="organ-name">眼部系统</div>
+          </button>
+          <button class="organ-btn" data-organ="lung">
+            <div class="organ-icon">🫁</div>
+            <div class="organ-name">肺循环</div>
+          </button>
+          <button class="organ-btn" data-organ="peripheral">
+            <div class="organ-icon">🦶</div>
+            <div class="organ-name">外周组织</div>
+          </button>
+          <button class="organ-btn" data-organ="liver">
+            <div class="organ-icon">🥐</div>
+            <div class="organ-name">肝脏系统</div>
+          </button>
+          <button class="organ-btn" data-organ="gi">
+            <div class="organ-icon">🍤</div>
+            <div class="organ-name">胃肠系统</div>
+          </button>
+        </div>
+
+        <!-- 器官特异性通路展示区 -->
+        <div id="organ-pathways">
+          <!-- 心血管系统 -->
+          <div class="organ-pathway" data-pathway="heart">
+            <h3 style="color: var(--ink); margin-bottom: 20px;">🫀 心血管系统完整通路</h3>
+            
+            <div class="pathway-level">
+              <div class="level-header">1️⃣ 分子机制</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>5-HT₂A拮抗：</strong>阻断血管收缩和血小板激活<br>
+                  <strong>信号通路：</strong>PLCβ/IP3/Ca²⁺↓ → PKC/MAPK↓ → NF-κB↓<br>
+                  <strong>NO通路：</strong>PI3K/Akt↑ → eNOS磷酸化↑ → NO生成↑
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-arrow">⬇️</div>
+
+            <div class="pathway-level">
+              <div class="level-header">2️⃣ 细胞效应</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>内皮细胞：</strong>屏障功能↑、粘附分子↓、NO释放↑<br>
+                  <strong>平滑肌细胞：</strong>收缩反应正常化、增殖抑制、表型稳定<br>
+                  <strong>心肌细胞：</strong>Ca²⁺处理改善、能量代谢优化、凋亡↓<br>
+                  <strong>成纤维细胞：</strong>胶原沉积↓、MMP/TIMP平衡
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-arrow">⬇️</div>
+
+            <div class="pathway-level">
+              <div class="level-header">3️⃣ 组织改变</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>冠脉微循环：</strong>血流储备↑、灌注压改善、侧支循环形成<br>
+                  <strong>心肌组织：</strong>纤维化↓、舒张功能改善、氧供需平衡<br>
+                  <strong>传导系统：</strong>电稳定性↑、心律失常风险↓<br>
+                  <strong>瓣膜功能：</strong>钙化延缓、功能保护
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-arrow">⬇️</div>
+
+            <div class="pathway-level">
+              <div class="level-header">4️⃣ 临床获益</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>适应症：</strong>微血管性心绞痛、慢性心衰、高血压性心脏病<br>
+                  <strong>症状改善：</strong>胸痛缓解、运动耐量↑、呼吸困难减轻<br>
+                  <strong>预后影响：</strong>心血管事件↓、再住院率↓、生活质量↑<br>
+                  <strong>联合用药：</strong>与ACEI/ARB、β受体阻滞剂协同
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 神经系统 -->
+          <div class="organ-pathway" data-pathway="brain">
+            <h3 style="color: var(--ink); margin-bottom: 20px;">🧠 神经系统完整通路</h3>
+            
+            <div class="pathway-level">
+              <div class="level-header">1️⃣ 分子机制</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>5-HT₂A拮抗：</strong>脑血管舒张、神经炎症抑制<br>
+                  <strong>神经保护：</strong>BDNF↑、CREB磷酸化↑、突触可塑性↑<br>
+                  <strong>BBB保护：</strong>紧密连接蛋白↑、通透性↓
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-arrow">⬇️</div>
+
+            <div class="pathway-level">
+              <div class="level-header">2️⃣ 细胞效应</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>神经元：</strong>轴突保护、髓鞘维持、神经传导改善<br>
+                  <strong>胶质细胞：</strong>小胶质细胞M2极化、星形胶质细胞活化↓<br>
+                  <strong>血管内皮：</strong>BBB完整性↑、脑血流自动调节改善<br>
+                  <strong>周细胞：</strong>微血管稳定、基底膜维护
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-arrow">⬇️</div>
+
+            <div class="pathway-level">
+              <div class="level-header">3️⃣ 组织改变</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>脑血流：</strong>灌注增加、侧支循环开放、氧供改善<br>
+                  <strong>白质病变：</strong>进展延缓、髓鞘修复促进<br>
+                  <strong>灰质保护：</strong>神经元密度维持、突触功能改善<br>
+                  <strong>神经网络：</strong>连接性增强、功能重组促进
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-arrow">⬇️</div>
+
+            <div class="pathway-level">
+              <div class="level-header">4️⃣ 临床获益</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>适应症：</strong>慢性脑供血不足、血管性认知障碍、糖尿病神经病变<br>
+                  <strong>症状改善：</strong>头晕减轻、记忆力改善、肢体麻木缓解<br>
+                  <strong>神经功能：</strong>认知评分↑、日常生活能力↑、跌倒风险↓<br>
+                  <strong>联合治疗：</strong>与抗血小板药、神经营养药协同
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 肾脏系统 -->
+          <div class="organ-pathway" data-pathway="kidney">
+            <h3 style="color: var(--ink); margin-bottom: 20px;">🫘 肾脏系统完整通路</h3>
+            
+            <div class="pathway-level">
+              <div class="level-header">1️⃣ 分子机制</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>5-HT₂A拮抗：</strong>肾血管舒张、肾内RAS抑制<br>
+                  <strong>抗纤维化：</strong>TGF-β/Smad↓、CTGF↓、EMT抑制<br>
+                  <strong>抗氧化：</strong>Nrf2/HO-1↑、NOX4↓、线粒体保护
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-arrow">⬇️</div>
+
+            <div class="pathway-level">
+              <div class="level-header">2️⃣ 细胞效应</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>足细胞：</strong>裂孔膜蛋白保护、凋亡↓、自噬优化<br>
+                  <strong>系膜细胞：</strong>增殖抑制、ECM产生↓、收缩功能正常化<br>
+                  <strong>肾小管上皮：</strong>EMT抑制、能量代谢改善、转运功能保护<br>
+                  <strong>间质成纤维细胞：</strong>活化抑制、胶原沉积↓
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-arrow">⬇️</div>
+
+            <div class="pathway-level">
+              <div class="level-header">3️⃣ 组织改变</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>肾小球：</strong>硬化延缓、滤过屏障保护、蛋白尿↓<br>
+                  <strong>肾小管间质：</strong>纤维化↓、炎症浸润↓、微血管稀疏改善<br>
+                  <strong>肾血流：</strong>入球小动脉舒张、肾血流量↑、GFR保护<br>
+                  <strong>肾功能：</strong>肌酐清除率维持、电解质平衡改善
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-arrow">⬇️</div>
+
+            <div class="pathway-level">
+              <div class="level-header">4️⃣ 临床获益</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>适应症：</strong>糖尿病肾病、慢性肾病(CKD)、高血压肾损害<br>
+                  <strong>肾功能保护：</strong>eGFR下降速度↓、蛋白尿减少、透析延缓<br>
+                  <strong>心肾获益：</strong>心血管事件↓、水钠潴留改善、贫血改善<br>
+                  <strong>联合方案：</strong>与ACEI/ARB、SGLT2i协同保护
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 眼部系统 -->
+          <div class="organ-pathway" data-pathway="eye">
+            <h3 style="color: var(--ink); margin-bottom: 20px;">👁️ 眼部系统完整通路</h3>
+            
+            <div class="pathway-level">
+              <div class="level-header">1️⃣ 分子机制</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>5-HT₂A拮抗：</strong>视网膜血管舒张、血-视网膜屏障保护<br>
+                  <strong>VEGF调节：</strong>HIF-1α↓、VEGF表达↓、新生血管抑制<br>
+                  <strong>神经保护：</strong>视网膜神经节细胞保护、谷氨酸毒性↓
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-arrow">⬇️</div>
+
+            <div class="pathway-level">
+              <div class="level-header">2️⃣ 细胞效应</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>视网膜内皮：</strong>通透性↓、紧密连接↑、白细胞粘附↓<br>
+                  <strong>视网膜色素上皮：</strong>屏障功能↑、吞噬功能改善、氧化应激↓<br>
+                  <strong>感光细胞：</strong>光损伤保护、凋亡↓、外节膜更新改善<br>
+                  <strong>Müller细胞：</strong>胶质化↓、神经营养因子↑
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-arrow">⬇️</div>
+
+            <div class="pathway-level">
+              <div class="level-header">3️⃣ 组织改变</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>视网膜微血管：</strong>微动脉瘤↓、出血点减少、渗出减轻<br>
+                  <strong>黄斑区：</strong>水肿消退、中心凹厚度↓、视力改善<br>
+                  <strong>视神经：</strong>血供改善、轴突保护、视野缺损延缓<br>
+                  <strong>脉络膜：</strong>血流增加、新生血管抑制
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-arrow">⬇️</div>
+
+            <div class="pathway-level">
+              <div class="level-header">4️⃣ 临床获益</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>适应症：</strong>糖尿病视网膜病变、黄斑水肿、视网膜静脉阻塞<br>
+                  <strong>视功能改善：</strong>视力稳定/提升、对比敏感度↑、暗适应改善<br>
+                  <strong>病程控制：</strong>病变进展延缓、激光治疗需求↓、玻璃体出血↓<br>
+                  <strong>联合治疗：</strong>与抗VEGF药物、激光治疗协同
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 肺循环系统 -->
+          <div class="organ-pathway" data-pathway="lung">
+            <h3 style="color: var(--ink); margin-bottom: 20px;">🫁 肺循环系统完整通路</h3>
+            
+            <div class="pathway-level">
+              <div class="level-header">1️⃣ 分子机制</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>5-HT₂A拮抗：</strong>肺血管舒张、肺动脉压↓<br>
+                  <strong>血管重构抑制：</strong>平滑肌增殖↓、内膜增厚↓<br>
+                  <strong>炎症调节：</strong>肺泡巨噬细胞M2极化、炎症因子↓
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-arrow">⬇️</div>
+
+            <div class="pathway-level">
+              <div class="level-header">2️⃣ 细胞效应</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>肺血管内皮：</strong>NO生成↑、ET-1↓、屏障功能↑<br>
+                  <strong>肺动脉平滑肌：</strong>增殖抑制、凋亡正常化、表型转换↓<br>
+                  <strong>肺泡上皮：</strong>EMT抑制、表面活性物质分泌↑<br>
+                  <strong>间质细胞：</strong>成纤维细胞活化↓、ECM沉积↓
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-arrow">⬇️</div>
+
+            <div class="pathway-level">
+              <div class="level-header">3️⃣ 组织改变</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>肺血管床：</strong>血管阻力↓、顺应性↑、右心负荷↓<br>
+                  <strong>肺间质：</strong>纤维化延缓、气体交换改善<br>
+                  <strong>支气管微循环：</strong>粘膜血供↑、分泌功能改善<br>
+                  <strong>肺泡-毛细血管膜：</strong>弥散功能改善、氧合效率↑
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-arrow">⬇️</div>
+
+            <div class="pathway-level">
+              <div class="level-header">4️⃣ 临床获益</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>适应症：</strong>肺动脉高压、间质性肺病、COPD相关肺血管病变<br>
+                  <strong>症状改善：</strong>呼吸困难缓解、运动耐量↑、咳嗽减少<br>
+                  <strong>功能改善：</strong>6分钟步行距离↑、肺功能参数改善<br>
+                  <strong>联合用药：</strong>与内皮素受体拮抗剂、PDE5抑制剂协同
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 外周组织 -->
+          <div class="organ-pathway" data-pathway="peripheral">
+            <h3 style="color: var(--ink); margin-bottom: 20px;">🦶 外周组织完整通路</h3>
+            
+            <div class="pathway-level">
+              <div class="level-header">1️⃣ 分子机制</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>5-HT₂A拮抗：</strong>外周血管舒张、血小板聚集↓<br>
+                  <strong>微循环改善：</strong>毛细血管开放、血流速度↑<br>
+                  <strong>组织修复：</strong>VEGF/bFGF表达、血管新生促进
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-arrow">⬇️</div>
+
+            <div class="pathway-level">
+              <div class="level-header">2️⃣ 细胞效应</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>微血管内皮：</strong>通透性正常化、白细胞滚动↓<br>
+                  <strong>皮肤细胞：</strong>角质细胞增殖↑、成纤维细胞活化<br>
+                  <strong>骨骼肌细胞：</strong>氧利用率↑、糖代谢改善<br>
+                  <strong>神经末梢：</strong>营养供应↑、传导速度改善
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-arrow">⬇️</div>
+
+            <div class="pathway-level">
+              <div class="level-header">3️⃣ 组织改变</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>皮肤：</strong>温度恢复、颜色改善、溃疡愈合<br>
+                  <strong>肌肉：</strong>疲劳减轻、痉挛缓解、功能恢复<br>
+                  <strong>关节：</strong>滑膜炎症↓、关节液改善<br>
+                  <strong>皮下组织：</strong>水肿消退、组织营养改善
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-arrow">⬇️</div>
+
+            <div class="pathway-level">
+              <div class="level-header">4️⃣ 临床获益</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>适应症：</strong>外周动脉疾病、糖尿病足、雷诺现象<br>
+                  <strong>症状改善：</strong>间歇性跛行缓解、肢体疼痛↓、冷感减轻<br>
+                  <strong>功能恢复：</strong>步行距离↑、伤口愈合加速、截肢风险↓<br>
+                  <strong>生活质量：</strong>日常活动改善、睡眠质量↑
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 肝脏系统 -->
+          <div class="organ-pathway" data-pathway="liver">
+            <h3 style="color: var(--ink); margin-bottom: 20px;">🥐 肝脏系统完整通路</h3>
+            
+            <div class="pathway-level">
+              <div class="level-header">1️⃣ 分子机制</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>5-HT₂A拮抗：</strong>门脉压力↓、肝窦血流改善<br>
+                  <strong>抗纤维化：</strong>HSC活化抑制、TGF-β/PDGF信号↓<br>
+                  <strong>代谢调节：</strong>脂质代谢改善、胰岛素敏感性↑
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-arrow">⬇️</div>
+
+            <div class="pathway-level">
+              <div class="level-header">2️⃣ 细胞效应</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>肝细胞：</strong>脂肪变性↓、线粒体功能改善、凋亡↓<br>
+                  <strong>肝星状细胞：</strong>活化抑制、胶原产生↓、维生素A储存恢复<br>
+                  <strong>Kupffer细胞：</strong>M2极化、炎症介质↓<br>
+                  <strong>肝窦内皮：</strong>窗孔功能恢复、NO生成↑
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-arrow">⬇️</div>
+
+            <div class="pathway-level">
+              <div class="level-header">3️⃣ 组织改变</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>肝实质：</strong>纤维化进展延缓、再生能力↑<br>
+                  <strong>门脉系统：</strong>压力降低、侧支循环减少<br>
+                  <strong>胆道系统：</strong>胆汁淤积改善、胆管炎症↓<br>
+                  <strong>肝功能：</strong>合成功能改善、解毒能力↑
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-arrow">⬇️</div>
+
+            <div class="pathway-level">
+              <div class="level-header">4️⃣ 临床获益</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>适应症：</strong>NAFLD/NASH、肝硬化、门脉高压<br>
+                  <strong>肝功能保护：</strong>转氨酶↓、胆红素改善、凝血功能改善<br>
+                  <strong>并发症预防：</strong>腹水减少、脑病风险↓、静脉曲张出血↓<br>
+                  <strong>代谢获益：</strong>胰岛素抵抗改善、脂代谢正常化
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 胃肠系统 -->
+          <div class="organ-pathway" data-pathway="gi">
+            <h3 style="color: var(--ink); margin-bottom: 20px;">🍤 胃肠系统完整通路</h3>
+            
+            <div class="pathway-level">
+              <div class="level-header">1️⃣ 分子机制</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>5-HT₂A拮抗：</strong>肠系膜血流↑、粘膜血供改善<br>
+                  <strong>肠道屏障：</strong>紧密连接蛋白↑、通透性↓<br>
+                  <strong>神经调节：</strong>肠神经系统功能改善、蠕动协调
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-arrow">⬇️</div>
+
+            <div class="pathway-level">
+              <div class="level-header">2️⃣ 细胞效应</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>肠上皮细胞：</strong>屏障功能↑、分泌功能改善<br>
+                  <strong>杯状细胞：</strong>粘液分泌正常化、保护层增强<br>
+                  <strong>肠道免疫细胞：</strong>炎症反应↓、免疫耐受改善<br>
+                  <strong>肠神经元：</strong>神经传导改善、动力调节优化
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-arrow">⬇️</div>
+
+            <div class="pathway-level">
+              <div class="level-header">3️⃣ 组织改变</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>粘膜层：</strong>炎症减轻、溃疡愈合、绒毛高度恢复<br>
+                  <strong>肌层：</strong>平滑肌功能改善、蠕动协调<br>
+                  <strong>血管网：</strong>微循环改善、营养吸收↑<br>
+                  <strong>淋巴系统：</strong>淋巴回流改善、水肿减轻
+                </div>
+              </div>
+            </div>
+
+            <div class="flow-arrow">⬇️</div>
+
+            <div class="pathway-level">
+              <div class="level-header">4️⃣ 临床获益</div>
+              <div class="level-content">
+                <div class="pathway-item">
+                  <strong>适应症：</strong>缺血性肠病、IBD、功能性胃肠病<br>
+                  <strong>症状改善：</strong>腹痛缓解、腹胀减少、排便改善<br>
+                  <strong>营养状态：</strong>吸收功能↑、营养不良改善<br>
+                  <strong>生活质量：</strong>饮食耐受性↑、社交功能改善
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Theme toggle
+    const html = document.documentElement;
+    const themeBtn = document.getElementById('themeToggle');
+    
+    const applyTheme = (mode) => {
+      html.setAttribute('data-theme', mode);
+      themeBtn.textContent = mode === 'dark' ? '🌙 深色' : '🌞 明亮';
+      localStorage.setItem('sarp-theme', mode);
+    };
+    
+    const savedTheme = localStorage.getItem('sarp-theme') || 'light';
+    applyTheme(savedTheme);
+    
+    themeBtn.addEventListener('click', () => {
+      const currentTheme = html.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      applyTheme(newTheme);
+    });
+
+    // Molecular pathway tabs
+    const tabs = document.querySelectorAll('.tab-btn');
+    const panels = document.querySelectorAll('.panel');
+    
+    tabs.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetTab = btn.dataset.tab;
+        
+        // Update active states
+        tabs.forEach(t => t.dataset.active = 'false');
+        btn.dataset.active = 'true';
+        
+        // Show corresponding panel
+        panels.forEach(p => p.dataset.active = 'false');
+        const targetPanel = document.getElementById(`panel-${targetTab}`);
+        if (targetPanel) {
+          targetPanel.dataset.active = 'true';
+        }
+        
+        // Save preference
+        localStorage.setItem('sarp-pathway-tab', targetTab);
+      });
+    });
+    
+    // Restore saved tab
+    const savedTab = localStorage.getItem('sarp-pathway-tab');
+    if (savedTab) {
+      const savedTabBtn = document.querySelector(`.tab-btn[data-tab="${savedTab}"]`);
+      if (savedTabBtn) {
+        savedTabBtn.click();
+      }
+    }
+
+    // Organ selector functionality
+    const organBtns = document.querySelectorAll('.organ-btn');
+    const organPathways = document.querySelectorAll('.organ-pathway');
+    
+    organBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const targetOrgan = btn.dataset.organ;
+        
+        // Update button states
+        organBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        // Show corresponding pathway
+        organPathways.forEach(p => {
+          p.classList.remove('active');
+          if (p.dataset.pathway === targetOrgan) {
+            p.classList.add('active');
+            // Smooth scroll to pathway
+            setTimeout(() => {
+              p.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+            }, 100);
+          }
+        });
+        
+        // Save selection
+        localStorage.setItem('sarp-selected-organ', targetOrgan);
+      });
+    });
+    
+    // Restore saved organ selection
+    const savedOrgan = localStorage.getItem('sarp-selected-organ');
+    if (savedOrgan) {
+      const savedOrganBtn = document.querySelector(`.organ-btn[data-organ="${savedOrgan}"]`);
+      if (savedOrganBtn) {
+        savedOrganBtn.click();
+      }
+    }
+
+    // Keyboard navigation for tabs
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+        const activeTabs = [...tabs].filter(t => t.dataset.active === 'true');
+        if (activeTabs.length > 0) {
+          const currentIndex = [...tabs].indexOf(activeTabs[0]);
+          let newIndex;
+          
+          if (e.key === 'ArrowRight') {
+            newIndex = (currentIndex + 1) % tabs.length;
+          } else {
+            newIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+          }
+          
+          tabs[newIndex].click();
+        }
+      }
+    });
+
+    // Add hover effects for better interactivity
+    document.querySelectorAll('.pathway-level').forEach(level => {
+      level.addEventListener('mouseenter', function() {
+        this.style.transform = 'translateX(5px)';
+        this.style.transition = 'all 0.3s ease';
+      });
+      level.addEventListener('mouseleave', function() {
+        this.style.transform = 'translateX(0)';
+      });
+    });
+
+    // Print pathway information for debugging (optional)
+    console.log('沙格雷酯器官特异性通路系统已加载');
+    console.log('可用器官:', [...organBtns].map(b => b.dataset.organ));
+    console.log('可用通路:', [...tabs].map(t => t.dataset.tab));
+  </script>
+</body>
+</html>

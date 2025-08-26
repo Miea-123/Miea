@@ -1,0 +1,85 @@
+{
+  "DATA": [
+    {
+      "name": "合心爽",
+      "group": "远大天津",
+      "href": "/products/hxs"
+    },
+    {
+      "name": "合贝爽",
+      "group": "远大天津",
+      "href": "/products/hbs"
+    },
+    {
+      "name": "力美通",
+      "group": "远大天津",
+      "href": "/products/yplt"
+    },
+    {
+      "name": "安步乐克",
+      "group": "远大天津",
+      "href": "/products/ablk"
+    },
+    {
+      "name": "能气朗",
+      "group": "心血管组",
+      "href": "/products/nql"
+    },
+    {
+      "name": "瑞安吉",
+      "group": "心血管组",
+      "href": "/products/raj"
+    },
+    {
+      "name": "诺复康",
+      "group": "急救组",
+      "href": "/products/nfk"
+    },
+    {
+      "name": "利其安",
+      "group": "急救组",
+      "href": "/products/lqa"
+    },
+    {
+      "name": "润漠德霖",
+      "group": "罕见病组",
+      "href": "/products/rmdl"
+    },
+    {
+      "name": "安维得",
+      "group": "罕见病组",
+      "href": "/products/awd"
+    },
+    {
+      "name": "安希达",
+      "group": "罕见病组",
+      "href": "/products/axd"
+    },
+    {
+      "name": "安维灵",
+      "group": "罕见病组",
+      "href": "/products/awl"
+    },
+    {
+      "name": "达爽",
+      "group": "普药组",
+      "href": "/products/ds"
+    },
+    {
+      "name": "泰里安",
+      "group": "普药组",
+      "href": "/products/tla"
+    },
+    {
+      "name": "乐美汀",
+      "group": "普药组",
+      "href": "/products/lmt"
+    },
+    {
+      "name": "力美松",
+      "group": "普药组",
+      "href": "/products/lms"
+    }
+  ],
+  "GROUPS": ["全部", "远大天津", "心血管组", "急救组", "罕见病组", "普药组"]
+}

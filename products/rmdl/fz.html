@@ -1,0 +1,314 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>曲前列尼尔（Treprostinil）分子机制图｜最终完整版</title>
+<style>
+  :root{
+    --bg:#f3f6fb;--ink:#0f172a;--muted:#475569;--panel:#ffffff;--sub:#f8fafc;--b:#e2e8f0;--accent:#6366f1;--accent2:#7c3aed;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;font:14px/1.6 system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans SC","PingFang SC",sans-serif;background:radial-gradient(1200px 800px at 20% -10%,#eef2ff 0%,#f8fafc 40%,#ffffff 100%)}
+  .wrap{max-width:1600px;margin:0 auto;padding:20px}
+  .header{background:var(--panel);border:1px solid var(--b);border-radius:18px;padding:20px 24px;margin-bottom:16px;box-shadow:0 10px 30px rgba(2,6,23,.06)}
+  .title{font-weight:800;font-size:26px;margin:0 0 4px;background:linear-gradient(120deg,var(--accent),var(--accent2));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+  .subtitle{color:var(--muted)}
+  .controls{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .chip{border:1.5px solid var(--b);background:var(--sub);border-radius:10px;padding:8px 12px;cursor:pointer}
+
+  /* 两栏 + 底部证据区（证据统一下移） */
+  .layout{display:grid;grid-template-columns:360px 1fr;gap:16px}
+  .panel{background:var(--panel);border:1px solid var(--b);border-radius:16px;box-shadow:0 8px 24px rgba(2,6,23,.05);overflow:hidden}
+  .panel>.hd{display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--b);background:linear-gradient(180deg,#fafbff,#fff)}
+  .panel>.bd{padding:14px 16px}
+
+  /* 左侧路径（唯一交互控制，色系同步机制图） */
+  .left .bd{display:grid;gap:10px;max-height:820px;overflow:auto}
+  .card{padding:12px;border:1px solid var(--b);background:var(--sub);border-radius:12px;cursor:pointer;transition:transform .2s, box-shadow .2s}
+  .card:hover{transform:translateX(4px);box-shadow:0 6px 14px rgba(2,6,23,.06)}
+  .card h3{margin:0 0 6px;font-size:14px;display:flex;align-items:center;gap:8px}
+  .swatch{width:16px;height:16px;border-radius:6px;border:1px solid var(--b);flex:0 0 16px}
+  .mini{color:var(--muted);font-size:12px;margin:0}
+  .card.active{outline:2px solid transparent;box-shadow:0 0 0 2px rgba(99,102,241,.45) inset}
+
+  /* 中间大画布 */
+  .svgbox{position:relative}
+  .zoom{position:absolute;top:10px;right:10px;display:flex;gap:6px;z-index:2}
+  .zbtn{width:38px;height:38px;border-radius:10px;border:1px solid var(--b);background:var(--panel);cursor:pointer;font-size:18px}
+  #scale{transform-origin:0 0;transition:transform .25s ease}
+  #stage{width:100%;height:860px} /* 放大画布高度 */
+  .metrics{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;padding:12px;border-top:1px dashed var(--b);background:var(--sub)}
+  .m{padding:10px;border:1px solid var(--b);border-radius:12px;background:#fff;text-align:center}
+  .m b{font-size:18px}
+  .m span{display:block;color:var(--muted);font-size:12px}
+
+  /* 底部证据区（统一下移，填充下方空间） */
+  .foot{grid-column:1 / 3;display:grid;grid-template-columns:2fr 1fr 1fr;gap:16px;margin-top:16px}
+  .stack{padding:12px 14px}
+  .stack h4{margin:4px 0 8px}
+  .ref{display:flex;flex-wrap:wrap;gap:8px}
+  .ref .chip{background:#fff}
+  .endpoint{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .e{padding:10px;border:1px solid var(--b);border-radius:12px;background:#fff}
+  .scenes{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}
+  .s{padding:10px;border:1px dashed var(--b);border-radius:12px;background:#fff}
+
+  /* Tooltip */
+  #tip{position:fixed;left:0;top:0;opacity:0;pointer-events:none;background:#0f172a;color:#fff;padding:6px 8px;border-radius:8px;font-size:12px;transform:translate(10px,-10px);transition:opacity .2s}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="header">
+    <h1 class="title">曲前列尼尔（Treprostinil）分子机制图 · 最终版</h1>
+    <p class="subtitle"><b>PGI₂ 类似物</b> · IP受体 → Gs → AC → cAMP → PKA/EPAC · 7条作用路径（舒张/超极化/抗血小板/抗增殖/抗炎/抗纤维化/内皮保护）</p>
+    <div class="controls">
+      <button class="chip" id="reset">🔄 重置</button>
+      <button class="chip" id="export">💾 导出SVG</button>
+      <button class="chip" id="animate">✨ 播放动画</button>
+    </div>
+  </div>
+
+  <div class="layout">
+    <!-- 左栏：唯一交互控制（将机制图色系同步到此） -->
+    <section class="panel left">
+      <div class="hd">机制路径（点击高亮链路）</div>
+      <div class="bd" id="cards"></div>
+    </section>
+
+    <!-- 中栏：大画布与指标带（机制图内部不再点选，仅悬浮提示） -->
+    <section class="panel middle">
+      <div class="hd">交互机制图（放大）</div>
+      <div class="svgbox">
+        <div class="zoom"><button class="zbtn" id="zin">+</button><button class="zbtn" id="zout">−</button></div>
+        <div id="scale">
+          <svg id="stage" viewBox="0 0 1400 860" xmlns="http://www.w3.org/2000/svg"></svg>
+        </div>
+      </div>
+      <div class="metrics">
+        <div class="m"><b>cAMP↑</b><span>信号核心放大</span></div>
+        <div class="m"><b>PVR↓/mPAP↓</b><span>血流动力学</span></div>
+        <div class="m"><b>PLT聚集↓</b><span>微循环改善</span></div>
+        <div class="m"><b>重构↓</b><span>结构逆转</span></div>
+      </div>
+    </section>
+
+    <!-- 底部证据整体下移（避免上方拥挤/空旷不均衡） -->
+    <section class="panel foot">
+      <div class="stack">
+        <h4>📚 证据要点（示例，可替换为真实文献）</h4>
+        <ul id="evidenceList" style="margin:0;padding-left:18px;color:var(--muted)"></ul>
+      </div>
+      <div class="stack">
+        <h4>🎯 关键临床终点</h4>
+        <div class="endpoint">
+          <div class="e"><b>6MWD↑</b><div class="mini">运动耐量提升</div></div>
+          <div class="e"><b>NT‑proBNP↓</b><div class="mini">心衰负荷减轻</div></div>
+          <div class="e"><b>WHO‑FC改善</b><div class="mini">功能级别上调</div></div>
+          <div class="e"><b>住院率↓</b><div class="mini">事件风险降低</div></div>
+        </div>
+      </div>
+      <div class="stack">
+        <h4>🧭 临床场景</h4>
+        <div class="scenes">
+          <div class="s">血小板高反应性 → 强化抗聚集链路</div>
+          <div class="s">重构显著/右心衰 → 强化抗增殖/抗纤维化</div>
+          <div class="s">内皮功能差/ET‑1高 → 内皮保护/ET‑1下调</div>
+          <div class="s">运动耐量差 → 超极化+舒张并举</div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+<div id="tip"></div>
+
+<script>
+(()=>{
+  // 路径色系（与机制图完全一致）
+  const flows=[
+    {id:"vasodilation",label:"血管舒张",grad:["#60a5fa","#3b82f6"]},
+    {id:"hyperpolarization",label:"超极化",grad:["#a78bfa","#8b5cf6"]},
+    {id:"antiplatelet",label:"抗血小板",grad:["#34d399","#10b981"]},
+    {id:"antiproliferation",label:"抗增殖",grad:["#22d3ee","#06b6d4"]},
+    {id:"antiinflammation",label:"抗炎",grad:["#fbbf24","#f59e0b"]},
+    {id:"antifibrosis",label:"抗纤维化",grad:["#f9a8d4","#ec4899"]},
+    {id:"endoprotection",label:"内皮保护",grad:["#4ade80","#22c55e"]}
+  ];
+
+  // 节点布局（更大画布，确保节点清晰可见）
+  const nodes=[
+    {id:"tre",x:60,y:40,t:"曲前列尼尔",s:"Treprostinil",tip:"PGI₂类似物，激活IP受体"},
+    {id:"ip",x:280,y:40,t:"IP受体",s:"Gs‑GPCR",tip:"G蛋白偶联受体"},
+    {id:"ac",x:500,y:40,t:"AC↑",s:"腺苷酸环化酶",tip:"ATP→cAMP"},
+    {id:"camp",x:720,y:40,t:"cAMP↑",s:"第二信使",tip:"激活PKA/EPAC"},
+
+    {id:"pka",x:720,y:150,t:"PKA",s:"蛋白激酶A",tip:"磷酸化调控"},
+    {id:"mlck",x:720,y:250,t:"MLCK↓",s:"轻链激酶",tip:"收缩降低"},
+    {id:"smc",x:720,y:350,t:"平滑肌舒张",s:"Vasorelax",tip:"血管扩张"},
+    {id:"hemo",x:720,y:450,t:"PVR↓ mPAP↓",s:"血流动力学",tip:"阻力/压力下降"},
+
+    {id:"kca",x:960,y:150,t:"KCa通道",s:"K⁺外流",tip:"膜超极化"},
+    {id:"hyper",x:960,y:250,t:"超极化",s:"Hyper",tip:"协同舒张"},
+
+    {id:"plt",x:500,y:250,t:"血小板cAMP↑",s:"聚集↓",tip:"微循环改善"},
+
+    {id:"epac",x:960,y:40,t:"EPAC",s:"RAP1‑GEF",tip:"骨架/黏附"},
+    {id:"mapk",x:960,y:350,t:"MAPK/ERK↓",s:"增殖信号",tip:"抑制增殖"},
+    {id:"rhoa",x:1200,y:350,t:"RhoA/ROCK↓",s:"骨架",tip:"抑制迁移"},
+    {id:"prolif",x:1080,y:450,t:"PASMC增殖↓",s:"Anti‑prolif",tip:"平滑肌细胞"},
+    {id:"remodel",x:1080,y:550,t:"血管重构↓",s:"Remodel↓",tip:"中膜肥厚逆转"},
+
+    {id:"nfkb",x:500,y:350,t:"NF‑κB↓",s:"炎症因子",tip:"核转位抑制"},
+    {id:"cyto",x:500,y:450,t:"IL‑6/TNF‑α↓",s:"细胞因子",tip:"介质减少"},
+    {id:"inflam",x:500,y:550,t:"炎症反应↓",s:"Anti‑inflam",tip:"炎症缓解"},
+
+    {id:"enos",x:280,y:150,t:"eNOS/NO↑",s:"内皮NO",tip:"舒张/抗炎/抗聚集"},
+    {id:"et1",x:280,y:250,t:"ET‑1↓",s:"内皮素‑1",tip:"缩血管因子降低"},
+    {id:"endo",x:280,y:350,t:"内皮功能↑",s:"Endothelial",tip:"稳态恢复"},
+
+    {id:"tgf",x:720,y:550,t:"TGF‑β/Smad↓",s:"纤维化",tip:"成纤维分化抑制"},
+    {id:"fibro",x:720,y:650,t:"成纤维细胞↓",s:"Myofibro",tip:"α‑SMA下降"},
+    {id:"coll",x:720,y:750,t:"胶原沉积↓",s:"Collagen↓",tip:"顺应性改善"}
+  ];
+
+  const edges=[
+    {from:"tre",to:"ip",flows:flows.map(f=>f.id)},{from:"ip",to:"ac",flows:flows.map(f=>f.id)},{from:"ac",to:"camp",flows:flows.map(f=>f.id)},
+    {from:"camp",to:"pka",flows:["vasodilation","antiproliferation","antiinflammation","antifibrosis","endoprotection"]},
+    {from:"pka",to:"mlck",flows:["vasodilation"]},{from:"mlck",to:"smc",flows:["vasodilation"]},{from:"smc",to:"hemo",flows:["vasodilation"]},
+    {from:"camp",to:"kca",flows:["hyperpolarization"]},{from:"kca",to:"hyper",flows:["hyperpolarization"]},
+    {from:"camp",to:"plt",flows:["antiplatelet"]},
+    {from:"camp",to:"epac",flows:["antiproliferation","antifibrosis"]},{from:"pka",to:"mapk",flows:["antiproliferation"]},{from:"epac",to:"rhoa",flows:["antiproliferation"]},{from:"mapk",to:"prolif",flows:["antiproliferation"]},{from:"rhoa",to:"prolif",flows:["antiproliferation"]},{from:"prolif",to:"remodel",flows:["antiproliferation","antifibrosis"]},
+    {from:"pka",to:"nfkb",flows:["antiinflammation"]},{from:"nfkb",to:"cyto",flows:["antiinflammation"]},{from:"cyto",to:"inflam",flows:["antiinflammation"]},
+    {from:"pka",to:"enos",flows:["endoprotection"]},{from:"camp",to:"et1",flows:["endoprotection"]},{from:"enos",to:"endo",flows:["endoprotection"]},{from:"et1",to:"endo",flows:["endoprotection"]},{from:"endo",to:"hemo",flows:["endoprotection"]},
+    {from:"pka",to:"tgf",flows:["antifibrosis"]},{from:"epac",to:"tgf",flows:["antifibrosis"]},{from:"tgf",to:"fibro",flows:["antifibrosis"]},{from:"fibro",to:"coll",flows:["antifibrosis"]},{from:"coll",to:"remodel",flows:["antifibrosis"]}
+  ];
+
+  const stage=document.getElementById('stage');
+  const scale=document.getElementById('scale');
+  const tip=document.getElementById('tip');
+  const cards=document.getElementById('cards');
+  const zin=document.getElementById('zin');
+  const zout=document.getElementById('zout');
+  const exportBtn=document.getElementById('export');
+  const animateBtn=document.getElementById('animate');
+  const resetBtn=document.getElementById('reset');
+
+  let active='all', scaleVal=1;
+
+  // 创建色块卡片（唯一交互控制）
+  flows.forEach(f=>{
+    const c=document.createElement('div');
+    c.className='card';
+    c.dataset.path=f.id;
+    c.innerHTML=`<h3><span class=\"swatch\" style=\"background:linear-gradient(135deg,${f.grad[0]},${f.grad[1]})\"></span>${f.label}</h3><p class=\"mini\">点击高亮该链路</p>`;
+    cards.appendChild(c);
+  });
+  // 添加“全部”
+  const allCard=document.createElement('div');
+  allCard.className='card active';
+  allCard.dataset.path='all';
+  allCard.innerHTML=`<h3><span class=\"swatch\" style=\"background:linear-gradient(135deg,#6366f1,#7c3aed)\"></span>全部路径</h3><p class=\"mini\">显示所有链路</p>`;
+  cards.prepend(allCard);
+
+  function defs(){
+    let d=stage.querySelector('defs');if(!d){d=document.createElementNS('http://www.w3.org/2000/svg','defs');stage.appendChild(d)}
+    d.innerHTML='';
+    flows.forEach(f=>{
+      const lg=document.createElementNS('http://www.w3.org/2000/svg','linearGradient');lg.id='g-'+f.id;lg.innerHTML=`<stop offset=\"0%\" stop-color=\"${f.grad[0]}\"/><stop offset=\"100%\" stop-color=\"${f.grad[1]}\"/>`;d.appendChild(lg);
+      const m=document.createElementNS('http://www.w3.org/2000/svg','marker');m.id='m-'+f.id;m.setAttribute('viewBox','0 0 10 10');m.setAttribute('refX','10');m.setAttribute('refY','5');m.setAttribute('markerWidth','6');m.setAttribute('markerHeight','6');m.setAttribute('orient','auto');m.innerHTML=`<path d=\"M0 0 L10 5 L0 10 Z\" fill=\"${f.grad[1]}\"/>`;d.appendChild(m);
+    });
+    const m=document.createElementNS('http://www.w3.org/2000/svg','marker');m.id='m-all';m.setAttribute('viewBox','0 0 10 10');m.setAttribute('refX','10');m.setAttribute('refY','5');m.setAttribute('markerWidth','6');m.setAttribute('markerHeight','6');m.setAttribute('orient','auto');m.innerHTML='<path d="M0 0 L10 5 L0 10 Z" fill="#94a3b8"/>';d.appendChild(m);
+
+    // 阴影与发光
+    const filter=document.createElementNS('http://www.w3.org/2000/svg','filter');filter.id='shadow';filter.innerHTML='<feGaussianBlur in="SourceAlpha" stdDeviation="3"/><feOffset dx="0" dy="2" result="ob"/><feFlood flood-color="#000" flood-opacity="0.15"/><feComposite in2="ob" operator="in"/><feMerge><feMergeNode/><feMergeNode in="SourceGraphic"/></feMerge>';d.appendChild(filter);
+    const glow=document.createElementNS('http://www.w3.org/2000/svg','filter');glow.id='glow';glow.innerHTML='<feGaussianBlur stdDeviation="4" result="cb"/><feMerge><feMergeNode in="cb"/><feMergeNode in="SourceGraphic"/></feMerge>';d.appendChild(glow);
+  }
+
+  function grid(){
+    const g=document.createElementNS('http://www.w3.org/2000/svg','g');g.setAttribute('opacity','.05');
+    for(let y=0;y<=860;y+=20){const l=document.createElementNS('http://www.w3.org/2000/svg','line');l.setAttribute('x1','0');l.setAttribute('y1',y);l.setAttribute('x2','1400');l.setAttribute('y2',y);l.setAttribute('stroke','#94a3b8');g.appendChild(l)}
+    for(let x=0;x<=1400;x+=20){const l=document.createElementNS('http://www.w3.org/2000/svg','line');l.setAttribute('x1',x);l.setAttribute('y1','0');l.setAttribute('x2',x);l.setAttribute('y2','860');l.setAttribute('stroke','#94a3b8');g.appendChild(l)}
+    return g;
+  }
+
+  const pos=Object.fromEntries(nodes.map(n=>[n.id,{x:n.x,y:n.y}]));
+  function path(from,to){const a=pos[from],b=pos[to];const dx=b.x-(a.x+160),dy=b.y-a.y;const c1x=a.x+160+dx*.3,c1y=a.y+dy*.1,c2x=b.x-dx*.3,c2y=b.y-dy*.1;return `M ${a.x+160} ${a.y+30} C ${c1x} ${c1y}, ${c2x} ${c2y}, ${b.x} ${b.y+30}`}
+
+  function draw(anim=false){
+    stage.innerHTML='';defs();stage.appendChild(grid());
+    const ge=document.createElementNS('http://www.w3.org/2000/svg','g');
+    const gn=document.createElementNS('http://www.w3.org/2000/svg','g');
+
+    edges.forEach((e,i)=>{
+      const p=document.createElementNS('http://www.w3.org/2000/svg','path');
+      p.setAttribute('d',path(e.from,e.to));
+      p.setAttribute('fill','none');
+      const act=(active==='all')||e.flows.includes(active);
+      if(active==='all'){p.setAttribute('stroke','#94a3b8');p.setAttribute('opacity','.5');p.setAttribute('stroke-width','2');p.setAttribute('marker-end','url(#m-all)')}
+      else if(act){p.setAttribute('stroke',`url(#g-${active})`);p.setAttribute('stroke-width','3');p.setAttribute('marker-end',`url(#m-${active})`)}
+      else{p.setAttribute('stroke','#e5e7eb');p.setAttribute('opacity','.2');p.setAttribute('stroke-width','1.5')}
+      if(anim&&act){p.style.strokeDasharray='1000';p.style.strokeDashoffset='1000';p.style.animation=`dash 1.2s ease ${i*0.06}s forwards`}
+      ge.appendChild(p);
+    });
+
+    nodes.forEach((n,i)=>{
+      const g=document.createElementNS('http://www.w3.org/2000/svg','g');g.setAttribute('transform',`translate(${n.x},${n.y})`);g.style.cursor='default';
+      const r=document.createElementNS('http://www.w3.org/2000/svg','rect');r.setAttribute('width','160');r.setAttribute('height','60');r.setAttribute('rx','12');r.setAttribute('fill','#fff');r.setAttribute('stroke','#e2e8f0');r.setAttribute('stroke-width','2');
+      // 高亮当前通路涉及节点
+      const isActive = active==='all' || edges.some(e => (e.from===n.id || e.to===n.id) && e.flows.includes(active));
+      if(isActive && active!=='all'){r.setAttribute('stroke',flows.find(f=>f.id===active).grad[1]);r.setAttribute('stroke-width','3');r.setAttribute('filter','url(#glow)')}
+
+      const t1=document.createElementNS('http://www.w3.org/2000/svg','text');t1.setAttribute('x','80');t1.setAttribute('y','24');t1.setAttribute('text-anchor','middle');t1.setAttribute('font-size','13');t1.setAttribute('font-weight','700');t1.setAttribute('fill','#0f172a');t1.textContent=n.t;
+      const t2=document.createElementNS('http://www.w3.org/2000/svg','text');t2.setAttribute('x','80');t2.setAttribute('y','42');t2.setAttribute('text-anchor','middle');t2.setAttribute('font-size','11');t2.setAttribute('fill','#64748b');t2.textContent=n.s;
+
+      // 悬浮提示
+      g.addEventListener('mouseenter',ev=>{tip.textContent=n.tip||`${n.t} — ${n.s}`;tip.style.opacity=.95;tip.style.left=ev.pageX+10+'px';tip.style.top=ev.pageY-28+'px'});
+      g.addEventListener('mousemove',ev=>{tip.style.left=ev.pageX+10+'px';tip.style.top=ev.pageY-28+'px'});
+      g.addEventListener('mouseleave',()=>{tip.style.opacity=0});
+
+      g.appendChild(r);g.appendChild(t1);g.appendChild(t2);if(anim){g.style.opacity=0;g.style.animation=`fade .4s ease ${i*0.04}s forwards`}
+      gn.appendChild(g);
+    });
+
+    stage.appendChild(ge);stage.appendChild(gn);
+
+    // 顶部标签
+    const label=document.createElementNS('http://www.w3.org/2000/svg','g');
+    label.innerHTML=`<rect x="50" y="120" width="300" height="30" rx="15" fill="#fff" stroke="#e2e8f0" opacity="0.95"/><text x="200" y="140" text-anchor="middle" font-size="12" fill="#475569">核心链路：IP→Gs→AC→cAMP→PKA/EPAC</text>`;
+    stage.appendChild(label);
+  }
+
+  // 动画样式
+  const style=document.createElement('style');style.textContent=`@keyframes dash{to{stroke-dashoffset:0}}@keyframes fade{to{opacity:1}}`;document.head.appendChild(style);
+  draw();
+
+  // 左侧唯一交互：筛选链路
+  cards.addEventListener('click',e=>{
+    const t=e.target.closest('.card');if(!t)return;
+    active=t.dataset.path;
+    document.querySelectorAll('.card').forEach(el=>el.classList.toggle('active',el===t));
+    draw();
+  });
+
+  // 缩放 / 重置 / 动画 / 导出
+  zin.onclick=()=>{scaleVal=Math.min(scaleVal+0.1,2.2);scale.style.transform=`scale(${scaleVal})`};
+  zout.onclick=()=>{scaleVal=Math.max(scaleVal-0.1,.6);scale.style.transform=`scale(${scaleVal})`};
+  resetBtn.onclick=()=>{active='all';scaleVal=1;scale.style.transform='scale(1)';document.querySelectorAll('.card').forEach(el=>el.classList.remove('active'));document.querySelector('[data-path="all"]').classList.add('active');draw()};
+  animateBtn.onclick=()=>draw(true);
+  exportBtn.onclick=()=>{const ser=new XMLSerializer();const src=ser.serializeToString(stage);const blob=new Blob([src],{type:'image/svg+xml;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='treprostinil_mechanism.svg';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url)};
+
+  // 证据要点（示例，占位）
+  const evidence=[
+    'IP → cAMP → PKA/EPAC 双通路证据',
+    '抗增殖：MAPK/ERK 与 RhoA/ROCK 下调',
+    '抗炎：NF‑κB核转位抑制，炎症因子下降',
+    '内皮保护：eNOS/NO↑ 与 ET‑1↓ 协同',
+    '抗纤维化：TGF‑β/Smad 抑制，胶原沉积下降'
+  ];
+  const evidenceList=document.getElementById('evidenceList');
+  evidence.forEach(t=>{const li=document.createElement('li');li.textContent=t;evidenceList.appendChild(li)});
+})();
+</script>
+</body>
+</html>

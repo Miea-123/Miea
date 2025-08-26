@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>润漠德霖®（曲前列尼尔注射液）- 临床应用指南</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+      background: #f8f9fa;
+      line-height: 1.6;
+      color: #333;
+    }
+
+    .hero-section {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      padding: 60px 20px;
+      text-align: center;
+      color: white;
+    }
+
+    .hero-title {
+      font-size: 3em;
+      font-weight: 800;
+      margin-bottom: 10px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .hero-subtitle {
+      font-size: 1.2em;
+      opacity: 0.95;
+      margin-bottom: 20px;
+    }
+
+    .hero-badge {
+      display: inline-block;
+      background: rgba(255,255,255,0.2);
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-weight: 600;
+    }
+
+    .nav-sticky {
+      position: sticky;
+      top: 0;
+      background: white;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      z-index: 1000;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 15px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-brand {
+      font-weight: 800;
+      font-size: 1.2em;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .nav-item {
+      padding: 8px 16px;
+      border-radius: 25px;
+      cursor: pointer;
+      background: #f0f2f5;
+      transition: all 0.3s;
+      font-size: 14px;
+    }
+
+    .nav-item:hover {
+      background: #e8eaf0;
+      transform: translateY(-2px);
+    }
+
+    .nav-item.active {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+    }
+
+    .content-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .section {
+      display: none;
+      animation: fadeIn 0.5s;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .card {
+      background: white;
+      border-radius: 15px;
+      padding: 30px;
+      margin-bottom: 30px;
+      box-shadow: 0 5px 20px rgba(0,0,0,0.08);
+    }
+
+    .card-title {
+      font-size: 1.8em;
+      font-weight: 700;
+      color: #2c3e50;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .guideline-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .guideline-card {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      border-left: 4px solid #667eea;
+      transition: all 0.3s;
+    }
+
+    .guideline-card:hover {
+      transform: translateX(5px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.2);
+    }
+
+    .guideline-year {
+      display: inline-block;
+      background: #667eea;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 8px;
+    }
+
+    .guideline-title {
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+
+    .guideline-source {
+      font-size: 13px;
+      color: #6c757d;
+      margin-bottom: 10px;
+    }
+
+    .guideline-recommendation {
+      background: white;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .recommendation-level {
+      display: inline-block;
+      padding: 4px 10px;
+      border-radius: 15px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-right: 8px;
+    }
+
+    .level-i {
+      background: #d4edda;
+      color: #155724;
+    }
+
+    .level-iia {
+      background: #cce5ff;
+      color: #004085;
+    }
+
+    .level-iib {
+      background: #fff3cd;
+      color: #856404;
+    }
+
+    .mechanism-diagram {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      padding: 30px;
+      border-radius: 15px;
+      margin: 20px 0;
+      text-align: center;
+    }
+
+    .pathway-box {
+      display: inline-block;
+      background: white;
+      padding: 15px 25px;
+      border-radius: 10px;
+      margin: 10px;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+      font-weight: 600;
+    }
+
+    .arrow {
+      display: inline-block;
+      margin: 0 10px;
+      color: #667eea;
+      font-size: 24px;
+    }
+
+    .dosage-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+      overflow-x: auto;
+      display: block;
+    }
+
+    .dosage-table table {
+      width: 100%;
+      min-width: 600px;
+    }
+
+    .dosage-table th {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      padding: 12px;
+      text-align: left;
+    }
+
+    .dosage-table td {
+      padding: 12px;
+      border-bottom: 1px solid #e9ecef;
+    }
+
+    .dosage-table tr:hover {
+      background: #f8f9fa;
+    }
+
+    .calculator-form {
+      background: #f8f9fa;
+      padding: 25px;
+      border-radius: 10px;
+      margin-top: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #495057;
+    }
+
+    .form-input, .form-select {
+      width: 100%;
+      padding: 10px;
+      border: 1px solid #ced4da;
+      border-radius: 8px;
+      font-size: 14px;
+    }
+
+    .calc-button {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+
+    .calc-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+    }
+
+    .calc-result {
+      background: #d4edda;
+      border: 1px solid #c3e6cb;
+      padding: 20px;
+      border-radius: 10px;
+      margin-top: 20px;
+      display: none;
+    }
+
+    .info-box {
+      background: #d1ecf1;
+      border-left: 4px solid #17a2b8;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 5px;
+    }
+
+    .warning-box {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 5px;
+    }
+
+    .success-box {
+      background: #d4edda;
+      border-left: 4px solid #28a745;
+      padding: 15px;
+      margin: 15px 0;
+      border-radius: 5px;
+    }
+
+    .tabs-container {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      border-bottom: 2px solid #e9ecef;
+      flex-wrap: wrap;
+    }
+
+    .tab-button {
+      padding: 10px 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-weight: 600;
+      color: #6c757d;
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .tab-button.active {
+      color: #667eea;
+    }
+
+    .tab-button.active::after {
+      content: '';
+      position: absolute;
+      bottom: -2px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background: #667eea;
+    }
+
+    .tab-content {
+      display: none;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .study-result {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 15px 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .result-title {
+      font-weight: 600;
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+
+    .result-detail {
+      color: #666;
+      line-height: 1.8;
+    }
+
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .stat-card {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: center;
+    }
+
+    .stat-number {
+      font-size: 2.5em;
+      font-weight: 700;
+      margin-bottom: 5px;
+    }
+
+    .stat-label {
+      font-size: 0.9em;
+      opacity: 0.9;
+    }
+
+    .dose-schedule {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+    }
+
+    .dose-week {
+      display: flex;
+      align-items: center;
+      margin: 10px 0;
+      padding: 10px;
+      background: white;
+      border-radius: 8px;
+    }
+
+    .week-label {
+      background: #667eea;
+      color: white;
+      padding: 5px 15px;
+      border-radius: 5px;
+      margin-right: 15px;
+      font-weight: 600;
+      min-width: 80px;
+      text-align: center;
+    }
+
+    .dose-value {
+      font-weight: 600;
+      color: #2c3e50;
+    }
+
+    @media (max-width: 768px) {
+      .hero-title {
+        font-size: 2em;
+      }
+
+      .nav-container {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .guideline-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .stat-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="hero-section">
+    <h1 class="hero-title">润漠德霖®</h1>
+    <p class="hero-subtitle">曲前列尼尔注射液 · 肺动脉高压标准治疗方案</p>
+    <div class="hero-badge">🏥 WHO I类中-高危肺动脉高压初始联合优选方案</div>
+  </section>
+
+  <nav class="nav-sticky">
+    <div class="nav-container">
+      <div class="nav-brand">润漠德霖®</div>
+      <div class="nav-menu" id="nav-menu">
+        <div class="nav-item active" data-section="guidelines">📚 指南推荐</div>
+        <div class="nav-item" data-section="clinical">🔬 临床研究</div>
+        <div class="nav-item" data-section="usage">💊 用法用量</div>
+        <div class="nav-item" data-section="mechanism">🧬 作用机制</div>
+        <div class="nav-item" data-section="safety">⚠️ 安全管理</div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="content-wrapper">
+    <!-- 指南推荐部分 -->
+    <section id="guidelines" class="section active">
+      <div class="card">
+        <h2 class="card-title">📚 国内外权威指南推荐</h2>
+
+        <div class="info-box">
+          <strong>💡 核心推荐：</strong>曲前列尼尔作为前列环素类药物，被多部国内外指南推荐用于中高危肺动脉高压患者的初始联合治疗或序贯治疗。
+        </div>
+
+        <div class="tabs-container">
+          <button class="tab-button active" onclick="showTab('international')">国际指南</button>
+          <button class="tab-button" onclick="showTab('chinese')">中国指南</button>
+          <button class="tab-button" onclick="showTab('special')">专病指南</button>
+        </div>
+
+        <div id="international" class="tab-content active">
+          <div class="guideline-grid">
+            <div class="guideline-card">
+              <span class="guideline-year">2022</span>
+              <div class="guideline-title">ESC/ERS肺动脉高压诊断和治疗指南</div>
+              <div class="guideline-source">欧洲心脏病学会/欧洲呼吸学会</div>
+              <div class="guideline-recommendation">
+                <span class="recommendation-level level-i">I类推荐</span>
+                <p>中高危患者初始联合治疗包含前列环素类药物</p>
+                <p>推荐静脉注射/皮下注射前列环素类似物</p>
+              </div>
+            </div>
+
+            <div class="guideline-card">
+              <span class="guideline-year">2018</span>
+              <div class="guideline-title">ACCP成人肺动脉高压治疗指南</div>
+              <div class="guideline-source">美国胸科医师学会</div>
+              <div class="guideline-recommendation">
+                <span class="recommendation-level level-i">强推荐</span>
+                <p>FC III-IV级患者，曲前列尼尔持续输注改善运动耐量和血流动力学</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="chinese" class="tab-content">
+          <div class="guideline-grid">
+            <div class="guideline-card">
+              <span class="guideline-year">2021</span>
+              <div class="guideline-title">中国肺动脉高压诊断与治疗指南</div>
+              <div class="guideline-source">中华医学会心血管病学分会</div>
+              <div class="guideline-recommendation">
+                <span class="recommendation-level level-i">I类推荐</span>
+                <p>WHO FC III-IV级患者，推荐静脉或皮下持续输注曲前列尼尔</p>
+                <p>高危PAH患者靶向药物联合治疗，方案中应包括静脉前列环素类似物(1A)</p>
+              </div>
+            </div>
+
+            <div class="guideline-card">
+              <span class="guideline-year">2018</span>
+              <div class="guideline-title">中国肺高血压诊断和治疗指南</div>
+              <div class="guideline-source">中华医学会呼吸病学分会</div>
+              <div class="guideline-recommendation">
+                <span class="recommendation-level level-i">I类推荐</span>
+                <p>重症PAH患者的一线治疗选择</p>
+                <p>推荐PAH在病情早期（低危或中危）进行靶向药物联合治疗(1B)</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div id="special" class="tab-content">
+          <div class="guideline-grid">
+            <div class="guideline-card">
+              <span class="guideline-year">2020</span>
+              <div class="guideline-title">结缔组织病相关肺动脉高压专家共识</div>
+              <div class="guideline-source">中华医学会风湿病学分会</div>
+              <div class="guideline-recommendation">
+                <span class="recommendation-level level-iia">IIa类推荐</span>
+                <p>CTD-PAH患者可考虑曲前列尼尔皮下/静脉持续输注</p>
+              </div>
+            </div>
+
+            <div class="guideline-card">
+              <span class="guideline-year">2021</span>
+              <div class="guideline-title">儿童肺高血压诊断与治疗专家共识</div>
+              <div class="guideline-source">中华医学会儿科学分会</div>
+              <div class="guideline-recommendation">
+                <span class="recommendation-level level-iia">IIa类推荐</span>
+                <p>儿童PAH可使用曲前列尼尔，需调整剂量</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 临床研究部分 -->
+    <section id="clinical" class="section">
+      <div class="card">
+        <h2 class="card-title">🔬 临床研究证据</h2>
+
+        <div class="stat-grid">
+          <div class="stat-card">
+            <div class="stat-number">57%</div>
+            <div class="stat-label">9年生存率</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">16m</div>
+            <div class="stat-label">6MWD改善</div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-number">69%</div>
+            <div class="stat-label">PVR降低</div>
+          </div>
+        </div>
+
+        <div class="study-result">
+          <div class="result-title">🎯 RCT研究：皮下注射显著改善运动能力</div>
+          <div class="result-detail">
+            <p>• 研究纳入470名PAH患者，为期12周双盲安慰剂对照试验</p>
+            <p>• <strong>6MWD改善：</strong>曲前列尼尔组改善10m，安慰剂组无变化(0m)，组间差异16m (p=0.006)</p>
+            <p>• <strong>体征和症状综合评分：</strong>试验组从7.6±0.5分改善到8.5±0.5分 (p=0.0001)</p>
+          </div>
+        </div>
+
+        <div class="study-result">
+          <div class="result-title">📈 长期随访：持续皮下注射9年生存率57%</div>
+          <div class="result-detail">
+            <p>• 纳入111名PAH患者(1999年至2010年)</p>
+            <p>• <strong>能够耐受治疗>6个月的患者，9年时的生存率为57%</strong></p>
+            <p>• 停止治疗的患者(<6个月)1年的生存率仅为32%</p>
+          </div>
+        </div>
+
+        <div class="study-result">
+          <div class="result-title">💊 三联治疗：右心逆向重构</div>
+          <div class="result-detail">
+            <p>• 21例新诊断高危特发性PAH患者接受安立生坦、他达拉非和皮下曲前列尼尔三联治疗</p>
+            <p>• <strong>肺血管阻力PVR：</strong>16.4±4.4 WU降至5.5±1.3 WU (-69%, p<0.001)</p>
+            <p>• <strong>心脏指数CI：</strong>1.8±0.3增至3.5±0.8 L/min/m² (+94%, p<0.001)</p>
+            <p>• <strong>所有患者均达到右心逆转重构(RHRR)</strong></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 用法用量部分 -->
+    <section id="usage" class="section">
+      <div class="card">
+        <h2 class="card-title">🧮 剂量计算器</h2>
+
+        <div class="calculator-form">
+          <div class="form-group">
+            <label class="form-label">患者体重 (kg)</label>
+            <input type="number" class="form-input" id="weight" placeholder="请输入体重，如：60">
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">给药途径</label>
+            <select class="form-select" id="route">
+              <option value="sc">皮下输注</option>
+              <option value="iv">静脉输注</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label">治疗阶段</label>
+            <select class="form-select" id="phase">
+              <option value="initial">起始剂量</option>
+              <option value="week2">第2周</option>
+              <option value="week4">第4周</option>
+              <option value="week8">第8周</option>
+              <option value="maintenance">维持剂量</option>
+            </select>
+          </div>
+
+          <button class="calc-button" onclick="calculateDose()">计算剂量</button>
+
+          <div id="calc-result" class="calc-result"></div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">📋 标准给药方案</h2>
+
+        <h3 style="margin-top: 30px; color: #2c3e50;">剂量滴定方案</h3>
+        <div style="overflow-x: auto;">
+          <table class="dosage-table" style="min-width: 100%;">
+            <thead>
+              <tr>
+                <th>阶段</th>
+                <th>皮下输注剂量</th>
+                <th>静脉输注剂量</th>
+                <th>调整说明</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>起始剂量</td>
+                <td>1.25 ng/kg/min</td>
+                <td>1.25 ng/kg/min</td>
+                <td>如不耐受可降至0.625 ng/kg/min</td>
+              </tr>
+              <tr>
+                <td>前4周递增</td>
+                <td>每周增加1.25 ng/kg/min</td>
+                <td>每周增加2.5 ng/kg/min</td>
+                <td>根据耐受性调整</td>
+              </tr>
+              <tr>
+                <td>4周后递增</td>
+                <td>每周增加2.5 ng/kg/min</td>
+                <td>每周增加2.5 ng/kg/min</td>
+                <td>密切监测血压和心率</td>
+              </tr>
+              <tr>
+                <td>维持剂量</td>
+                <td>20-40 ng/kg/min</td>
+                <td>20-40 ng/kg/min</td>
+                <td>个体化调整，部分患者可达80 ng/kg/min</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="dose-schedule">
+          <h4 style="color: #2c3e50; margin-bottom: 15px;">📅 剂量滴定时间表</h4>
+          <div class="dose-week">
+            <span class="week-label">第1周</span>
+            <span class="dose-value">1.25 ng/kg/min（起始剂量）</span>
+          </div>
+          <div class="dose-week">
+            <span class="week-label">第2周</span>
+            <span class="dose-value">2.5 ng/kg/min</span>
+          </div>
+          <div class="dose-week">
+            <span class="week-label">第3周</span>
+            <span class="dose-value">3.75 ng/kg/min</span>
+          </div>
+          <div class="dose-week">
+            <span class="week-label">第4周</span>
+            <span class="dose-value">5.0 ng/kg/min</span>
+          </div>
+          <div class="dose-week">
+            <span class="week-label">第5周起</span>
+            <span class="dose-value">每周增加2.5 ng/kg/min，直至达到目标剂量20-40 ng/kg/min</span>
+          </div>
+        </div>
+
+        <div class="info-box">
+          <strong>💡 使用提示（规格：20ml:20mg/瓶）：</strong>
+          <ul style="margin-left: 20px; margin-top: 10px;">
+            <li>体重60kg的患者达目标剂量20 ng/kg/min需要约64天，约需2.5瓶</li>
+            <li>体重60kg的患者达目标剂量40 ng/kg/min需要约120天，约需9.4瓶</li>
+            <li>一瓶可用时长：40kg患者52天，50kg患者48天，60kg患者43天</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 作用机制部分 -->
+    <section id="mechanism" class="section">
+      <div class="card">
+        <h2 class="card-title">🧬 分子作用机制</h2>
+
+        <div class="mechanism-diagram">
+          <div class="pathway-box">曲前列尼尔</div>
+          <span class="arrow">→</span>
+          <div class="pathway-box">激活IP/EP2/DP1受体</div>
+          <span class="arrow">→</span>
+          <div class="pathway-box">↑cAMP</div>
+          <span class="arrow">→</span>
+          <div class="pathway-box">血管舒张</div>
+        </div>
+
+        <div class="guideline-grid">
+          <div class="guideline-card">
+            <div class="guideline-title">1. 血管舒张作用</div>
+            <p>通过激活IP受体，增加细胞内cAMP浓度，导致肺动脉平滑肌松弛，降低肺血管阻力(PVR)和肺动脉压力。</p>
+          </div>
+
+          <div class="guideline-card">
+            <div class="guideline-title">2. 抗血管重构</div>
+            <p>激活DP1受体，通过PKA依赖的raptor Ser791磷酸化抑制mTORC1的活性，减弱肺动脉重塑。</p>
+          </div>
+
+          <div class="guideline-card">
+            <div class="guideline-title">3. 抗血小板聚集</div>
+            <p>减少血小板活化和聚集，改善肺循环微血栓形成，优化肺血管床的灌注。</p>
+          </div>
+
+          <div class="guideline-card">
+            <div class="guideline-title">4. 独特优势</div>
+            <p>与舒张类受体(IP、EP2、EP4、DP)高亲和，与收缩类受体(EP1、EP3、FP、TP)低亲和。</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- 安全管理部分 -->
+    <section id="safety" class="section">
+      <div class="card">
+        <h2 class="card-title">⚠️ 不良反应管理</h2>
+
+        <table class="dosage-table" style="width: 100%; display: table;">
+          <thead>
+            <tr>
+              <th style="width: 25%;">不良反应</th>
+              <th style="width: 15%;">发生率</th>
+              <th style="width: 60%;">处理措施</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>输注部位疼痛/红肿</strong></td>
+              <td>85%（皮下）</td>
+              <td>• 轮换注射部位<br>• 局部热敷或冷敷<br>• 使用止痛药物</td>
+            </tr>
+            <tr>
+              <td><strong>头痛</strong></td>
+              <td>42%</td>
+              <td>• 对症使用止痛药<br>• 通常1-2周后缓解<br>• 必要时减慢剂量递增速度</td>
+            </tr>
+            <tr>
+              <td><strong>腹泻</strong></td>
+              <td>37%</td>
+              <td>• 对症止泻治疗<br>• 补充电解质<br>• 调整饮食结构</td>
+            </tr>
+            <tr>
+              <td><strong>颌痛</strong></td>
+              <td>25%</td>
+              <td>• 首次进食时发生<br>• 通常自限性<br>• 可使用止痛药</td>
+            </tr>
+            <tr>
+              <td><strong>潮红</strong></td>
+              <td>23%</td>
+              <td>• 通常为一过性<br>• 无需特殊处理<br>• 避免热刺激</td>
+            </tr>
+            <tr>
+              <td><strong>恶心</strong></td>
+              <td>19%</td>
+              <td>• 餐后给药<br>• 必要时使用止吐药<br>• 少量多餐</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div class="info-box" style="margin-top: 20px;">
+          <strong>💡 管理要点：</strong>
+          <ul style="margin-top: 10px; padding-left: 20px;">
+            <li>大多数不良反应为轻至中度，可通过对症处理缓解</li>
+            <li>不良反应通常在治疗初期出现，随时间推移可能减轻</li>
+            <li>严重不良反应少见，但需密切监测</li>
+            <li>建立患者教育和随访体系，提高依从性</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">⚠️ 注意事项与禁忌</h2>
+
+        <div class="guideline-grid">
+          <div class="guideline-card">
+            <div class="guideline-title">绝对禁忌症</div>
+            <div class="guideline-recommendation">
+              <ul style="padding-left: 20px;">
+                <li>对曲前列尼尔或任何辅料过敏</li>
+                <li>肺静脉闭塞病（PVOD）</li>
+                <li>严重左心功能不全（LVEF<40%）</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="guideline-card">
+            <div class="guideline-title">相对禁忌症</div>
+            <div class="guideline-recommendation">
+              <ul style="padding-left: 20px;">
+                <li>活动性消化道溃疡</li>
+                <li>严重肝功能不全（Child-Pugh C级）</li>
+                <li>血小板<50,000/μL</li>
+                <li>未控制的系统性低血压</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="guideline-card">
+            <div class="guideline-title">药物相互作用</div>
+            <div class="guideline-recommendation">
+              <ul style="padding-left: 20px;">
+                <li><strong>抗凝药物：</strong>增加出血风险，需监测INR</li>
+                <li><strong>降压药物：</strong>可能增强降压效果</li>
+                <li><strong>CYP2C8抑制剂：</strong>可能增加血药浓度</li>
+                <li><strong>血管扩张剂：</strong>联用需谨慎，监测血压</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="guideline-card">
+            <div class="guideline-title">特殊人群</div>
+            <div class="guideline-recommendation">
+              <ul style="padding-left: 20px;">
+                <li><strong>妊娠期：</strong>FDA分类B类，权衡利弊后使用</li>
+                <li><strong>儿童：</strong>需调整剂量，密切监测</li>
+                <li><strong>老年人：</strong>起始剂量可降低25-50%</li>
+                <li><strong>肝肾功能不全：</strong>需调整剂量</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">📋 监测与随访</h2>
+
+        <table class="dosage-table" style="width: 100%; display: table;">
+          <thead>
+            <tr>
+              <th style="width: 25%;">时间点</th>
+              <th style="width: 35%;">监测项目</th>
+              <th style="width: 40%;">评估重点</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>基线（治疗前）</strong></td>
+              <td>• 6MWD<br>• WHO FC<br>• 超声心动图<br>• NT-proBNP/BNP<br>• 肝肾功能<br>• 血常规</td>
+              <td>确定疾病严重程度和危险分层</td>
+            </tr>
+            <tr>
+              <td><strong>第1-2周</strong></td>
+              <td>• 生命体征<br>• 症状评估<br>• 不良反应<br>• 输注部位检查</td>
+              <td>早期耐受性评估</td>
+            </tr>
+            <tr>
+              <td><strong>第1个月</strong></td>
+              <td>• 症状改善<br>• 不良反应管理<br>• 剂量调整<br>• 血压监测</td>
+              <td>剂量优化</td>
+            </tr>
+            <tr>
+              <td><strong>第3个月</strong></td>
+              <td>• 6MWD<br>• WHO FC<br>• NT-proBNP<br>• 肝功能<br>• 血常规</td>
+              <td>初步疗效评估</td>
+            </tr>
+            <tr>
+              <td><strong>第6个月</strong></td>
+              <td>• 完整评估<br>• 超声心动图<br>• 考虑复查RHC<br>• 生活质量评分</td>
+              <td>综合疗效评估，是否达标</td>
+            </tr>
+            <tr>
+              <td><strong>此后每3-6个月</strong></td>
+              <td>• 常规临床评估<br>• 实验室检查<br>• 年度超声心动图<br>• 必要时RHC</td>
+              <td>长期管理和预后评估</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <h2 class="card-title">📋 总结</h2>
+
+        <div class="success-box">
+          <strong>✅ 润漠德霖®（曲前列尼尔注射液）临床应用优势：</strong>
+          <ul style="margin-top: 10px; padding-left: 20px;">
+            <li>肺动脉高压患病率高，指南推荐前列环素类等靶向药物早期/联合使用</li>
+            <li>曲前列尼尔与舒张类受体高亲和，抑制细胞增殖和促进肺动脉重塑</li>
+            <li>持续皮下注射显著改善患者运动能力与症状，9年生存率达57%</li>
+            <li>三联治疗肺动脉高压降低风险及右心逆向重构</li>
+            <li>皮下曲前列尼尔快速滴定耐受性良好，改善预后，且安全有效</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // 导航切换功能
+    document.getElementById('nav-menu').addEventListener('click', function(e) {
+      if (e.target.classList.contains('nav-item')) {
+        document.querySelectorAll('.nav-item').forEach(item => {
+          item.classList.remove('active');
+        });
+        document.querySelectorAll('.section').forEach(section => {
+          section.classList.remove('active');
+        });
+
+        e.target.classList.add('active');
+        const sectionId = e.target.getAttribute('data-section');
+        document.getElementById(sectionId).classList.add('active');
+      }
+    });
+
+    // 标签切换功能
+    function showTab(tabName) {
+      // 隐藏所有标签内容
+      document.querySelectorAll('.tab-content').forEach(content => {
+        content.classList.remove('active');
+      });
+
+      // 移除所有标签按钮的active类
+      document.querySelectorAll('.tab-button').forEach(button => {
+        button.classList.remove('active');
+      });
+
+      // 显示选中的标签内容
+      document.getElementById(tabName).classList.add('active');
+
+      // 设置点击的按钮为active
+      event.target.classList.add('active');
+    }
+
+    // 剂量计算功能
+    function calculateDose() {
+      const weight = parseFloat(document.getElementById('weight').value);
+      const route = document.getElementById('route').value;
+      const phase = document.getElementById('phase').value;
+
+      if (!weight || weight <= 0) {
+        alert('请输入有效的体重');
+        return;
+      }
+
+      let rate = 0;
+      let description = '';
+
+      // 根据给药途径和阶段确定剂量
+      if (route === 'sc') {
+        switch(phase) {
+          case 'initial':
+            rate = 1.25;
+            description = '皮下输注起始剂量';
+            break;
+          case 'week2':
+            rate = 2.5;
+            description = '皮下输注第2周剂量';
+            break;
+          case 'week4':
+            rate = 5.0;
+            description = '皮下输注第4周剂量';
+            break;
+          case 'week8':
+            rate = 10.0;
+            description = '皮下输注第8周剂量';
+            break;
+          case 'maintenance':
+            rate = 30;
+            description = '皮下输注维持剂量（平均值）';
+            break;
+        }
+      } else {
+        switch(phase) {
+          case 'initial':
+            rate = 1.25;
+            description = '静脉输注起始剂量';
+            break;
+          case 'week2':
+            rate = 3.75;
+            description = '静脉输注第2周剂量';
+            break;
+          case 'week4':
+            rate = 8.75;
+            description = '静脉输注第4周剂量';
+            break;
+          case 'week8':
+            rate = 18.75;
+            description = '静脉输注第8周剂量';
+            break;
+          case 'maintenance':
+            rate = 30;
+            description = '静脉输注维持剂量（平均值）';
+            break;
+        }
+      }
+
+      // 计算实际剂量
+      const dosePerMin = (weight * rate).toFixed(2);
+      const dosePerHour = (weight * rate * 60).toFixed(2);
+      const dosePerDay = (weight * rate * 60 * 24 / 1000).toFixed(2); // 转换为μg
+
+      // 显示结果
+      const resultDiv = document.getElementById('calc-result');
+      resultDiv.style.display = 'block';
+      resultDiv.innerHTML = `
+        <h3 style="color: #28a745; margin-bottom: 15px;">💊 计算结果</h3>
+        <p><strong>体重：</strong>${weight} kg</p>
+        <p><strong>方案：</strong>${description}</p>
+        <p><strong>推荐剂量率：</strong>${rate} ng/kg/min</p>
+        <hr style="margin: 15px 0; border: none; border-top: 1px solid #dee2e6;">
+        <p><strong>实际剂量：</strong></p>
+        <ul style="margin-top: 10px; padding-left: 20px;">
+          <li>每分钟：${dosePerMin} ng</li>
+          <li>每小时：${dosePerHour} ng</li>
+          <li>每天：${dosePerDay} μg</li>
+        </ul>
+        <div style="margin-top: 15px; padding: 10px; background: #fff3cd; border-radius: 5px;">
+          <small>💡 提示：实际剂量需根据患者耐受性和临床反应进行个体化调整</small>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,1240 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>卡谷氨酸分散片 - 高氨血症特效治疗药物</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", Arial, sans-serif;
+    background: linear-gradient(135deg, #00a8cc 0%, #0077be 100%);
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.main-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background: white;
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+    overflow: hidden;
+}
+
+/* 头部区域 */
+.header-section {
+    background: linear-gradient(135deg, #00a8cc, #0077be);
+    color: white;
+    padding: 40px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.header-section::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+    animation: pulse 4s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 0.5; }
+    50% { transform: scale(1.1); opacity: 0.3; }
+}
+
+.product-name {
+    font-size: 42px;
+    font-weight: 900;
+    margin-bottom: 16px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    position: relative;
+    z-index: 1;
+}
+
+.product-subtitle {
+    font-size: 20px;
+    font-weight: 300;
+    opacity: 0.95;
+    margin-bottom: 24px;
+    position: relative;
+    z-index: 1;
+}
+
+.approval-badges {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    position: relative;
+    z-index: 1;
+}
+
+.badge {
+    background: rgba(255,255,255,0.2);
+    padding: 8px 16px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.3);
+}
+
+/* 核心价值区 */
+.key-values {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 0;
+    background: #f8f9fa;
+}
+
+.value-card {
+    padding: 30px;
+    text-align: center;
+    border-right: 1px solid #e9ecef;
+    border-bottom: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.value-card:hover {
+    background: white;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    z-index: 10;
+}
+
+.value-icon {
+    font-size: 48px;
+    margin-bottom: 16px;
+    display: block;
+    filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
+}
+
+.value-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #2c3e50;
+    margin-bottom: 12px;
+}
+
+.value-desc {
+    font-size: 14px;
+    color: #6c757d;
+    line-height: 1.6;
+}
+
+.highlight {
+    color: #00a8cc;
+    font-weight: 700;
+}
+
+/* 剂量计算器样式 */
+.calculator-section {
+    background: linear-gradient(135deg, #f3e5f5, #e8eaf6);
+    padding: 40px;
+}
+
+.calculator-container {
+    background: white;
+    border-radius: 16px;
+    padding: 30px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.calculator-title {
+    font-size: 28px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 8px;
+    color: #2c3e50;
+}
+
+.calculator-subtitle {
+    text-align: center;
+    color: #6c757d;
+    margin-bottom: 30px;
+}
+
+.calc-section {
+    background: #f8f9fa;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+}
+
+.calc-section-title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.calc-form-group {
+    margin-bottom: 20px;
+}
+
+.calc-form-group label {
+    display: block;
+    font-weight: 600;
+    color: #495057;
+    margin-bottom: 8px;
+}
+
+.calc-form-control {
+    width: 100%;
+    padding: 12px 16px;
+    border: 2px solid #e9ecef;
+    border-radius: 8px;
+    font-size: 16px;
+    transition: border-color 0.3s;
+}
+
+.calc-form-control:focus {
+    outline: none;
+    border-color: #00a8cc;
+}
+
+.calc-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.calc-button {
+    background: linear-gradient(135deg, #00a8cc, #0077be);
+    color: white;
+    border: none;
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: transform 0.2s;
+    width: 100%;
+}
+
+.calc-button:hover {
+    transform: translateY(-2px);
+}
+
+.calc-results {
+    background: linear-gradient(135deg, #e8f5e8, #e3f2fd);
+    border-radius: 12px;
+    padding: 24px;
+    margin-top: 24px;
+}
+
+.calc-result-item {
+    background: white;
+    padding: 16px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+    border-left: 4px solid #00a8cc;
+}
+
+.calc-result-label {
+    font-weight: 600;
+    color: #495057;
+    font-size: 14px;
+    margin-bottom: 4px;
+}
+
+.calc-result-value {
+    font-size: 18px;
+    font-weight: 700;
+    color: #2c3e50;
+}
+
+.calc-warning {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 20px;
+    color: #856404;
+}
+
+.calc-warning-title {
+    font-weight: 700;
+    margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.kidney-alert {
+    background: #f8d7da;
+    border: 1px solid #f5c6cb;
+    color: #721c24;
+}
+
+.dose-highlight {
+    background: #ffeaa7;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+/* 适应症卡片 */
+.indications-section {
+    padding: 40px;
+    background: white;
+}
+
+.section-title {
+    font-size: 32px;
+    font-weight: 800;
+    text-align: center;
+    margin-bottom: 40px;
+    color: #2c3e50;
+    position: relative;
+}
+
+.section-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(90deg, #00a8cc, #0077be);
+    border-radius: 2px;
+}
+
+.indications-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+}
+
+.indication-card {
+    background: linear-gradient(135deg, #f8f9fa, #ffffff);
+    border-radius: 16px;
+    padding: 24px;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.indication-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 6px;
+    background: linear-gradient(90deg, #00a8cc, #0077be);
+}
+
+.indication-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 168, 204, 0.15);
+    border-color: #00a8cc;
+}
+
+.indication-header {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 16px;
+}
+
+.indication-icon {
+    width: 56px;
+    height: 56px;
+    background: linear-gradient(135deg, #00a8cc, #0077be);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    color: white;
+    flex-shrink: 0;
+}
+
+.indication-info {
+    flex: 1;
+}
+
+.indication-name {
+    font-size: 20px;
+    font-weight: 800;
+    color: #2c3e50;
+    margin-bottom: 4px;
+}
+
+.indication-desc {
+    font-size: 13px;
+    color: #6c757d;
+}
+
+.indication-details {
+    background: white;
+    padding: 16px;
+    border-radius: 12px;
+    margin-top: 16px;
+}
+
+.detail-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 12px;
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+.detail-item:last-child {
+    margin-bottom: 0;
+}
+
+.detail-label {
+    font-weight: 700;
+    color: #495057;
+    min-width: 80px;
+}
+
+.detail-value {
+    color: #6c757d;
+    flex: 1;
+}
+
+/* 剂量方案区 */
+.dosage-section {
+    background: linear-gradient(135deg, #f3e5f5, #e8eaf6);
+    padding: 40px;
+}
+
+.dosage-table {
+    width: 100%;
+    background: white;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.dosage-table thead {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    color: white;
+}
+
+.dosage-table th {
+    padding: 16px;
+    text-align: left;
+    font-weight: 700;
+    font-size: 15px;
+    border-bottom: 2px solid rgba(255,255,255,0.1);
+}
+
+.dosage-table td {
+    padding: 16px;
+    border-bottom: 1px solid #e9ecef;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+.dosage-table tbody tr:hover {
+    background: #f8f9fa;
+}
+
+.dosage-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* 临床证据区 */
+.evidence-section {
+    padding: 40px;
+    background: white;
+}
+
+.evidence-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+    gap: 24px;
+}
+
+.evidence-card {
+    background: linear-gradient(135deg, #ffffff, #f8f9fa);
+    border-radius: 16px;
+    padding: 28px;
+    border: 1px solid #e9ecef;
+    transition: all 0.3s ease;
+}
+
+.evidence-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0,0,0,0.1);
+}
+
+.evidence-title {
+    font-size: 18px;
+    font-weight: 800;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    padding-bottom: 12px;
+    border-bottom: 2px solid #667eea;
+}
+
+.evidence-item {
+    margin-bottom: 16px;
+    padding-left: 24px;
+    position: relative;
+}
+
+.evidence-item::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 2px;
+    color: #27ae60;
+    font-weight: 800;
+    font-size: 16px;
+}
+
+.evidence-text {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #495057;
+}
+
+.evidence-number {
+    font-size: 20px;
+    font-weight: 800;
+    color: #667eea;
+    margin: 0 4px;
+}
+
+/* 安全性信息 */
+.safety-section {
+    background: linear-gradient(135deg, #e8f5e9, #e3f2fd);
+    padding: 40px;
+}
+
+.safety-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+}
+
+.safety-card {
+    background: white;
+    padding: 28px;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+}
+
+.safety-title {
+    font-size: 20px;
+    font-weight: 800;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.safety-list {
+    list-style: none;
+}
+
+.safety-list li {
+    padding: 12px 0;
+    border-bottom: 1px solid #e9ecef;
+    font-size: 14px;
+    color: #495057;
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.safety-list li:last-child {
+    border-bottom: none;
+}
+
+.safety-icon {
+    color: #27ae60;
+    font-size: 18px;
+    flex-shrink: 0;
+}
+
+/* CTA区域 */
+.cta-section {
+    background: linear-gradient(135deg, #667eea, #764ba2);
+    padding: 48px;
+    text-align: center;
+    color: white;
+}
+
+.cta-title {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 16px;
+}
+
+.cta-subtitle {
+    font-size: 18px;
+    margin-bottom: 32px;
+    opacity: 0.95;
+}
+
+.cta-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.cta-button {
+    background: white;
+    color: #667eea;
+    padding: 14px 32px;
+    border-radius: 28px;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    display: inline-block;
+}
+
+.cta-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+}
+
+.cta-button.secondary {
+    background: transparent;
+    color: white;
+    border: 2px solid white;
+}
+
+/* 底部信息 */
+.footer-info {
+    background: #2c3e50;
+    color: white;
+    padding: 32px;
+    text-align: center;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.footer-info .company {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 8px;
+}
+
+/* 响应式设计 */
+@media (max-width: 768px) {
+    .product-name { font-size: 32px; }
+    .indications-grid { grid-template-columns: 1fr; }
+    .evidence-grid { grid-template-columns: 1fr; }
+    .safety-grid { grid-template-columns: 1fr; }
+    .dosage-table { font-size: 12px; }
+    .dosage-table th, .dosage-table td { padding: 12px 8px; }
+    .calc-form-row { grid-template-columns: 1fr; }
+}
+
+/* 特殊标记样式 */
+.tag {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 12px;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+    margin-left: 8px;
+}
+
+.tag-new { background: #e74c3c; }
+.tag-unique { background: #f39c12; }
+.tag-fast { background: #27ae60; }
+
+.hidden {
+    display: none;
+}
+</style>
+</head>
+<body>
+
+<div class="main-container">
+    <!-- 头部区域 -->
+    <div class="header-section">
+        <h1 class="product-name">卡谷氨酸分散片（安维得®）</h1>
+        <p class="product-subtitle">全球首个特异性CPS-1激活剂 · 4种罕见病高氨血症特效治疗</p>
+        <div class="approval-badges">
+            <span class="badge">🏅 国家5.1类新药</span>
+            <span class="badge">🌍 全球54国上市</span>
+            <span class="badge">⏰ 超20年临床验证</span>
+            <span class="badge">🛡️ FDA/EMA孤儿药认定</span>
+        </div>
+    </div>
+
+    <!-- 核心价值 -->
+    <div class="key-values">
+        <div class="value-card">
+            <span class="value-icon">⚡</span>
+            <div class="value-title">快速降氨</div>
+            <div class="value-desc">平均<span class="highlight">1-2天</span>血氨恢复正常<br>避免氨毒性脑病</div>
+        </div>
+        <div class="value-card">
+            <span class="value-icon">🎯</span>
+            <div class="value-title">特异性机制</div>
+            <div class="value-desc">全球<span class="highlight">唯一</span>CPS-1特异性激活剂<br>重建尿素循环</div>
+        </div>
+        <div class="value-card">
+            <span class="value-icon">🏥</span>
+            <div class="value-title">减少医疗负担</div>
+            <div class="value-desc">急诊就诊减少<span class="highlight">51%</span><br>避免血液透析</div>
+        </div>
+        <div class="value-card">
+            <span class="value-icon">👶</span>
+            <div class="value-title">全年龄适用</div>
+            <div class="value-desc">新生儿即可使用<br><span class="highlight">分散片</span>设计便于给药</div>
+        </div>
+    </div>
+
+    <!-- 剂量计算器 -->
+    <div class="calculator-section">
+        <div class="calculator-container">
+            <h2 class="calculator-title">💊 用药剂量计算器</h2>
+            <p class="calculator-subtitle">专业剂量计算工具 - 请在医师指导下使用</p>
+            
+            <div class="calc-section">
+                <h3 class="calc-section-title">
+                    <span>👤</span>
+                    患者信息
+                </h3>
+                
+                <div class="calc-form-row">
+                    <div class="calc-form-group">
+                        <label for="weight">体重 (kg)</label>
+                        <input type="number" id="weight" class="calc-form-control" placeholder="请输入体重" min="0.5" max="200" step="0.1">
+                    </div>
+                    <div class="calc-form-group">
+                        <label for="bsa">体表面积 (m²) - 可选</label>
+                        <input type="number" id="bsa" class="calc-form-control" placeholder="自动计算或手动输入" min="0.1" max="5" step="0.01">
+                    </div>
+                </div>
+
+                <div class="calc-form-group">
+                    <label for="indication">适应症</label>
+                    <select id="indication" class="calc-form-control">
+                        <option value="">请选择适应症</option>
+                        <option value="nagsd-acute">NAGSD - 急性期</option>
+                        <option value="organic-acute">MMA/PA/IVA - 急性期</option>
+                        <option value="maintenance">维持期</option>
+                    </select>
+                </div>
+
+                <div class="calc-form-group">
+                    <label for="kidney-function">肾功能状态</label>
+                    <select id="kidney-function" class="calc-form-control">
+                        <option value="normal">正常</option>
+                        <option value="moderate">中度损害 (eGFR 30-59)</option>
+                        <option value="severe">重度损害 (eGFR ≤29)</option>
+                    </select>
+                </div>
+
+                <button onclick="calculateDose()" class="calc-button">
+                    💊 计算剂量
+                </button>
+            </div>
+
+            <div id="calc-results" class="calc-results hidden">
+                <h3 class="calc-section-title">
+                    <span>📋</span>
+                    计算结果
+                </h3>
+                
+                <div id="dose-results"></div>
+                
+                <div class="calc-warning">
+                    <div class="calc-warning-title">
+                        <span>⚠️</span>
+                        重要提醒
+                    </div>
+                    <p>• 本计算器仅供参考，实际用药请遵医嘱<br>
+                       • 需要定期监测血氨水平和血氨基酸水平<br>
+                       • 建议对肝脏、肾脏、心脏功能和血液学参数进行系统监测<br>
+                       • 片剂需用5-10mL水分散后立即服用</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 适应症详情 -->
+    <div class="indications-section">
+        <h2 class="section-title">批准适应症</h2>
+        <div class="indications-grid">
+            <div class="indication-card">
+                <div class="indication-header">
+                    <div class="indication-icon">🧬</div>
+                    <div class="indication-info">
+                        <div class="indication-name">NAGSD <span class="tag tag-unique">唯一特效</span></div>
+                        <div class="indication-desc">N-乙酰谷氨酸合成酶缺乏症</div>
+                    </div>
+                </div>
+                <div class="indication-details">
+                    <div class="detail-item">
+                        <span class="detail-label">发病率：</span>
+                        <span class="detail-value">极罕见，全球仅少数病例</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">治疗特点：</span>
+                        <span class="detail-value">需终生服用，是唯一可用的特效治疗</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">临床获益：</span>
+                        <span class="detail-value">挽救生命，维持正常生长发育</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="indication-card">
+                <div class="indication-header">
+                    <div class="indication-icon">🔬</div>
+                    <div class="indication-info">
+                        <div class="indication-name">MMA <span class="tag tag-new">中国新适应症</span></div>
+                        <div class="indication-desc">甲基丙二酸血症</div>
+                    </div>
+                </div>
+                <div class="indication-details">
+                    <div class="detail-item">
+                        <span class="detail-label">发病率：</span>
+                        <span class="detail-value">1/15,000，预估中国593名患者</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">高氨发生：</span>
+                        <span class="detail-value">42.7%患者发生高氨血症</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">临床获益：</span>
+                        <span class="detail-value">快速控制高氨危象，减少神经损伤</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="indication-card">
+                <div class="indication-header">
+                    <div class="indication-icon">⚗️</div>
+                    <div class="indication-info">
+                        <div class="indication-name">PA <span class="tag tag-fast">急救用药</span></div>
+                        <div class="indication-desc">丙酸血症</div>
+                    </div>
+                </div>
+                <div class="indication-details">
+                    <div class="detail-item">
+                        <span class="detail-label">发病率：</span>
+                        <span class="detail-value">1/190,000，预估中国46名患者</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">起病特点：</span>
+                        <span class="detail-value">多数1个月内起病，急性发作</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">临床获益：</span>
+                        <span class="detail-value">急性期快速降氨，缩短住院时间</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="indication-card">
+                <div class="indication-header">
+                    <div class="indication-icon">🧪</div>
+                    <div class="indication-info">
+                        <div class="indication-name">IVA</div>
+                        <div class="indication-desc">异戊酸血症</div>
+                    </div>
+                </div>
+                <div class="indication-details">
+                    <div class="detail-item">
+                        <span class="detail-label">发病率：</span>
+                        <span class="detail-value">1/190,000，预估中国46名患者</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">临床特点：</span>
+                        <span class="detail-value">超半数新生儿期发生急性脑病</span>
+                    </div>
+                    <div class="detail-item">
+                        <span class="detail-label">临床获益：</span>
+                        <span class="detail-value">预防脑损伤和智力发育落后</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 剂量方案 -->
+    <div class="dosage-section">
+        <h2 class="section-title">推荐剂量方案</h2>
+        <table class="dosage-table">
+            <thead>
+                <tr>
+                    <th>治疗情形</th>
+                    <th>推荐剂量</th>
+                    <th>给药频次</th>
+                    <th>治疗要点</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>NAGSD急性期</strong></td>
+                    <td><span class="dose-highlight">100-250 mg/kg/天</span></td>
+                    <td>分2-4次服用</td>
+                    <td>起始剂量可用至高限，快速控制血氨</td>
+                </tr>
+                <tr>
+                    <td><strong>MMA/PA/IVA急性期<br>(体重≤15kg)</strong></td>
+                    <td><span class="dose-highlight">150 mg/kg/天</span></td>
+                    <td>分2次服用<br>(间隔12小时)</td>
+                    <td>高氨危象期用药，血氨正常可维持稳定剂量用药</td>
+                </tr>
+                <tr>
+                    <td><strong>MMA/PA/IVA急性期<br>(体重>15kg)</strong></td>
+                    <td><span class="dose-highlight">3.3 g/m²/天</span></td>
+                    <td>分2次服用<br>(间隔12小时)</td>
+                    <td>按体表面积计算，连用7天，之后可按维持期稳定用药</td>
+                </tr>
+                <tr>
+                    <td><strong>维持期</strong></td>
+                    <td><span class="dose-highlight">10-100 mg/kg/天</span></td>
+                    <td>分2-4次服用</td>
+                    <td>终生用药，根据血氨水平个体化调整</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- 临床证据 -->
+    <div class="evidence-section">
+        <h2 class="section-title">循证医学证据</h2>
+        <div class="evidence-grid">
+            <div class="evidence-card">
+                <h3 class="evidence-title">🔬 中国真实世界研究</h3>
+                <div class="evidence-item">
+                    <div class="evidence-text">22例MMA/PA/IVA患儿使用卡谷氨酸治疗</div>
+                </div>
+                <div class="evidence-item">
+                    <div class="evidence-text">血氨平均降低时间：<span class="evidence-number">28.9</span>小时</div>
+                </div>
+                <div class="evidence-item">
+                    <div class="evidence-text">急性代谢危象发生率显著降低</div>
+                </div>
+                <div class="evidence-item">
+                    <div class="evidence-text">生存质量明显提升，病情不同程度好转</div>
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <h3 class="evidence-title">🌍 国际多中心研究</h3>
+                <div class="evidence-item">
+                    <div class="evidence-text">NAGSD患者血氨<span class="evidence-number">1-3天</span>降至正常</div>
+                </div>
+                <div class="evidence-item">
+                    <div class="evidence-text">MMA/PA患者达到正常血氨中位时间<span class="evidence-number">1.5天</span></div>
+                </div>
+                <div class="evidence-item">
+                    <div class="evidence-text">急诊就诊减少<span class="evidence-number">51%</span></div>
+                </div>
+                <div class="evidence-item">
+                    <div class="evidence-text">长期治疗安全性良好，耐受性佳</div>
+                </div>
+            </div>
+
+            <div class="evidence-card">
+                <h3 class="evidence-title">📊 对比传统治疗优势</h3>
+                <div class="evidence-item">
+                    <div class="evidence-text">降氨速度比单用氮清除剂快<span class="evidence-number">48-72</span>小时</div>
+                </div>
+                <div class="evidence-item">
+                    <div class="evidence-text">避免血液透析，减少有创操作</div>
+                </div>
+                <div class="evidence-item">
+                    <div class="evidence-text">缩短ICU和总住院时间</div>
+                </div>
+                <div class="evidence-item">
+                    <div class="evidence-text">降低医疗成本，改善预后</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 安全性信息 -->
+    <div class="safety-section">
+        <h2 class="section-title">安全性概况</h2>
+        <div class="safety-grid">
+            <div class="safety-card">
+                <h3 class="safety-title">
+                    <span>✅</span>
+                    <span>良好的安全性记录</span>
+                </h3>
+                <ul class="safety-list">
+                    <li>
+                        <span class="safety-icon">✓</span>
+                        <span>全球54个国家上市，超20年临床使用经验</span>
+                    </li>
+                    <li>
+                        <span class="safety-icon">✓</span>
+                        <span>FDA和EMA孤儿药资格认定</span>
+                    </li>
+                    <li>
+                        <span class="safety-icon">✓</span>
+                        <span>新生儿即可安全使用</span>
+                    </li>
+                    <li>
+                        <span class="safety-icon">✓</span>
+                        <span>长期治疗耐受性良好</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="safety-card">
+                <h3 class="safety-title">
+                    <span>📋</span>
+                    <span>主要不良反应</span>
+                </h3>
+                <ul class="safety-list">
+                    <li>
+                        <span class="safety-icon">•</span>
+                        <span>常见：呕吐(26%)、腹痛(17%)、发热(17%)</span>
+                    </li>
+                    <li>
+                        <span class="safety-icon">•</span>
+                        <span>多数不良反应与基础疾病相关</span>
+                    </li>
+                    <li>
+                        <span class="safety-icon">•</span>
+                        <span>未见严重药物相关不良事件</span>
+                    </li>
+                    <li>
+                        <span class="safety-icon">•</span>
+                        <span>肾功能损害患者需调整剂量</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- CTA区域 -->
+    <div class="cta-section">
+        <h2 class="cta-title">卡谷氨酸分散片 - 填补罕见病治疗空白</h2>
+        <p class="cta-subtitle">为中国超过700名罕见病患者带来希望</p>
+        <div class="cta-buttons">
+            <a href="#" class="cta-button">了解处方信息</a>
+            <a href="#" class="cta-button secondary">申请学术资料</a>
+        </div>
+    </div>
+
+    <!-- 底部信息 -->
+    <div class="footer-info">
+        <div class="company">远大医药（中国）有限公司</div>
+        <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid rgba(255,255,255,0.2);">
+            <small>本资料仅供医疗卫生专业人士参考，请在医师或药师指导下使用</small>
+        </div>
+    </div>
+</div>
+
+<script>
+// 体重变化时自动计算体表面积
+document.getElementById('weight').addEventListener('input', function() {
+    const weight = parseFloat(this.value);
+    if (weight > 0) {
+        // 使用Mosteller公式估算体表面积（假设平均身高）
+        let height;
+        if (weight < 3) height = 50; // 新生儿
+        else if (weight < 10) height = 75; // 婴儿
+        else if (weight < 20) height = 100; // 幼儿
+        else if (weight < 50) height = 140; // 儿童
+        else height = 170; // 成人
+        
+        const bsa = Math.sqrt((height * weight) / 3600);
+        document.getElementById('bsa').value = bsa.toFixed(2);
+    }
+});
+
+function calculateDose() {
+    const weight = parseFloat(document.getElementById('weight').value);
+    const bsa = parseFloat(document.getElementById('bsa').value);
+    const indication = document.getElementById('indication').value;
+    const kidneyFunction = document.getElementById('kidney-function').value;
+
+    if (!weight || !indication) {
+        alert('请填写完整的患者信息');
+        return;
+    }
+
+    let doseInfo = calculateDoseByIndication(weight, bsa, indication, kidneyFunction);
+    displayResults(doseInfo, weight, kidneyFunction);
+}
+
+function calculateDoseByIndication(weight, bsa, indication, kidneyFunction) {
+    let baseMin, baseMax, frequency, notes;
+    let useBsa = false;
+
+    switch(indication) {
+        case 'nagsd-acute':
+            baseMin = 100; baseMax = 250;
+            frequency = '分2-4次给药';
+            notes = '起始剂量，必要时可增加至最高限，快速控制血氨';
+            break;
+        case 'maintenance':
+            baseMin = 10; baseMax = 100;
+            frequency = '分2-4次给药';
+            notes = '终生用药，根据血氨水平个体化调整';
+            break;
+        case 'organic-acute':
+            if (weight <= 15) {
+                baseMin = baseMax = 150;
+                frequency = '分2次给药，间隔12小时';
+                notes = '高氨危象期用药，血氨正常后按维持期稳定用药';
+            } else {
+                baseMin = baseMax = 3.3;
+                useBsa = true;
+                frequency = '分2次给药，间隔12小时';
+                notes = '按体表面积计算，最多连用7天';
+            }
+            break;
+        default:
+            return null;
+    }
+
+    // 肾功能调整
+    if (kidneyFunction !== 'normal') {
+        const adjustment = getKidneyAdjustment(indication, kidneyFunction, weight);
+        if (adjustment) {
+            baseMin = adjustment.min;
+            baseMax = adjustment.max;
+            notes += '（已按肾功能调整）';
+        }
+    }
+
+    return {
+        baseMin, baseMax, frequency, notes, useBsa,
+        weight, bsa, indication, kidneyFunction
+    };
+}
+
+function getKidneyAdjustment(indication, kidneyFunction, weight) {
+    const adjustments = {
+        'nagsd-acute': {
+            'moderate': { min: 50, max: 125 },
+            'severe': { min: 15, max: 60 }
+        },
+        'maintenance': {
+            'moderate': { min: 5, max: 50 },
+            'severe': { min: 2, max: 25 }
+        },
+        'organic-acute': {
+            'moderate': weight <= 15 ? { min: 75, max: 75 } : { min: 1.7, max: 1.7 },
+            'severe': weight <= 15 ? { min: 25, max: 25 } : { min: 0.55, max: 0.55 }
+        }
+    };
+
+    return adjustments[indication]?.[kidneyFunction];
+}
+
+function displayResults(doseInfo, weight, kidneyFunction) {
+    if (!doseInfo) return;
+
+    const resultsDiv = document.getElementById('calc-results');
+    const doseResultsDiv = document.getElementById('dose-results');
+
+    let dailyMin, dailyMax, singleMin, singleMax;
+
+    if (doseInfo.useBsa && doseInfo.bsa) {
+        dailyMin = dailyMax = doseInfo.baseMin * doseInfo.bsa * 1000; // 转换为mg
+        singleMin = singleMax = dailyMin / 2; // 分2次
+    } else {
+        dailyMin = doseInfo.baseMin * weight;
+        dailyMax = doseInfo.baseMax * weight;
+        
+        // 根据给药频次计算单次剂量
+        const timesPerDay = doseInfo.frequency.includes('分2次') ? 2 : 
+                          doseInfo.frequency.includes('分3次') ? 3 : 
+                          doseInfo.frequency.includes('分4次') ? 4 : 3; // 默认3次
+        
+        singleMin = dailyMin / timesPerDay;
+        singleMax = dailyMax / timesPerDay;
+    }
+
+    // 计算所需片数（200mg/片）
+    const tabletMin = Math.ceil(singleMin / 200 * 4) / 4; // 四分之一片精度
+    const tabletMax = Math.ceil(singleMax / 200 * 4) / 4;
+
+    doseResultsDiv.innerHTML = `
+        <div class="calc-result-item">
+            <div class="calc-result-label">每日总剂量</div>
+            <div class="calc-result-value">
+                <span class="dose-highlight">${dailyMin.toFixed(1)}${dailyMin !== dailyMax ? ' - ' + dailyMax.toFixed(1) : ''} mg/天</span>
+            </div>
+        </div>
+        
+        <div class="calc-result-item">
+            <div class="calc-result-label">单次剂量</div>
+            <div class="calc-result-value">
+                ${singleMin.toFixed(1)}${singleMin !== singleMax ? ' - ' + singleMax.toFixed(1) : ''} mg/次
+            </div>
+        </div>
+        
+        <div class="calc-result-item">
+            <div class="calc-result-label">给药方法</div>
+            <div class="calc-result-value">${doseInfo.frequency}</div>
+        </div>
+        
+        <div class="calc-result-item">
+            <div class="calc-result-label">所需片数（每次）</div>
+            <div class="calc-result-value">
+                ${formatTabletDose(tabletMin)}${tabletMin !== tabletMax ? ' - ' + formatTabletDose(tabletMax) : ''} 片
+            </div>
+        </div>
+        
+        <div class="calc-result-item">
+            <div class="calc-result-label">用药说明</div>
+            <div class="calc-result-value" style="font-size: 14px; line-height: 1.4;">
+                ${doseInfo.notes}
+            </div>
+        </div>
+    `;
+
+    // 肾功能警告
+    if (kidneyFunction !== 'normal') {
+        doseResultsDiv.innerHTML += `
+            <div class="calc-warning kidney-alert">
+                <div class="calc-warning-title">
+                    <span>🚨</span>
+                    肾功能损害用药提醒
+                </div>
+                <p>患者存在${kidneyFunction === 'moderate' ? '中度' : '重度'}肾功能损害，剂量已按说明书调整。请密切监测肾功能和药物不良反应。</p>
+            </div>
+        `;
+    }
+
+    resultsDiv.classList.remove('hidden');
+    resultsDiv.scrollIntoView({ behavior: 'smooth' });
+}
+
+function formatTabletDose(tablets) {
+    if (tablets === 0.25) return '1/4';
+    if (tablets === 0.5) return '1/2';
+    if (tablets === 0.75) return '3/4';
+    if (tablets === 1) return '1';
+    if (tablets === 1.25) return '1又1/4';
+    if (tablets === 1.5) return '1又1/2';
+    if (tablets === 1.75) return '1又3/4';
+    return tablets.toString();
+}
+</script>
+                    

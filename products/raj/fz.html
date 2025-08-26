@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>FDP‑Na 线性流机制图 </title>
+<style>
+  :root { --fg:#111827; --muted:#6b7280; --border:#e5e7eb; --bg:#ffffff; }
+  html,body{margin:0;padding:0;background:var(--bg);color:var(--fg);font-family:system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,"Noto Sans","PingFang SC","Microsoft Yahei",sans-serif}
+  .wrap{max-width:1200px;margin:0 auto;padding:16px 20px 28px}
+  h1{font-size:24px;margin:0 0 4px}
+  .sub{color:var(--muted);font-size:13px;margin:0 0 12px}
+  .toolbar{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;margin:8px 0 12px}
+  .btn-group{display:flex;gap:6px;border:1px solid var(--border);border-radius:999px;padding:4px;background:#fff}
+  .btn{font-size:12px;padding:6px 10px;border-radius:999px;border:1px solid transparent;background:#fff;cursor:pointer}
+  .btn:hover{background:#f6f6f6}
+  .btn.active{background:#111827;color:#fff}
+  .hint{color:var(--muted);font-size:12px;padding:0 6px;align-self:center}
+  .card{border:1px solid var(--border);border-radius:16px;overflow:hidden;background:#fff}
+  .canvas{width:100%;overflow:auto}
+  .legend{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:12px;margin-top:8px}
+  .section{border:1px solid var(--border);border-radius:16px;padding:16px;background:#fff}
+  .grid2{display:grid;grid-template-columns:repeat(1,minmax(0,1fr));gap:8px}
+  @media (min-width:768px){.grid2{grid-template-columns:repeat(2,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="toolbar">
+    <div>
+      <h1>FDP‑Na 线性流</h1>
+      <div class="sub">分子 → 细胞 → 组织 → 器官 · 线宽≈效应强度</div>
+    </div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <div class="btn-group" id="stepGroup">
+        <button class="btn active" data-step="0">总览</button>
+        <button class="btn" data-step="1">分子→细胞</button>
+        <button class="btn" data-step="2">细胞→组织</button>
+        <button class="btn" data-step="3">组织→器官</button>
+        <button class="btn" data-step="4">全显</button>
+      </div>
+      <div class="btn-group">
+        <button class="btn" id="autoBtn">线性播放</button>
+        <button class="btn" id="labelBtn">图标+短词</button>
+      </div>
+      <div class="btn-group">
+        <span class="hint">强弱对比</span>
+        <button class="btn" data-contrast="1">低</button>
+        <button class="btn active" data-contrast="2">中</button>
+        <button class="btn" data-contrast="3">高</button>
+        <button class="btn" id="primaryBtn">只看主干</button>
+      </div>
+      <div class="btn-group">
+        <button class="btn" id="organBtn">器官聚焦</button>
+        <button class="btn" id="notesBtn">隐藏说明</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="card canvas">
+    <svg id="stage" viewBox="0 0 1120 560" style="width:100%;height:auto;display:block"></svg>
+  </div>
+
+  <div class="legend">
+    <span>线宽 = 效应强度：</span>
+    <svg width="180" height="18" viewBox="0 0 180 18" aria-hidden="true">
+      <line x1="10" y1="9" x2="60" y2="9" stroke="currentColor" stroke-width="2" />
+      <text x="62" y="12" font-size="10">弱</text>
+      <line x1="95" y1="9" x2="145" y2="9" stroke="currentColor" stroke-width="6" />
+      <text x="147" y="12" font-size="10">强</text>
+    </svg>
+    <span class="hint">可组合：强弱对比 / 只看主干 / 器官聚焦 / 说明开关。</span>
+  </div>
+
+  <!-- 图下说明区 -->
+  <div id="notes" style="margin-top:16px;display:block">
+    <section class="section">
+      <h3 style="font-size:14px;font-weight:600;margin:0">层级说明</h3>
+      <div class="grid2" style="margin-top:8px;font-size:12px;color:#374151">
+        <div class="section" style="padding:8px;background:#FEF3C7;border-color:#FCD34D">
+          <div style="font-weight:600">分子</div>
+          <ul style="margin:4px 0 0 16px;padding:0">
+            <li>增强糖酵解（PFK/PK）</li>
+            <li>ATP↑，ROS 压力↓</li>
+          </ul>
+        </div>
+        <div class="section" style="padding:8px;background:#D1FAE5;border-color:#A7F3D0">
+          <div style="font-weight:600">细胞</div>
+          <ul style="margin:4px 0 0 16px;padding:0">
+            <li>维持离子泵；Ca²⁺ 过载↓</li>
+            <li>膜/线粒体保护</li>
+          </ul>
+        </div>
+        <div class="section" style="padding:8px;background:#E0F2FE;border-color:#BAE6FD">
+          <div style="font-weight:600">组织</div>
+          <ul style="margin:4px 0 0 16px;padding:0">
+            <li>2,3‑DPG↑ → 释氧↑</li>
+            <li>红细胞变形性↑；微循环↑</li>
+          </ul>
+        </div>
+        <div class="section" style="padding:8px;background:#FFE4E6;border-color:#FECDD3">
+          <div style="font-weight:600">器官</div>
+          <ul style="margin:4px 0 0 16px;padding:0">
+            <li>心：CO/EF↑，梗死面积↓*</li>
+            <li>脑：缺血体积↓，功能恢复↑</li>
+          </ul>
+        </div>
+      </div>
+      <p style="margin:6px 0 0 0;color:#6b7280;font-size:11px">* 受剂量/时窗/模型影响。</p>
+    </section>
+
+    <section class="section" style="margin-top:12px">
+      <h3 style="font-size:14px;font-weight:600;margin:0">讲解脚本（30 秒）</h3>
+      <ol style="margin:8px 0 0 16px;font-size:12px;color:#374151">
+        <li>分子：FDP‑Na 促进糖酵解（PFK/PK），提高 ATP，缓解 ROS。</li>
+        <li>细胞：ATP 保障离子泵与膜/线粒体稳态，Ca²⁺ 过载下降。</li>
+        <li>组织：红细胞 2,3‑DPG↑ 右移氧解离曲线，末梢释氧与微循环改善。</li>
+        <li>器官：心排量/射血分数提升，梗死体积降低；脑缺血损伤减轻、恢复更快。</li>
+      </ol>
+    </section>
+
+    <section class="section" style="margin-top:12px">
+      <h3 style="font-size:14px;font-weight:600;margin:0">应用要点</h3>
+      <ul style="margin:8px 0 0 16px;font-size:12px;color:#374151">
+        <li>时窗：围绕缺血/再灌注越早越好；围术期可参考。</li>
+        <li>联合：与常规再灌注/保温/镇静等标准治疗并行。</li>
+        <li>监测：心电/乳酸/神经评分等跟踪疗效响应。</li>
+      </ul>
+    </section>
+  </div>
+</div>
+
+<script>
+(function(){
+  const state = { step:0, labelsOn:true, auto:false, contrast:2, primaryOnly:false, organFocus:false, showNotes:true, hover:null };
+  const W=1120,H=560; const x=c=>120+c*280, y=r=>110+r*90;
+  const svg=document.getElementById('stage'); const notesBox=document.getElementById('notes');
+
+  const nodes=[
+    {id:'pfk', col:0, row:0, emoji:'🧪', label:'PFK↑'},
+    {id:'pk',  col:0, row:1, emoji:'🧪', label:'PK↑'},
+    {id:'glu', col:0, row:2, emoji:'🧪', label:'糖异生↓'},
+    {id:'ppp', col:0, row:3, emoji:'🧪', label:'PPP/ROS↓'},
+
+    {id:'atp', col:1, row:0, emoji:'⚡',  label:'ATP↑'},
+    {id:'pumps',col:1,row:1,emoji:'🧫', label:'离子泵↑'},
+    {id:'ca',  col:1, row:2, emoji:'🧫', label:'Ca²⁺↓'},
+    {id:'mem', col:1, row:3, emoji:'🛡️', label:'膜/线粒体↑'},
+
+    {id:'dpg', col:2, row:0, emoji:'🩸', label:'2,3‑DPG↑'},
+    {id:'o2',  col:2, row:1, emoji:'🩸', label:'释氧↑'},
+    {id:'micro',col:2,row:2,emoji:'🩸',label:'微循环↑'},
+
+    {id:'heart',col:3,row:0,emoji:'🫀',label:'心功能↑'},
+    {id:'infarct',col:3,row:1,emoji:'🫀',label:'梗死面积↓*'},
+    {id:'brain', col:3,row:2,emoji:'🧠',label:'脑保护↑'},
+  ];
+
+  const NOTE={
+    pfk:{title:'PFK↑', bullets:['提升糖酵解通量','为缺血细胞快速供能']},
+    pk:{title:'PK↑', bullets:['加快丙酮酸生成','维持 ATP 产生']},
+    glu:{title:'糖异生↓', bullets:['减少底物竞争','聚焦能量供给']},
+    ppp:{title:'PPP/ROS↓', bullets:['平衡旁路代谢','降低氧化应激']},
+
+    atp:{title:'ATP↑', bullets:['支持 Na⁺/K⁺ 泵','维持膜/细胞器稳态']},
+    pumps:{title:'离子泵↑', bullets:['膜电位稳定','水肿风险下降']},
+    ca:{title:'Ca²⁺ 过载↓', bullets:['避免 mPTP 开放','凋亡/坏死信号减弱']},
+    mem:{title:'膜/线粒体保护', bullets:['膜稳定性↑','ATP 合成效率↑']},
+
+    dpg:{title:'2,3‑DPG↑', bullets:['Hb‑O₂ 解离曲线右移','末梢释氧↑']},
+    o2:{title:'组织释氧↑', bullets:['缺血区氧供改善','乳酸负荷下降']},
+    micro:{title:'微循环↑', bullets:['变形性↑/聚集↓','再灌注更通畅']},
+
+    heart:{title:'心功能↑', bullets:['收缩/舒张改善','CO/EF↑，LVEDP↓']},
+    infarct:{title:'梗死面积↓*', bullets:['再灌注损伤减轻','* 受剂量/时窗/模型影响']},
+    brain:{title:'脑保护↑', bullets:['缺血体积↓','神经评分/EEG 恢复↑']},
+  };
+
+  const links=[
+    {s:'pfk',t:'atp',w:3,stage:1}, {s:'pk',t:'atp',w:2,stage:1}, {s:'glu',t:'atp',w:1,stage:1}, {s:'ppp',t:'mem',w:1,stage:1},
+    {s:'atp',t:'pumps',w:2,stage:2}, {s:'atp',t:'mem',w:2,stage:2}, {s:'atp',t:'ca',w:2,stage:2}, {s:'pumps',t:'micro',w:2,stage:2}, {s:'mem',t:'micro',w:2,stage:2}, {s:'ca',t:'micro',w:1,stage:2}, {s:'atp',t:'dpg',w:1,stage:2},
+    {s:'dpg',t:'o2',w:3,stage:3}, {s:'o2',t:'heart',w:2,stage:3}, {s:'micro',t:'heart',w:2,stage:3}, {s:'micro',t:'brain',w:2,stage:3}, {s:'o2',t:'brain',w:1,stage:3}, {s:'heart',t:'infarct',w:1,stage:3},
+  ];
+
+  // 工具函数
+  function make(name,attrs){const el=document.createElementNS('http://www.w3.org/2000/svg',name); if(attrs) for(const k in attrs) el.setAttribute(k, attrs[k]); return el;}
+  function pathD(a,b){const dx=(b.x-a.x)*0.5; return `M ${a.x} ${a.y} C ${a.x+dx} ${a.y}, ${b.x-dx} ${b.y}, ${b.x} ${b.y}`;}
+  function toneFill(col){return ['url(#grad-amber)','url(#grad-emerald)','url(#grad-sky)','url(#grad-rose)'][col]}
+  function stageOpacity(st,w){ if(state.primaryOnly && w===1) return 0.1; if(state.step===0) return 0.7; if(state.step===4) return 1.0; return (st===state.step)?1.0:0.15 }
+  function strokeWidthFor(w){ const factor = (state.contrast===1)?1.2:(state.contrast===2)?1.8:2.6; const base = (state.primaryOnly && w===1)?0.8:1.0; return base + w*factor; }
+
+  // 渐变定义
+  const defs=make('defs'); defs.innerHTML = `
+    <linearGradient id="grad-amber" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fde68a"/><stop offset="100%" stop-color="#fff"/></linearGradient>
+    <linearGradient id="grad-emerald" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a7f3d0"/><stop offset="100%" stop-color="#fff"/></linearGradient>
+    <linearGradient id="grad-sky" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#bae6fd"/><stop offset="100%" stop-color="#fff"/></linearGradient>
+    <linearGradient id="grad-rose" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#fecdd3"/><stop offset="100%" stop-color="#fff"/></linearGradient>`;
+  const svgEl=document.getElementById('stage'); svgEl.appendChild(defs);
+
+  // 位置
+  const nodePos={}; nodes.forEach(n=>nodePos[n.id]={x:x(n.col), y:y(n.row)});
+
+  // 列面板
+  ;['分子','细胞','组织','器官'].forEach((c,i)=>{
+    const g=make('g'); const rect=make('rect',{x:x(i)-110,y:30,width:220,height:520-80,rx:18,fill:'#fff'});
+    const text=make('text',{x:x(i),y:54,'text-anchor':'middle',fill:'#6b7280','font-size':14}); text.style.fontWeight=600; text.textContent=c;
+    g.append(rect,text); svgEl.appendChild(g);
+  });
+
+  // 连线
+  const linkElems=[]; links.forEach(e=>{ const a=nodePos[e.s], b=nodePos[e.t]; const p=make('path',{d:pathD(a,b),fill:'none','stroke-linejoin':'round','stroke-linecap':'round',stroke:'#111827'}); svgEl.appendChild(p); linkElems.push({e,path:p}); });
+
+  // 节点
+  const nodeElems=[]; nodes.forEach(n=>{
+    const g=make('g',{transform:`translate(${nodePos[n.id].x}, ${nodePos[n.id].y})`});
+    const rect=make('rect',{x:-56,y:-20,width:112,height:40,rx:20,fill:toneFill(n.col),stroke:'#d1d5db'});
+    const fo=make('foreignObject',{x:-54,y:-18,width:108,height:36});
+    const div=document.createElement('div'); Object.assign(div.style,{width:'100%',height:'100%',display:'flex',alignItems:'center',justifyContent:'center',gap:'4px',borderRadius:'18px',border:'1px solid #e5e7eb',background:'transparent'});
+    const emoji=document.createElement('span'); emoji.textContent=n.emoji; Object.assign(emoji.style,{fontSize:'15px',lineHeight:'1'});
+    const label=document.createElement('span'); label.textContent=n.label; Object.assign(label.style,{fontSize:'11px',lineHeight:'1',color:'#1f2937'});
+    div.append(emoji,label); fo.appendChild(div); g.append(rect,fo); svgEl.appendChild(g);
+    g.addEventListener('mouseenter',()=>{state.hover=n.id; renderToolTip();}); g.addEventListener('mouseleave',()=>{ if(state.hover===n.id){state.hover=null; renderToolTip();}});
+    nodeElems.push({n,g,rect,fo,label});
+  });
+
+  // 器官聚焦卡片
+  const organGroup=make('g',{style:'display:none'}); svgEl.appendChild(organGroup);
+  function buildOrganCards(){
+    while(organGroup.firstChild) organGroup.removeChild(organGroup.firstChild);
+    const heartP=nodePos['heart']; const brainP=nodePos['brain'];
+    const hPath=make('path',{d:pathD({x:heartP.x+56,y:heartP.y},{x:W-280,y:70}),stroke:'#9ca3af','stroke-width':1.5,fill:'none'});
+    const hRect=make('rect',{x:W-280,y:28,width:240,height:120,rx:12,fill:'#fff',stroke:'#e5e7eb'});
+    const hTitle=make('text',{x:W-268,y:50,'font-size':13,fill:'#111827'}); hTitle.style.fontWeight=600; hTitle.textContent='🫀 心脏（功能/损伤）';
+    const hG=make('g',{transform:`translate(${W-268}, 70)`});
+    ['CO/EF↑','LVEDP↓','ST↘','梗死面积↓*'].forEach((t,i)=>{ const row=make('g',{transform:`translate(0, ${i*20})`}); row.append(make('rect',{x:0,y:-12,width:130,height:18,rx:9,fill:'#fff',stroke:'#e5e7eb'})); const txt=make('text',{x:10,y:0,'font-size':12,fill:'#111827'}); txt.textContent=t; row.append(txt); hG.append(row); });
+
+    const bPath=make('path',{d:pathD({x:brainP.x+56,y:brainP.y},{x:W-280,y:210}),stroke:'#9ca3af','stroke-width':1.5,fill:'none'});
+    const bRect=make('rect',{x:W-280,y:168,width:240,height:120,rx:12,fill:'#fff',stroke:'#e5e7eb'});
+    const bTitle=make('text',{x:W-268,y:190,'font-size':13,fill:'#111827'}); bTitle.style.fontWeight=600; bTitle.textContent='🧠 脑（恢复/损伤）';
+    const bG=make('g',{transform:`translate(${W-268}, 210)`});
+    ['缺血体积↓','EEG 恢复↑','神经评分↑'].forEach((t,i)=>{ const row=make('g',{transform:`translate(0, ${i*20})`}); row.append(make('rect',{x:0,y:-12,width:150,height:18,rx:9,fill:'#fff',stroke:'#e5e7eb'})); const txt=make('text',{x:10,y:0,'font-size':12,fill:'#111827'}); txt.textContent=t; row.append(txt); bG.append(row); });
+
+    organGroup.append(hPath,hRect,hTitle,hG,bPath,bRect,bTitle,bG);
+  }
+
+  // 底部时间线
+  const tl=make('g'); tl.appendChild(make('line',{x1:x(0),y1:H-36,x2:x(3),y2:H-36,stroke:'#d1d5db','stroke-width':2})); const timelineCircles=[]; ['分子','细胞','组织','器官'].forEach((c,i)=>{ const circ=make('circle',{cx:x(i),cy:H-36,r:6,stroke:'#111827','stroke-width':1}); const t=make('text',{x:x(i),y:H-16,'font-size':12,fill:'#6b7280','text-anchor':'middle'}); t.textContent=c; tl.append(circ,t); timelineCircles.push(circ); }); svgEl.appendChild(tl);
+
+  // 提示气泡
+  let tooltipEl=null; function renderToolTip(){ if(tooltipEl){ try{svgEl.removeChild(tooltipEl);}catch(e){} tooltipEl=null; } const id=state.hover; if(!id) return; const p=nodePos[id]; const top=Math.max(30,p.y-54), left=p.x+16; tooltipEl=make('foreignObject',{x:left,y:top,width:240,height:110}); const div=document.createElement('div'); div.className='section'; div.style.fontSize='11px'; div.style.lineHeight='1.2'; div.style.boxShadow='0 1px 4px rgba(0,0,0,0.08)'; const d=NOTE[id]; div.innerHTML=`<div style="font-weight:600;color:#1f2937">${d.title}</div><ul style="margin:4px 0 0 16px;color:#374151">${d.bullets.map(b=>`<li>${b}</li>`).join('')}</ul>`; tooltipEl.appendChild(div); svgEl.appendChild(tooltipEl); }
+
+  // 渲染
+  function renderLinks(){ linkElems.forEach(({e,path})=>{ path.setAttribute('stroke-width', String(strokeWidthFor(e.w))); path.setAttribute('opacity', String(stageOpacity(e.stage,e.w))); }); }
+  function renderNodes(){ const chipWidth= state.labelsOn?112:64; const chipHalf=chipWidth/2; nodeElems.forEach(({fo,rect})=>{ rect.setAttribute('x', String(-chipHalf)); rect.setAttribute('width', String(chipWidth)); fo.setAttribute('x', String(-chipHalf+2)); fo.setAttribute('width', String(chipWidth-4)); const span=fo.querySelector('span:nth-child(2)'); if(span){ span.style.display = state.labelsOn? 'inline' : 'none'; } }); }
+  function renderTimeline(){ const arr=['分子','细胞','组织','器官']; timelineCircles.forEach((c,i)=>{ c.setAttribute('fill', (state.step>=i)?'#111827':'#fff'); c.nextSibling.textContent=arr[i]; }); }
+  function renderOrgan(){ organGroup.style.display = state.organFocus ? 'block' : 'none'; if(state.organFocus) buildOrganCards(); }
+  function renderAll(){ renderLinks(); renderNodes(); renderToolTip(); renderTimeline(); renderOrgan(); }
+
+  // 初始化
+  (function init(){
+    const bg = make('rect',{x:0,y:0,width:W,height:H,fill:'#fff'}); svgEl.appendChild(bg);
+    // 列、线、点
+    ;['分子','细胞','组织','器官'].forEach(()=>{}); // 保留以便以后扩展
+    renderAll(); // 先渲染一次，随后构建
+  })();
+
+  // 先构建再刷新（保证次序）
+  ;(function build(){
+    // 需要先把列、连线、节点加入，再统一刷新
+    // 列
+    ;['分子','细胞','组织','器官'].forEach((c,i)=>{
+      const g=make('g'); const rect=make('rect',{x:x(i)-110,y:30,width:220,height:520-80,rx:18,fill:'#fff'});
+      const text=make('text',{x:x(i),y:54,'text-anchor':'middle',fill:'#6b7280','font-size':14}); text.style.fontWeight=600; text.textContent=c;
+      g.append(rect,text); svgEl.appendChild(g);
+    });
+    // 连线
+    const tmpLinks=[]; links.forEach(e=>{ const a=nodePos[e.s], b=nodePos[e.t]; const p=make('path',{d:pathD(a,b),fill:'none','stroke-linejoin':'round','stroke-linecap':'round',stroke:'#111827'}); svgEl.appendChild(p); tmpLinks.push({e,path:p}); });
+    linkElems.push(...tmpLinks);
+    // 节点
+    nodes.forEach(n=>{
+      const g=make('g',{transform:`translate(${nodePos[n.id].x}, ${nodePos[n.id].y})`});
+      const rect=make('rect',{x:-56,y:-20,width:112,height:40,rx:20,fill:toneFill(n.col),stroke:'#d1d5db'});
+      const fo=make('foreignObject',{x:-54,y:-18,width:108,height:36});
+      const div=document.createElement('div'); Object.assign(div.style,{width:'100%',height:'100%',display:'flex',alignItems:'center',justifyContent:'center',gap:'4px',borderRadius:'18px',border:'1px solid #e5e7eb',background:'transparent'});
+      const emoji=document.createElement('span'); emoji.textContent=n.emoji; Object.assign(emoji.style,{fontSize:'15px',lineHeight:'1'});
+      const label=document.createElement('span'); label.textContent=n.label; Object.assign(label.style,{fontSize:'11px',lineHeight:'1',color:'#1f2937'});
+      div.append(emoji,label); fo.appendChild(div); g.append(rect,fo); svgEl.appendChild(g);
+      g.addEventListener('mouseenter',()=>{state.hover=n.id; renderToolTip();}); g.addEventListener('mouseleave',()=>{ if(state.hover===n.id){state.hover=null; renderToolTip();}});
+      nodeElems.push({n,g,rect,fo,label});
+    });
+    renderAll();
+  })();
+
+  // 交互
+  let timer=null; function setAuto(v){ state.auto=v; if(timer){clearInterval(timer); timer=null;} if(state.auto){ timer=setInterval(()=>{ state.step = state.step>=3?0:state.step+1; syncStepButtons(); renderLinks(); renderTimeline(); }, 1400); } document.getElementById('autoBtn').classList.toggle('active', state.auto); document.getElementById('autoBtn').textContent = state.auto ? '暂停' : '线性播放'; }
+
+  function syncStepButtons(){ document.querySelectorAll('#stepGroup .btn').forEach(b=>{ const s=Number(b.dataset.step); b.classList.toggle('active', s===state.step); }); }
+
+  document.getElementById('autoBtn').addEventListener('click',()=>setAuto(!state.auto));
+  document.getElementById('labelBtn').addEventListener('click',()=>{ state.labelsOn=!state.labelsOn; document.getElementById('labelBtn').classList.toggle('active', state.labelsOn); document.getElementById('labelBtn').textContent = state.labelsOn ? '图标+短词' : '仅图标'; renderNodes(); });
+  document.getElementById('primaryBtn').addEventListener('click',(e)=>{ state.primaryOnly=!state.primaryOnly; e.currentTarget.classList.toggle('active', state.primaryOnly); renderLinks(); });
+  document.getElementById('organBtn').addEventListener('click',(e)=>{ state.organFocus=!state.organFocus; e.currentTarget.classList.toggle('active', state.organFocus); if(state.organFocus){ state.step=3; syncStepButtons(); } renderOrgan(); renderTimeline(); });
+  document.getElementById('notesBtn').addEventListener('click',(e)=>{ state.showNotes=!state.showNotes; e.currentTarget.classList.toggle('active', state.showNotes); e.currentTarget.textContent = state.showNotes ? '隐藏说明' : '显示说明'; notesBox.style.display = state.showNotes? 'block':'none'; });
+  document.querySelectorAll('[data-contrast]').forEach(b=>{ b.addEventListener('click',()=>{ state.contrast=Number(b.dataset.contrast); document.querySelectorAll('[data-contrast]').forEach(bb=>bb.classList.toggle('active', bb===b)); renderLinks(); }); });
+  document.querySelectorAll('#stepGroup .btn').forEach(b=>{ b.addEventListener('click',()=>{ state.step=Number(b.dataset.step); syncStepButtons(); renderLinks(); renderTimeline(); }); });
+})();
+</script>
+</body>
+</html>

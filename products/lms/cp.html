@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>尼美舒利｜医学推广页</title>
+  <style>
+  :root{
+    --brand1:#38bdf8; /* sky-400 */
+    --brand2:#6366f1; /* indigo-500 */
+    --ink:#0f172a;
+    --muted:#475569;
+    --bg:#f6fbff; /* very light blue */
+    --card:#ffffff;
+    --ok:#10b981; /* emerald-500 */
+    --warn:#ef4444; /* red-500 */
+    --info:#2563eb; /* blue-600 */
+    --shadow:0 12px 30px rgba(2,8,23,.08);
+    --radius:18px;
+    --leading:1.8; /* 全站行高 */
+  }
+  /* 基础排版（提升行间距与易读性） */
+  html,body{
+    margin:0;padding:0;background:var(--bg);color:var(--ink);
+    font-family:"Alibaba PuHuiTi","HarmonyOS Sans SC","Noto Sans SC",system-ui,-apple-system,Segoe UI,Roboto,"PingFang SC","Microsoft YaHei",sans-serif;
+    line-height:var(--leading);letter-spacing:.2px;
+    text-rendering:optimizeLegibility;-webkit-font-smoothing:antialiased;moz-osx-font-smoothing:grayscale
+  }
+  a{color:var(--ink);text-decoration:none}
+  .app{max-width:1080px;margin:0 auto;padding:16px 16px 96px}
+  /* 顶部导航（汉堡） */
+  .topbar{
+    position:sticky;top:0;z-index:50;
+    background:linear-gradient(90deg,var(--brand1),var(--brand2));
+    color:#111827;border-bottom:1px solid rgba(0,0,0,.06);
+    box-shadow:var(--shadow)
+  }
+  .topbar-inner{display:flex;align-items:center;justify-content:space-between;padding:16px}
+  .brand{font-weight:800;letter-spacing:.4px}
+  .brand b{font-size:18px}
+  .brand small{opacity:.85;font-weight:600}
+  .hamburger{
+    width:36px;height:36px;border-radius:10px;border:0;background:#fff;box-shadow:var(--shadow);
+    display:grid;place-items:center;cursor:pointer
+  }
+  .hamburger span{width:18px;height:2px;background:#111827;display:block;position:relative}
+  .hamburger span::before,.hamburger span::after{content:"";position:absolute;left:0;width:18px;height:2px;background:#111827}
+  .hamburger span::before{top:-6px}.hamburger span::after{top:6px}
+  .drawer{position:fixed;inset:0 35% 0 0;max-width:320px;background:#fff;transform:translateX(-105%);transition:.28s ease;box-shadow:var(--shadow)}
+  .drawer.open{transform:translateX(0)}
+  .drawer header{padding:18px 18px 8px;font-weight:800}
+  .menu a{display:flex;align-items:center;gap:10px;padding:14px 18px;border-radius:12px;margin:6px 10px;color:#111827}
+  .menu a.active{background:linear-gradient(90deg,var(--brand1),var(--brand2));box-shadow:var(--shadow)}
+  .menu small{color:#374151;opacity:.9}
+  /* 页面区块 */
+  .page{display:none;animation:fade .25s ease}
+  .page.active{display:block}
+  @keyframes fade{from{opacity:.0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  h1{font-size:clamp(22px,3vw,32px);margin:20px 0 12px;line-height:1.3}
+  h2{font-size:clamp(18px,2.2vw,24px);margin:20px 0 14px;line-height:1.35}
+  h3{font-size:clamp(16px,2vw,20px);margin:16px 0 10px;line-height:1.4}
+  p{margin:12px 0}
+  .hero{
+    border-radius:22px;padding:28px;
+    background:linear-gradient(120deg,rgba(56,189,248,.16),rgba(99,102,241,.16));
+    box-shadow:var(--shadow)
+  }
+  .pill{display:inline-flex;align-items:center;gap:10px;padding:9px 14px;border-radius:999px;background:#fff;box-shadow:var(--shadow);font-weight:700}
+  .grid{display:grid;gap:20px;grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
+  .card{background:var(--card);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px}
+  .card ul,.card ol{line-height:var(--leading);padding-left:1.1em}
+  .card li{margin:6px 0}
+  .tag{display:inline-block;padding:7px 11px;border-radius:999px;background:#eff6ff;color:#1e293b;font-weight:700;font-size:12px}
+  .good{color:var(--ok);font-weight:800}
+  .warn{color:var(--warn);font-weight:800}
+  .info{color:var(--info);font-weight:800}
+  .cta{display:inline-flex;align-items:center;gap:10px;padding:12px 16px;border-radius:12px;background:linear-gradient(90deg,var(--brand1),var(--brand2));box-shadow:var(--shadow);font-weight:800}
+  .kbd{font-family:ui-monospace,Menlo,Consolas,monospace;background:#111827;color:#fff;padding:3px 8px;border-radius:8px;font-size:12px}
+  .foot{margin-top:28px;color:var(--muted);font-size:12px}
+  /* 响应式细节 */
+  @media (min-width:960px){
+    .drawer{position:sticky;transform:none;inset:auto;top:0;height:100%;display:block;border-right:1px solid #eef2ff}
+    .topbar .hamburger{display:none}
+    .layout{display:grid;grid-template-columns:260px 1fr;gap:22px}
+  }
+</style>
+</head>
+<body>
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand"><b>尼美舒利</b> <small>· 医学推广页</small> 💊</div>
+      <button class="hamburger" id="hb" aria-label="打开导航"><span></span></button>
+    </div>
+  </div>
+
+  <div class="app layout">
+    <!-- 抽屉导航 -->
+    <aside class="drawer" id="drawer">
+      <header>目录导航</header>
+      <nav class="menu" id="menu">
+        <a href="#home" data-nav class="active">🏠 首页</a>
+        <a href="#mechanism" data-nav>🧬 作用机制</a>
+        <a href="#evidence" data-nav>📊 证据速览</a>
+        <a href="#safety" data-nav>🛡️ 安全性</a>
+        <a href="#dosing" data-nav>💡 用法用量</a>
+        <a href="#scenarios" data-nav>🎯 临床场景</a>
+        <a href="#consensus" data-nav>📚 共识/指南</a>
+        <a href="#faq" data-nav>❓ 常见问答</a>
+        <a href="#compliance" data-nav>⚖️ 合规提示</a>
+      </nav>
+    </aside>
+
+    <!-- 页面内容 -->
+    <main>
+      <!-- 首页 -->
+      <section class="page active" id="home" role="region" aria-label="首页">
+        <div class="hero">
+          <div class="pill">✨ 价值主张：<span class="good">起效快 · 止痛稳 · 用法简</span></div>
+          <h1>尼美舒利（Nimesulide）</h1>
+          <p>一款以 COX-2 倾向抑制为特征的非甾体抗炎药（NSAIDs），用于疼痛与发热等症状的短期对症管理。配方设计与理化特性共同支持良好的<strong>到位性</strong>与<strong>耐受性</strong>策略。</p>
+          <div class="grid" style="margin-top:12px">
+            <div class="card"><span class="tag">适应症（依中国说明书）</span>
+              <p>仅在至少一种其他 NSAIDs 治疗失败时考虑使用；用于<strong>慢性关节炎疼痛</strong>、<strong>手术与急性创伤后疼痛</strong>、<strong>原发性痛经</strong>的症状治疗。</p>
+            </div>
+            <div class="card"><span class="tag">全球审评提示</span>
+              <p>EMA（2012）建议系统用尼美舒利限用于<strong>急性疼痛/原发性痛经</strong>（不推荐 OA），利弊比总体可接受。</p>
+            </div>
+            <div class="card"><span class="tag">核心卖点</span>
+              <ul>
+                <li>⏱️ <b>起效更快</b>——临床对比显示起效时间优势</li>
+                <li>🎯 <b>滑液浓度维持</b>——有利于关节疼痛控制</li>
+                <li>🛡️ <b>耐受性策略</b>——COX-2 倾向抑制 + pKa≈6.5</li>
+              </ul>
+            </div>
+          </div>
+          <p class="foot">* 本页为医学信息供专业人士参考，非面向公众之广告。</p>
+        </div>
+      </section>
+
+      <!-- 机制 -->
+      <section class="page" id="mechanism" role="region" aria-label="作用机制">
+        <h2>🧬 作用机制 · 三要点</h2>
+        <div class="grid">
+          <div class="card"><h3>1) COX-2 倾向抑制</h3>
+            <p>降低 PGE₂ 等炎性介质，缓解炎症、疼痛与发热。</p>
+          </div>
+          <div class="card"><h3>2) 关节到位性</h3>
+            <p>口服后可进入关节滑液，且清除速率较血浆更慢，有利于持续镇痛。</p>
+          </div>
+          <div class="card"><h3>3) 胃肠友好策略</h3>
+            <p>较高 pKa 与对 COX-1 的相对保留，叠加抗氧化研究线索，构成 GI 保护思路。</p>
+          </div>
+        </div>
+        <p class="foot">提示：上述为作用原理与理化/组织分布等依据的学理性归纳，具体个体反应存在差异。</p>
+      </section>
+
+      <!-- 证据速览 -->
+      <section class="page" id="evidence" role="region" aria-label="证据速览">
+        <h2>📊 证据速览（临床要点）</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>起效更快 ⏱️</h3>
+            <p>临床比较显示：与部分 NSAIDs 相比，尼美舒利起效更快，短时止痛更强，有利于尽快缓解症状与复工复学。</p>
+          </div>
+          <div class="card">
+            <h3>滑液浓度维持 🎯</h3>
+            <p>RA 患者用药后，关节滑液浓度维持优于血浆，有助于关节疼痛控制与活动恢复。</p>
+          </div>
+          <div class="card">
+            <h3>总体耐受性 🛡️</h3>
+            <p>基于多项再评价与人群资料，系统应用在推荐人群/剂量/疗程内总体获益/风险可接受；治疗中需依规监测。</p>
+          </div>
+        </div>
+        <p class="foot">* 以上为已发表研究与再评价结论之要点式转述，详见“安全性”与“合规提示”。</p>
+      </section>
+
+      <!-- 安全性 -->
+      <section class="page" id="safety" role="region" aria-label="安全性">
+        <h2>🛡️ 安全性 · 三层把控</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>1) 人群把关</h3>
+            <ul>
+              <li class="warn">12 岁以下：<b>禁用</b></li>
+              <li class="warn">肝功能损害：<b>禁用</b>；治疗期间避免酒精与肝损药物，按需监测肝功能</li>
+              <li>肾功能重度不全：禁用；轻中度可照常或遵医嘱</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>2) 剂量疗程</h3>
+            <p>遵循“<span class="good">最小有效剂量 × 最短疗程</span>”原则；单次 ≤100 mg，疗程 ≤15 天。</p>
+          </div>
+          <div class="card">
+            <h3>3) 胃肠策略</h3>
+            <p>COX-2 倾向抑制 + 较高 pKa（≈6.5）支持耐受性；既往消化道事件或合用抗凝/类固醇者，应综合评估并按需加用胃粘膜保护策略。</p>
+          </div>
+        </div>
+        <p class="foot">* 请严格遵循最新药品说明书与当地监管要求；发生可疑不良反应应及时停药并就医。</p>
+      </section>
+
+      <!-- 用法用量 -->
+      <section class="page" id="dosing" role="region" aria-label="用法用量">
+        <h2>💡 用法用量（口服）</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>推荐</h3>
+            <ul>
+              <li>成人：一次 50–100 mg，每日 2 次，餐后服用</li>
+              <li>最大单次 100 mg；<b>连续疗程不超过 15 天</b></li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>不推荐/禁用</h3>
+            <ul>
+              <li class="warn">12 岁以下儿童：禁用</li>
+              <li class="warn">发热或类似流感样症状者：禁用</li>
+              <li class="warn">肝功能损害者：禁用</li>
+            </ul>
+          </div>
+          <div class="card">
+            <h3>小贴士</h3>
+            <p>若需继续治疗，遵医嘱评估风险，可考虑间歇用药与复评肝功能；避免与其他 NSAIDs 联用。</p>
+          </div>
+        </div>
+        <p class="foot">* <span class="kbd">Esc</span>：随时返回上一页（桌面端）。</p>
+      </section>
+
+      <!-- 临床场景 -->
+      <section class="page" id="scenarios" role="region" aria-label="临床场景">
+        <h2>🎯 适用场景（示例）</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>急性疼痛</h3>
+            <p>如术后/创伤后疼痛等，目标为快速有效的短程对症控制。</p>
+          </div>
+          <div class="card">
+            <h3>原发性痛经</h3>
+            <p>聚焦起效速度与止痛强度，提高功能恢复与生活质量。</p>
+          </div>
+          <div class="card">
+            <h3>关节相关疼痛</h3>
+            <p>在其他 NSAIDs 失败后作为备选，关注滑液浓度维持带来的获益可能。</p>
+          </div>
+        </div>
+        <p class="foot">* 以上为“使用情境”描述，具体应个体化评估。</p>
+      </section>
+
+      <!-- 共识/指南 -->
+      <section class="page" id="consensus" role="region" aria-label="共识与指南">
+        <h2>📚 共识与指南（相关）</h2>
+        <div class="card">
+          <ul>
+            <li>骨关节炎药物治疗专家共识（涉及 NSAIDs 应用框架）</li>
+            <li>急性闭合性软组织损伤诊疗与疼痛管理专家共识</li>
+            <li>类风湿关节炎<strong>超说明书</strong>用药中国专家共识（2022版）——需遵循当地法规与医院制度</li>
+            <li>（儿科）解热镇痛处方审核建议 —— 与尼美舒利年龄禁忌保持一致</li>
+          </ul>
+          <p class="foot">* 共识用于总体把握用药原则，处方需以最新说明书与患者具体情况为准。</p>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="page" id="faq" role="region" aria-label="常见问答">
+        <h2>❓ 常见问答</h2>
+        <div class="grid">
+          <div class="card">
+            <h3>Q：为什么“仅在其他 NSAIDs 治疗失败时使用”？</h3>
+            <p>A：这是说明书层面的风险管理与合理用药要求，旨在在“失败”人群中提供另一可选途径，同时强调最小剂量/最短疗程的用药理念。</p>
+          </div>
+          <div class="card">
+            <h3>Q：与传统 NSAIDs 相比的亮点是什么？</h3>
+            <p>A：起效更快、滑液到位性与理化特征支持的 GI 策略是常被关注的差异化点；但是否转化为个体获益需结合病种与风险评估。</p>
+          </div>
+          <div class="card">
+            <h3>Q：需要做哪些用药监测？</h3>
+            <p>A：疗程内建议关注肝功能与胃肠道症状，合并用药（特别是抗凝、糖皮质激素等）时需警惕相互作用与出血风险。</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- 合规提示 -->
+      <section class="page" id="compliance" role="region" aria-label="合规提示">
+        <h2>⚖️ 合规与重要声明</h2>
+        <div class="card">
+          <ul>
+            <li>严格遵守最新批准的药品说明书与本机构药事管理制度。</li>
+            <li>本页涉及之共识/指南用于学术交流，<b>不替代</b>监管批准适应症。</li>
+            <li>任何超说明书讨论仅作学术了解，处方需经充分受益/风险评估与知情沟通。</li>
+          </ul>
+          <a class="cta" href="#home">返回首页 🏠</a>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+  // 改进版路由：不拦截默认锚点行为，避免 hash 与状态不同步导致的“无法跳转”
+  const hb = document.getElementById('hb');
+  const drawer = document.getElementById('drawer');
+  const menu = document.getElementById('menu');
+  const pages = Array.from(document.querySelectorAll('.page'));
+  const navLinks = Array.from(menu.querySelectorAll('a[data-nav]'));
+  const routeSet = new Set(pages.map(p=>p.id));
+
+  function setActiveFromHash(){
+    let id = (location.hash || '#home').slice(1);
+    if(!routeSet.has(id)) id = 'home';
+    pages.forEach(p => p.classList.toggle('active', p.id === id));
+    navLinks.forEach(a => {
+      const active = a.getAttribute('href') === ('#' + id);
+      a.classList.toggle('active', active);
+      if(active){ a.setAttribute('aria-current','page'); } else { a.removeAttribute('aria-current'); }
+    });
+    drawer.classList.remove('open');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  // 初始与 hash 变化时同步
+  window.addEventListener('hashchange', setActiveFromHash);
+  document.addEventListener('DOMContentLoaded', setActiveFromHash);
+  if(!location.hash){ location.hash = '#home'; }
+
+  // 打开/关闭抽屉
+  hb.addEventListener('click', () => drawer.classList.toggle('open'));
+
+  // 点击导航时不再调用 pushState，直接让浏览器处理锚点，避免跳转失效
+  menu.addEventListener('click', (e) => {
+    const a = e.target.closest('a[data-nav]');
+    if(!a) return;
+    // 让默认行为发生（修改 hash 并触发 hashchange）
+    // 仅做 UI 收尾：关闭抽屉
+    drawer.classList.remove('open');
+  });
+</script>
+</body>
+</html>
